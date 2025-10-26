@@ -1,0 +1,22 @@
+let VERSION = "1.0.0";
+
+let `maven-javadoc-plugin` = "3.12.0";
+let `maven-source-plugin` = "3.3.1";
+let `maven-compiler-plugin` = "3.14.1";
+let `maven-dependency-plugin` = "3.8.1";
+let `maven-surefire-plugin` = "3.5.4";
+let `org.junit.jupiter` = "6.0.0";
+let `maven-assembly-plugin` = "3.7.1";
+let `org.mockito` = "5.17.0";
+let `maven-resources-plugin` = "3.3.1";
+let `maven-core` = "4.0.0-rc-4";
+let `jakarta.annotation` = "3.0.0";
+let `jakarta.inject` = "2.0.1";
+let `sisu-maven-plugin` = "0.3.5";
+let JAVA_VERSION = 25;
+
+let groupId = "com.javax0.logiqua";
+let groupIdMavenPlugin = "org.apache.maven.plugins";
+
+
+export_all();
