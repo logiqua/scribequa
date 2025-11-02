@@ -13,7 +13,7 @@ public class TestMissing {
     void testMissing() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!"));
         final var script = engine.getOp("missing").args("a", "b", "c");
-        final var result = script.evaluate(engine);
+        final var result = script.evaluate();
         Assertions.assertEquals(List.of("b", "c"), result);
     }
 
@@ -21,7 +21,7 @@ public class TestMissing {
     void testMissingWithArray() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!"));
         final var script = engine.getOp("missing").args((Object) new String[]{"a", "b", "c"});
-        final var result = script.evaluate(engine);
+        final var result = script.evaluate();
         Assertions.assertEquals(List.of("b", "c"), result);
     }
 
@@ -29,7 +29,7 @@ public class TestMissing {
     void testMissingWithList() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!"));
         final var script = engine.getOp("missing").args(List.of("a", "b", "c"));
-        final var result = script.evaluate(engine);
+        final var result = script.evaluate();
         Assertions.assertEquals(List.of("b", "c"), result);
     }
 
@@ -37,7 +37,7 @@ public class TestMissing {
     void testMissingWithSet() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!"));
         final var script = engine.getOp("missing").args(Set.of("a", "b", "c"));
-        final var result = script.evaluate(engine);
+        final var result = script.evaluate();
         Assertions.assertInstanceOf(List.class, result);
         final var list = (List<?>) result;
         Assertions.assertTrue(list.contains("b"));
@@ -55,7 +55,7 @@ public class TestMissing {
         }
         final var engine = Engine.withData(Map.of("a", "Hello, World!"));
         final var script = engine.getOp("missing").args(new MyIterable());
-        final var result = script.evaluate(engine);
+        final var result = script.evaluate();
         Assertions.assertInstanceOf(List.class, result);
         final var list = (List<?>) result;
         Assertions.assertTrue(list.contains("b"));

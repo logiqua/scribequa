@@ -4,6 +4,7 @@ import com.javax0.logiqua.Context;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Named;
 import com.javax0.logiqua.Operation;
+import com.javax0.logiqua.commands.utils.Array;
 
 import java.util.ArrayList;
 
@@ -13,24 +14,13 @@ public class Missing implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... args) {
         final var missing = new ArrayList<String>();
+        final Object[] arguments;
         if (args.length == 1) {
-            final var list = args[0];
-            if (executor.getContext().accessor(list) instanceof Context.ListLike listAccessor) {
-                final var size = listAccessor.size(list);
-                for (int i = 0; i < size; i++) {
-                    final var arg = listAccessor.get(list, i);
-                    if (arg != null && arg.get() != null) {
-                        final var key = arg.get().toString();
-                        final var value = executor.getContext().get(key);
-                        if (value == null) {
-                            missing.add(key);
-                        }
-                    }
-                }
-                return missing;
-            }
+            arguments = new Array(executor).flat(args[0]);
+        }else{
+            arguments = args;
         }
-        for (final var arg : args) {
+        for (final var arg : arguments) {
             if (arg != null) {
                 final var key = arg.toString();
                 final var value = executor.getContext().get(key);

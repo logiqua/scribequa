@@ -12,15 +12,22 @@ public interface Builder {
     class FunctionNodeBuilder extends NodeBuilder {
         private final Operation.Function operation;
 
-        public FunctionNodeBuilder(Engine engine,Operation.Function operation) {
+        public FunctionNodeBuilder(Engine engine, Operation.Function operation) {
             super(engine);
             this.operation = operation;
         }
 
         @Override
-        Script args(Object... argsObj) {
+        public Script subscripts(Script... scripts) {
+            final var node = new FunctionNode(engine, operation, scripts);
+            operation.checkArguments(scripts);
+            return node;
+        }
+
+        @Override
+        public Script args(Object... argsObj) {
             final var args = toScript(argsObj);
-            final var node = new FunctionNode(operation, args);
+            final var node = new FunctionNode(engine, operation, args);
             operation.checkArguments(args);
             return node;
         }
@@ -35,11 +42,16 @@ public interface Builder {
         }
 
         @Override
-        Script args(Object... argsObj) {
-            final var args = toScript(argsObj);
-            final var node = new CommandNode(operation, args);
-            operation.checkArguments(args);
+        public Script subscripts(Script... scripts) {
+            final var node = new CommandNode(engine, operation, scripts);
+            operation.checkArguments(scripts);
             return node;
+        }
+
+        @Override
+        public Script args(Object... argsObj) {
+            final var args = toScript(argsObj);
+            return subscripts(args);
         }
     }
 
@@ -48,14 +60,18 @@ public interface Builder {
             this.engine = engine;
         }
 
-        abstract Script args(Object... args);
+        public abstract Script subscripts(Script... scrips);
+
+        public abstract Script args(Object... args);
+
         protected final Engine engine;
+
         protected Script[] toScript(Object[] argsObj) {
             return Arrays.stream(argsObj)
-                    .map( obj -> {
-                        if( obj instanceof Script sc){
+                    .map(obj -> {
+                        if (obj instanceof Script sc) {
                             return sc;
-                        }else {
+                        } else {
                             return engine.constant(obj);
                         }
                     }).toArray(Script[]::new);

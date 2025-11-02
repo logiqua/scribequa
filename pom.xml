@@ -44,6 +44,11 @@
                 <version>1.0.0</version>
             </dependency>
             <dependency>
+                <groupId>com.javax0.logiqua</groupId>
+                <artifactId>lex</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
                 <scope>test</scope>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
@@ -130,6 +135,7 @@
         <module>lsp</module>
         <module>yaml</module>
         <module>xml</module>
+        <module>lex</module>
     </modules>
     <url>https://github.com/logiqua/scribequa</url>
     <licenses>

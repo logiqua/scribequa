@@ -16,18 +16,16 @@ public interface Script {
 
     /**
      * A script can evaluate itself.
-     * To do that, it needs an {@link Executor} and a {@link Context}.
      *
-     * @param executor the executor that can evaluate the arguments and the operation.
      * @return the result of the evaluation
      */
-    Object evaluate(Executor executor);
+    Object evaluate();
 
     /**
      * Returns the set of classes representing the possible return types of this script when evaluated.
      * <p>
      * The typical implementation of this method will just call the {@link Operation#returns(Script...)} passing the
-     * underlying scripts as argument, when there are underlying scripts.
+     * underlying scripts as an argument, when there are underlying scripts.
      *
      * @return a set of Class objects corresponding to the possible types that the evaluation might return
      */

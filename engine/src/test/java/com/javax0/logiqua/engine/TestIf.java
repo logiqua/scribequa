@@ -12,7 +12,7 @@ public class TestIf {
         final var engine = Engine.withData(Map.of());
         final var script =
                 engine.getOp("if").args(true, "Very well", "Too bad");
-        Assertions.assertEquals("Very well", script.evaluate(engine));
+        Assertions.assertEquals("Very well", script.evaluate());
     }
 
     @Test
@@ -20,7 +20,7 @@ public class TestIf {
         final var engine = Engine.withData(Map.of());
         final var script =
                 engine.getOp("if").args(false, "Too bad", "Very well");
-        Assertions.assertEquals("Very well", script.evaluate(engine));
+        Assertions.assertEquals("Very well", script.evaluate());
     }
 
     @Test
@@ -46,11 +46,13 @@ public class TestIf {
     }
 
     @Test
-    @DisplayName("An 'if' command cannot be built if the first argument is not boolean")
+    @DisplayName("An 'if' command cannot interpret integer truthy with int -> boolean caster")
     void testIfNeedsBooleanFirstArgument() {
         final var engine = Engine.withData(Map.of());
-        Assertions.assertThrows(IllegalArgumentException.class, () -> engine.getOp("if")
-                .args(1, 2, 3));
+        final MapContext ctx = (MapContext) engine.getContext();
+        ctx.registerCaster(Integer.class, Boolean.class, i -> i != 0);
+        final var script = engine.getOp("if").args(1, 2, 3);
+        Assertions.assertEquals(2, script.evaluate());
     }
 
     @Test
@@ -59,7 +61,7 @@ public class TestIf {
         final var engine = Engine.withData(Map.of("a", true));
         final var script = engine.getOp("if").args(
                 engine.getOp("var").args("a"), "Hello, World!", "Goodbye");
-        Assertions.assertEquals("Hello, World!", script.evaluate(engine));
+        Assertions.assertEquals("Hello, World!", script.evaluate());
     }
 
     @Test
@@ -68,6 +70,6 @@ public class TestIf {
         final var engine = Engine.withData(Map.of("a", "not boolean"));
         final var script = engine.getOp("if").args(
                 engine.getOp("var").args("a"), "Hello, World!", "Goodbye");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> script.evaluate(engine));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> script.evaluate());
     }
 }

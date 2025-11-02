@@ -1,0 +1,47 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-encoding
+'UTF-8'
+-protected
+-source
+'25'
+-sourcepath
+'/Users/verhasp/github/scribequa/lex/src/main/java:/Users/verhasp/github/scribequa/lex/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/verhasp/github/scribequa/lex/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-Xdoclint:none
+-doctitle
+'Lexical Analyser 1.0.0 API'
+-use
+-version
+-windowtitle
+'Lexical Analyser 1.0.0 API'
+com.javax0.lex
+com.javax0.lex.analyzers
+com.javax0.lex.tokens
+/Users/verhasp/github/scribequa/lex/src/main/java = 1761824223597
+/Users/verhasp/github/scribequa/lex/target/generated-sources/annotations = 1762106711373
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/tag-search-index.js = 1762106712843
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/overview-tree.html = 1762106712830
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/module-search-index.js = 1762106712841
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/index.html = 1762106712831
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/package-search-index.js = 1762106712842
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/index-all.html = 1762106712853
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/allpackages-index.html = 1762106712841
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/member-search-index.js = 1762106712843
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/overview-summary.html = 1762106712855
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/help-doc.html = 1762106712857
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/element-list = 1762106712761
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/search.html = 1762106712854
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/allclasses-index.html = 1762106712839
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/type-search-index.js = 1762106712842

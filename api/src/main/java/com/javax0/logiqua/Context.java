@@ -1,5 +1,7 @@
 package com.javax0.logiqua;
 
+import java.util.Optional;
+
 /**
  * An execution context that holds parameters for an execution.
  * This is like a Map containing string keys and values that can also be maps, arrays, and other objects.
@@ -11,14 +13,30 @@ public interface Context {
      * This interface is part of the execution context model, enabling flexible handling of map-like or list-like
      * collection patterns.
      * <p>
-     * CollectionLike acts as a sealed interface which can only be directly implemented by {@code MapLike}
-     * and {@code ListLike}, both of which extend specific collection handling behavior. Classes extending
-     * {@code MapLike} or {@code ListLike} are expected to provide contextual value retrieval mechanisms.
+     * CollectionLike acts as a sealed interface which can only be directly implemented by {@code Mapped}
+     * and {@code Indexed}, both of which extend specific collection handling behavior. Classes extending
+     * {@code Mapped} or {@code Indexed} are expected to provide contextual value retrieval mechanisms.
      * <p>
      * This interface serves as a unification of map-like and list-like operations, providing a flexible foundation
      * for implementation and extension of collection-style behaviors in execution contexts.
      */
-    sealed interface CollectionLike permits MapLike, ListLike {
+    sealed interface Proxy permits MappedProxy, IndexedProxy {
+    }
+
+    sealed interface Accessor permits Mapped, Indexed {
+
+    }
+
+    /**
+     * A functional interface representing a transformer or converter that can transform an object
+     * of type `From` into an object of type `To`.
+     *
+     * @param <From> the source type of the object to be transformed
+     * @param <To>   the target type of the transformation
+     */
+    @FunctionalInterface
+    public interface Caster<From, To> {
+        To cast(From from);
     }
 
     /**
@@ -30,12 +48,19 @@ public interface Context {
      * with a specific key from a given target object. This enables flexible handling of a collection-style object
      * behaviors in an execution context.
      */
-    non-sealed interface MapLike extends CollectionLike {
-        Context.Value get(Object target, String key);
+    @FunctionalInterface
+    non-sealed interface MappedProxy extends Proxy {
+        Mapped get(Object target);
+    }
+
+
+    @FunctionalInterface
+    non-sealed interface Mapped extends Accessor {
+        Value get(String key);
     }
 
     /**
-     * The `ListLike` interface represents a structure that mimics list-like behavior, allowing indexed access patterns.
+     * The `Indexed` interface represents a structure that mimics list-like behavior, allowing indexed access patterns.
      * It is a non-sealed interface that extends the `Like` interface, which provides a mechanism for deriving behavior
      * from a contextual value.
      * <p>
@@ -47,10 +72,25 @@ public interface Context {
      * similar to elements in a list. It takes a target object and an integer index, and returns the corresponding value
      * wrapped in a `Context.Value` object.
      */
-    non-sealed interface ListLike extends CollectionLike {
-        Context.Value get(Object target, int index);
+    @FunctionalInterface
+    non-sealed interface IndexedProxy extends Proxy {
+        Indexed get(Object target);
+    }
 
-        int size(Object target);
+    /**
+     * The Indexed interface represents a collection-like structure that allows
+     * access to elements by their positional index.
+     * <p>
+     * This interface provides methods to retrieve the size of the collection
+     * and to access elements at a specific index.
+     * <p>
+     * The interface is non-sealed, allowing additional implementation flexibility
+     * and customization beyond the defined boundaries of the sealed Accessor interface.
+     */
+    non-sealed interface Indexed extends Accessor {
+        Value get(int index);
+
+        int size();
     }
 
     /**
@@ -66,7 +106,7 @@ public interface Context {
     }
 
     /**
-     * Get the value associated with the given key.
+     * Get the value from the context associated with the given key.
      * If the key is not found, returns null.
      * <p>
      * It is up to the implementation to implement a single flat data structure or hierarchical keys.
@@ -79,17 +119,24 @@ public interface Context {
 
     /**
      * Returns a proxy that can be used to access the target object as a collection-like structure.
-     * The returned  proxy can be {@link MapLike} or {@link ListLike}.
+     * The returned roxy can be {@link MappedProxy} or {@link IndexedProxy}.
      *
      * @param target the object that we want to access as a collection-like structure. Note that this reference is also
-     *               passed as a parameter to the proxy method {@link MapLike#get(Object, String)} or
-     *               {@link ListLike#get(Object, int)} as first parameter.
+     *               passed as a parameter to the proxy method {@link MappedProxy#get(Object)} or
+     *               {@link IndexedProxy#get(Object)} as first parameter.
      *               It must be the same target.
      *               The accessor may keep the reference passed to this method and use this or the one passed as a
      *               parameter to the proxy method as it decides. Hence, the reference passed here and to the 'get'
      *               method MUST be the same.
-     * @return either a {@link MapLike} or {@link ListLike} proxy, or null if the target object is not a collection-like object
+     * @return either a {@link MappedProxy} or {@link IndexedProxy} proxy, or null if the target object is not a collection-like object
      * The structure and the actual context do not have any handler for the type of the target.
      */
-    CollectionLike accessor(Object target);
+    Accessor accessor(Object target);
+
+    <From, To> Optional<Caster<From, To>> caster(Class<From> from, Class<To> to);
+
+    @SuppressWarnings("unchecked")
+    static <Target> Class<Object> classOf(Target target) {
+        return (Class<Object>) target.getClass();
+    }
 }

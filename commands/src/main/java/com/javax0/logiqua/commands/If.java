@@ -1,9 +1,6 @@
 package com.javax0.logiqua.commands;
 
-import com.javax0.logiqua.Executor;
-import com.javax0.logiqua.Named;
-import com.javax0.logiqua.Operation;
-import com.javax0.logiqua.Script;
+import com.javax0.logiqua.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,16 +8,6 @@ import java.util.Set;
 @Named.Symbol("if")
 @Operation.Limited(min = 2, max = 3)
 public class If implements Operation.Command {
-
-
-    @Override
-    public void checkArguments(Script... args) {
-        Operation.Command.super.checkArguments(args);
-        final var firstArgType = args[0].returns();
-        if (!firstArgType.contains(Boolean.class) && !firstArgType.contains(boolean.class) && (firstArgType != NOT_IMPLEMENTED)) {
-            throw new IllegalArgumentException("The first argument of the if command must be a boolean expression.");
-        }
-    }
 
     @Override
     public Set<Class<?>> returns(Script... args) {
@@ -32,17 +19,17 @@ public class If implements Operation.Command {
 
     @Override
     public Object evaluate(Executor executor, Script... args) {
-        final var condition = args[0].evaluate(executor);
-        if (condition instanceof Boolean bool) {
-            if (bool) {
-                return args[1].evaluate(executor);
-            }
-            if (args.length > 2) {
-                return args[2].evaluate(executor);
-            }
-            return null;
-        }else{
-            throw new IllegalArgumentException("The first argument of the if command must be a boolean expression.");
+        final var arg0 = args[0].evaluate();
+        final var caster = executor.getContext().caster(Context.classOf(arg0), Boolean.class)
+                .orElseThrow(() -> new IllegalArgumentException("The first argument of the if command must be a boolean expression."));
+
+        final var condition = caster.cast(arg0);
+        if (condition) {
+            return args[1].evaluate();
         }
+        if (args.length > 2) {
+            return args[2].evaluate();
+        }
+        return null;
     }
 }

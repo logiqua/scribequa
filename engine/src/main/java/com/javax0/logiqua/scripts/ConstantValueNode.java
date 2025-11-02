@@ -14,7 +14,7 @@ public class ConstantValueNode<T> implements Script {
     }
 
     @Override
-    public Object evaluate(Executor executor) {
+    public Object evaluate() {
         return value;
     }
 

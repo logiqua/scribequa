@@ -12,6 +12,6 @@ public class TestEngine {
         final var script =
                 engine.getOp("log").args(
                         engine.constant("Hello, World!"));
-        script.evaluate(engine);
+        script.evaluate();
     }
 }

@@ -14,28 +14,28 @@ public class TestVar {
     void testVar() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!"));
         final var script = engine.getOp("var").args("a");
-        Assertions.assertEquals("Hello, World!", script.evaluate(engine));
+        Assertions.assertEquals("Hello, World!", script.evaluate());
     }
 
     @Test
     void testVarKey() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!", "b", Map.of("german", "Wilcommen, Welt")));
         final var script = engine.getOp("var").args("b.german");
-        Assertions.assertEquals("Wilcommen, Welt", script.evaluate(engine));
+        Assertions.assertEquals("Wilcommen, Welt", script.evaluate());
     }
 
     @Test
     void testVarIndex() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!", "b", List.of("german", "Wilcommen, Welt")));
         final var script = engine.getOp("var").args("b[1]");
-        Assertions.assertEquals("Wilcommen, Welt", script.evaluate(engine));
+        Assertions.assertEquals("Wilcommen, Welt", script.evaluate());
     }
 
     @Test
     void testVarIndexIndex() {
         final var engine = Engine.withData(Map.of("a", "Hello, World!", "b", List.of("german", List.of("Wilcommen, Welt"))));
         final var script = engine.getOp("var").args("b[1][0]");
-        Assertions.assertEquals("Wilcommen, Welt", script.evaluate(engine));
+        Assertions.assertEquals("Wilcommen, Welt", script.evaluate());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class TestVar {
         ctx.convenience.doJavaIntrospection();
         final var engine = Engine.withData(ctx);
         final var script = engine.getOp("var").args("a.testField");
-        Assertions.assertEquals("Hello, World!", script.evaluate(engine));
+        Assertions.assertEquals("Hello, World!", script.evaluate());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class TestVar {
         // DO NOT ctx.convenience.doJavaIntrospection();
         final var engine = Engine.withData(ctx);
         final var script = engine.getOp("var").args("a.testField");
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> script.evaluate(engine));
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> script.evaluate());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class TestVar {
         ctx.convenience.doJavaIntrospection();
         final var engine = Engine.withData(ctx);
         final var script = engine.getOp("var").args("a.testMedow");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> script.evaluate(engine));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> script.evaluate());
     }
 
 }

@@ -33,7 +33,7 @@ public interface Named {
         if (ann != null) {
             return ann.value();
         }
-        return "";
+        return this.getClass().getSimpleName();
     }
 
 }

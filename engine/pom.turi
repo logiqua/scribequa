@@ -26,6 +26,11 @@ let project=maven_project( {
                 artifactId: "api",
             } ,
             {
+                groupId: groupId,
+                artifactId: "commands",
+                scope: "test"
+            } ,
+            {
                 groupId: "org.junit.jupiter",
                 artifactId: "junit-jupiter-api",
             } ,

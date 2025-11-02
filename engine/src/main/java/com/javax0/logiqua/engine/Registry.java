@@ -46,6 +46,27 @@ public class Registry {
         operations.put(operation.symbol(), operation);
     }
 
+    /**
+     * Registers a new operation in the registry or updates an existing one.
+     * If an operation with the same symbol is already registered, its definition is updated.
+     * If the symbol is not registered, the operation is added as a new entry.
+     *
+     * @param operation the operation to register or update.
+     *                  The operation must have a unique symbol as defined by its {@code symbol()} method,
+     *                  which is used as the identifier in the registry.
+     */
+    public void registerOrUpdate(Operation operation) {
+        operations.put(operation.symbol(), operation);
+    }
+
+    /**
+     * Retrieves the operation associated with the given symbol from the registry.
+     * If the symbol is not registered, an {@link IllegalArgumentException} is thrown.
+     *
+     * @param symbol the symbol representing the desired operation. This symbol must have been registered in the registry.
+     * @return the operation associated with the given symbol.
+     * @throws IllegalArgumentException if the symbol is not registered in the registry.
+     */
     public Operation get(String symbol) {
         if (!operations.containsKey(symbol)) {
             throw new IllegalArgumentException("The operation '" + symbol + "' is not registered");

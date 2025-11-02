@@ -8,6 +8,14 @@ import com.javax0.logiqua.scripts.ConstantValueNode;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+/**
+ * The Engine class represents a script execution framework that can load, manage, and execute
+ * operations (commands and functions). It acts as both an {@link Executor} and a {@link Builder}.
+ * <p>
+ * The Engine loads operations from the service loader mechanism and provides APIs to access and
+ * update operations. Additionally, the Engine allows the creation of nodes for operations and
+ * supports working with constant values in scripts.
+ */
 public class Engine implements Executor, Builder {
     private final Context context;
     private final Registry registry = new Registry();
@@ -33,7 +41,6 @@ public class Engine implements Executor, Builder {
         ServiceLoader.load(Operation.Command.class).forEach(registry::register);
     }
 
-
     @Override
     public Context getContext() {
         return context;
@@ -47,6 +54,16 @@ public class Engine implements Executor, Builder {
     @Override
     public void updateOperation(Operation operation) {
         registry.update(operation);
+    }
+
+    @Override
+    public void registerOperation(Operation operation) {
+        registry.register(operation);
+    }
+
+    @Override
+    public void registerOrUpdateOperation(Operation operation) {
+        registry.register(operation);
     }
 
     @Override

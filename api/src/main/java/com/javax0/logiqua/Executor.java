@@ -28,7 +28,9 @@ public interface Executor {
      * The operation will replace the one operator in the engine that has the same symbol.
      *
      * @param operation the updating operation instance the engine has to use instead of the one loaded from the
-     *                  service loader.
+     *                  service loader, or registered earlier
      */
     void updateOperation(Operation operation);
+    void registerOperation(Operation operation);
+    void registerOrUpdateOperation(Operation operation);
 }
