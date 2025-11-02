@@ -1,24 +1,16 @@
 package com.javax0.logiqua.json;
 
-import com.javax0.lex.LexicalAnalyzer;
-import com.javax0.lex.StringInput;
-import com.javax0.lex.TokenIterator;
-import com.javax0.lex.tokens.NewLine;
-import com.javax0.lex.tokens.Space;
-import com.javax0.logiqua.engine.Engine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 public class TestJsonLogiqua {
 
 
     @Test
-    void  test(){
+    void test() {
         final var sample = "{\"==\" : [ 3, 5] }";
         final var script = new JsonLogiqua().compile(sample);
-        Assertions.assertEquals(false,script.evaluate());
+        Assertions.assertEquals(false, script.evaluate());
     }
 
 }
