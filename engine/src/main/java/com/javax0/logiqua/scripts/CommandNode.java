@@ -1,5 +1,6 @@
 package com.javax0.logiqua.scripts;
 
+import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
 import com.javax0.logiqua.engine.Engine;
@@ -12,6 +13,11 @@ non-sealed public class CommandNode extends AbstractOperation {
 
     @Override
     public Object evaluate() {
-        return ((Operation.Command) super.operation).evaluate(engine, args);
+        return evaluateUsing(engine);
+    }
+
+    @Override
+    public Object evaluateUsing(Executor executor) {
+        return ((Operation.Command) super.operation).evaluate(executor, args);
     }
 }

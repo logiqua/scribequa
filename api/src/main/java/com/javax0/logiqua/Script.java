@@ -22,6 +22,16 @@ public interface Script {
     Object evaluate();
 
     /**
+     * A script can evaluate itself using the given executor.
+     * The executor has to be "compatible" with the one that was used to compile the script.
+     * <p>
+     * This API is called to implement commands like map, aggregate etc. that provide a local context.
+     *
+     * @return the result of the evaluation
+     */
+    Object evaluateUsing(Executor executor);
+
+    /**
      * Returns the set of classes representing the possible return types of this script when evaluated.
      * <p>
      * The typical implementation of this method will just call the {@link Operation#returns(Script...)} passing the

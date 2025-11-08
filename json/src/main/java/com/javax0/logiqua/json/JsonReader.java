@@ -17,7 +17,7 @@ public class JsonReader {
     }
 
 
-    Object read() {
+    public Object read() {
         if (tokens.current().is("{")) {
             return readObject();
         }

@@ -2,6 +2,7 @@ package com.javax0.logiqua.engine;
 
 import com.javax0.logiqua.Context;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
@@ -124,6 +125,9 @@ public class MapContext implements Context {
 
     @Override
     public Context.Value get(String key) {
+        if (key.isEmpty()) {
+            return Context.Value.of(map);
+        }
         return get(key, map);
     }
 
@@ -200,7 +204,7 @@ public class MapContext implements Context {
      */
     @SuppressWarnings("unchecked")
     public <From, To> Optional<Caster<From, To>> caster(Class<From> fromClass, Class<To> toClass) {
-        if ((fromClass.isPrimitive() && toClass == getWrapperClass(fromClass)) || toClass == fromClass) {
+        if (toClass == fromClass || (fromClass.isPrimitive() && toClass == getWrapperClass(fromClass))) {
             return Optional.of(from -> (To) from);
         }
         final var caster = casters.get(fromClass, toClass);
@@ -210,6 +214,14 @@ public class MapContext implements Context {
         return Optional.ofNullable(caster);
     }
 
+    /**
+     * Converts a primitive type {@code Class} to its corresponding wrapper type {@code Class}.
+     * This method identifies the wrapper classes for all Java primitive types.
+     *
+     * @param primitive the {@code Class} object representing a primitive type
+     * @return the {@code Class} object representing the wrapper type of the given primitive type
+     * @throws IllegalArgumentException if the provided class is not a primitive type
+     */
     private static Class<?> getWrapperClass(Class<?> primitive) {
         if (primitive == int.class) return Integer.class;
         if (primitive == long.class) return Long.class;
@@ -247,7 +259,7 @@ public class MapContext implements Context {
 
                 @Override
                 public int size() {
-                    return ((Object[]) target).length;
+                    return Array.getLength(target);
                 }
 
                 @Override
@@ -255,10 +267,10 @@ public class MapContext implements Context {
                     if (index < 0) {
                         throw new NumberFormatException("Index must be a positive number");
                     }
-                    if (index >= ((Object[]) target).length) {
+                    if (index >= Array.getLength(target)) {
                         throw new IndexOutOfBoundsException("Index " + index + " is out of bounds > " + ((Object[]) target).length);
                     }
-                    return Context.Value.of(((Object[]) target)[index]);
+                    return Context.Value.of(Array.get(target,index));
                 }
             };
         }
@@ -295,7 +307,7 @@ public class MapContext implements Context {
                 if (indexed != null) {
                     yield indexed.get(target);
                 }
-                throw new IllegalArgumentException("Cannot use Java Object '" + target.getClass().getName() + "' as an Indexed or Mapped compliant object");
+                yield null;
             }
 
         };

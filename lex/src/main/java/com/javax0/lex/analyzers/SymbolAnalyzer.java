@@ -10,10 +10,10 @@ import com.javax0.lex.tokens.Symbol;
  * predefined symbols from an input source. It checks whether the input starts
  * with any of the predefined symbols and, if so, extracts that symbol as a
  * lexical element.
- *
+ * <p>
  * The symbols to be recognized can be customized by providing a different
  * set of symbols through the {@code setSymbols} method.
- *
+ * <p>
  * This analyzer is typically used in lexical analysis to parse and identify symbol
  * tokens, such as punctuation or special characters.
  */

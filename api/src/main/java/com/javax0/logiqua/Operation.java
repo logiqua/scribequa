@@ -56,10 +56,12 @@ public sealed interface Operation extends Named permits Operation.Function, Oper
     default void checkArguments(Script... args) {
         final var limits = argLimits();
         if (limits[0] != -1 && limits[0] > args.length) {
-            throw new IllegalArgumentException("The operation " + this.getClass().getName() + " requires at least " + limits[0] + " arguments but only " + args.length + " were provided.");
+            throw new IllegalArgumentException("The operation " + this.getClass().getName() + " requires at least " + limits[0] + " arguments but "
+                    + (args.length == 0 ? "none" : "only " + args.length) + " were provided.");
         }
         if (limits[1] != -1 && limits[1] < args.length) {
-            throw new IllegalArgumentException("The operation " + this.getClass().getName() + " requires at most " + limits[1] + " arguments but " + args.length + " were provided.");
+            throw new IllegalArgumentException("The operation " + this.getClass().getName() + " requires at most " + limits[1] + " arguments but "
+                    + args.length + " were provided.");
         }
     }
 

@@ -19,6 +19,11 @@ public class ConstantValueNode<T> implements Script {
     }
 
     @Override
+    public Object evaluateUsing(Executor executor) {
+        return value;
+    }
+
+    @Override
     public Set<Class<?>> returns() {
         return Set.of(value.getClass());
     }

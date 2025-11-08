@@ -27,7 +27,7 @@ public class JsonBuilder {
     }
 
     private Script build(Object jsonObject) throws IllegalArgumentException {
-        if (Objects.requireNonNull(jsonObject) instanceof Map<?, ?> map) {
+        if (jsonObject instanceof Map<?, ?> map) {
             if (map.size() != 1) {
                 return new ConstantValueNode<>(jsonObject);
             }

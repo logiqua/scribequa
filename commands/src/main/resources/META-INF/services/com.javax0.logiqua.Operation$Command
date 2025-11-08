@@ -1,1 +1,9 @@
 com.javax0.logiqua.commands.If
+com.javax0.logiqua.commands.Or
+com.javax0.logiqua.commands.And
+com.javax0.logiqua.commands.Map
+com.javax0.logiqua.commands.Filter
+com.javax0.logiqua.commands.All
+com.javax0.logiqua.commands.Some
+com.javax0.logiqua.commands.None
+com.javax0.logiqua.commands.Reduce

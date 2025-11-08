@@ -14,8 +14,12 @@ public class FloatNumberAnalyzer implements Analyzer<Double> {
         final var start = input.position();
         final var sb = new StringBuilder();
 
+        final int minLength;
         if (input.startsWith("-") || input.startsWith("+")) {
             sb.append(input.next());
+            minLength = 2;
+        }else{
+            minLength = 1;
         }
         while (!input.eof() && Character.isDigit(input.peek())) {
             sb.append(input.next());
@@ -37,7 +41,7 @@ public class FloatNumberAnalyzer implements Analyzer<Double> {
                 }
             }
         }
-        if( sb.isEmpty() ) {
+        if( sb.length() < minLength ) {
             return null;
         }
         final var value = Double.parseDouble(sb.toString());

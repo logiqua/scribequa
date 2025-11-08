@@ -2,11 +2,14 @@ package com.javax0.lex.analyzers;
 
 import com.javax0.lex.Analyzer;
 import com.javax0.lex.Input;
+import com.javax0.lex.Position;
 import com.javax0.lex.Token;
 import com.javax0.lex.tokens.Constant;
 import com.javax0.lex.tokens.Identifier;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -33,22 +36,26 @@ import java.util.function.Predicate;
  * - The analysis resumes from the input's current position after processing, resetting
  *   to the last valid state when an identifier match ends.
  */
-public class IdentifierAnalyzer implements Analyzer<String> {
+public class IdentifierAnalyzer implements Analyzer<Object> {
 
-    private Set<String> keywords = new HashSet<>(Set.of("true", "false", "null"));
+    private Map<String,Object> keywords = new HashMap<>(Map.of("true", true, "false", false));
     private Predicate<Character> start = Character::isJavaIdentifierStart;
     private Predicate<Character> part = Character::isJavaIdentifierPart;
 
-    public void setKeywords(Set<String> keywords) {
+    public IdentifierAnalyzer() {
+        keywords.put("null", null);
+    }
+
+    public void setKeywords(Map<String,Object> keywords) {
         this.keywords = keywords;
     }
 
-    public Set<String> keywords() {
+    public Map<String,Object> keywords() {
         return keywords;
     }
 
     @Override
-    public Token<String> analyse(Input input) {
+    public Token analyse(Input input) {
         if (input.eof()) {
             return null;
         }
@@ -79,10 +86,9 @@ public class IdentifierAnalyzer implements Analyzer<String> {
             return null;
         }
         final var identifier = sb.toString();
-        if (keywords.contains(identifier))
-            return new Constant(start, end, identifier, identifier);
+        if (keywords.containsKey(identifier))
+            return new Constant(start, end, keywords().get(identifier), identifier);
         else
             return new Identifier(start, end, sb.toString(), sb.toString());
     }
-
 }

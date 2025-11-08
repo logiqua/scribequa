@@ -15,8 +15,20 @@ public class JsonLogiqua implements Logiqua {
 
     private Engine engine = null;
 
+    public Engine engine() {
+        return engine;
+    }
+
     public JsonLogiqua with(Engine engine) {
         this.engine = engine;
+        return this;
+    }
+
+    public JsonLogiqua with(Map<String,Object> data) {
+        if( engine != null) {
+            throw new IllegalStateException("The engine is already set");
+        }
+        this.engine = Engine.withData(data);;
         return this;
     }
 

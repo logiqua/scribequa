@@ -1,6 +1,10 @@
 package com.javax0.logiqua.commands;
 
-import com.javax0.logiqua.*;
+import com.javax0.logiqua.Executor;
+import com.javax0.logiqua.Named;
+import com.javax0.logiqua.Operation;
+import com.javax0.logiqua.Script;
+import com.javax0.logiqua.commands.utils.Castor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,17 +23,16 @@ public class If implements Operation.Command {
 
     @Override
     public Object evaluate(Executor executor, Script... args) {
+        final var cast = new Castor(executor);
         final var arg0 = args[0].evaluate();
-        final var caster = executor.getContext().caster(Context.classOf(arg0), Boolean.class)
-                .orElseThrow(() -> new IllegalArgumentException("The first argument of the if command must be a boolean expression."));
 
-        final var condition = caster.cast(arg0);
-        if (condition) {
+        if (cast.toBoolean(arg0)
+                .orElseThrow(() -> new IllegalArgumentException("The first argument of the 'if' command must be a boolean expression."))) {
             return args[1].evaluate();
-        }
-        if (args.length > 2) {
+        } else if (args.length > 2) {
             return args[2].evaluate();
+        } else {
+            return null;
         }
-        return null;
     }
 }

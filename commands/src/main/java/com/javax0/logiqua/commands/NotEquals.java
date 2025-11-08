@@ -13,10 +13,12 @@ public class NotEquals implements Operation.Function {
     public Object evaluate(Executor executor, Object... args) {
         final var base = args[0];
         for (int i = 1; i < args.length; i++) {
-            final var value = executor.getContext().caster(Context.classOf(args[i]),Context.classOf(base))
-                    .orElseThrow(() -> new IllegalArgumentException("The arguments of the equals command must be of the same type after coercion."))
-                    .cast(args[i]);
-            if( Objects.equals(base, value) ){
+            final var caster = executor.getContext().caster(Context.classOf(args[i]), Context.classOf(base));
+            if (caster.isEmpty()) {
+                return false;
+            }
+            final var value = caster.get().cast(args[i]);
+            if (Objects.equals(base, value)) {
                 return false;
             }
         }

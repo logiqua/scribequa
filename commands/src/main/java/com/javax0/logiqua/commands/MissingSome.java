@@ -16,14 +16,14 @@ public class MissingSome implements Operation.Function {
 
     @Override
     public Object evaluate(Executor executor, Object... args) {
-        final var required = executor.getContext().caster(Context.classOf(args[0]),Integer.class)
+        final var required = executor.getContext().caster(Context.classOf(args[0]), Integer.class)
                 .orElseThrow(() -> new IllegalArgumentException("The first argument of the missing_some command must be an integer."))
                 .cast(args[0]);
         final var missing = new ArrayList<String>();
         final Object[] arguments;
         if (args.length == 2) {
             arguments = new Array(executor).flat(args[1]);
-        }else{
+        } else {
             arguments = args;
         }
 
@@ -34,16 +34,14 @@ public class MissingSome implements Operation.Function {
                 final var value = executor.getContext().get(key);
                 if (value == null) {
                     missing.add(key);
-                }else{
+                } else {
                     counter++;
-                    if(counter >=  required){
-                        return List.of();
-                    }
+                }
+                if (counter >= required) {
+                    return List.of();
                 }
             }
         }
         return missing;
-
     }
-
 }

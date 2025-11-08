@@ -95,7 +95,12 @@ public interface Context {
 
     /**
      * A wrapper for a contextual value.
-     * This is to distinguish between null values and values that are not present.
+     * This is to distinguish between {@code null} values and values that are not present.
+     * <p>
+     * This wrapper is almost like a {@code java.util.Optional}, but it is not a generic type.
+     * We use this wrapper instead of an optional, because when returning an optional from a method, it is assumed to be
+     * not {@code null}. When the return type is {@code Value}, then it can also be {@code null}, which is means the
+     * value is not present. With the optional, you cannot return a value that is present and {@ @code null}.
      *
      * @param get the actual value wrapped in this object. Also, the getter for this is called {@code get()}.
      */
@@ -119,7 +124,7 @@ public interface Context {
 
     /**
      * Returns a proxy that can be used to access the target object as a collection-like structure.
-     * The returned roxy can be {@link MappedProxy} or {@link IndexedProxy}.
+     * The returned proxy can be {@link MappedProxy} or {@link IndexedProxy}.
      *
      * @param target the object that we want to access as a collection-like structure. Note that this reference is also
      *               passed as a parameter to the proxy method {@link MappedProxy#get(Object)} or
@@ -133,10 +138,31 @@ public interface Context {
      */
     Accessor accessor(Object target);
 
+    /**
+     * Attempts to retrieve a caster that can transform an object of type {@code From} into an object of type {@code To}.
+     *
+     * @param <From> the source type to be transformed
+     * @param <To>   the target type of the transformation
+     * @param from   the {@code Class} object representing the source type
+     * @param to     the {@code Class} object representing the target type
+     * @return an {@code Optional} containing a {@code Caster<From, To>} if a suitable caster is available,
+     * or an empty {@code Optional} if no such caster exists
+     */
     <From, To> Optional<Caster<From, To>> caster(Class<From> from, Class<To> to);
 
+    /**
+     * Retrieves the runtime {@code Class} object of the specified target object.
+     *
+     * @param <Target> the type of the input target object
+     * @param target   the object whose runtime {@code Class} is to be determined
+     * @return the {@code Class} object representing the runtime class of the given target object
+     */
     @SuppressWarnings("unchecked")
     static <Target> Class<Object> classOf(Target target) {
-        return (Class<Object>) target.getClass();
+        if (target == null) {
+            return null;
+        } else {
+            return (Class<Object>) target.getClass();
+        }
     }
 }

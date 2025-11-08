@@ -11,6 +11,6 @@ public class Log implements Operation.Function {
         for( final var arg : args ){
             System.out.println(""+arg);
         }
-        return null;
+        return ""+args[0];
     }
 }

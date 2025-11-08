@@ -1,0 +1,17 @@
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/JsonLogic.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/JsonLogicException.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLAll.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLAnd.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLEqual.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLIf.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLIn.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLNone.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLNot.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLNotNot.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLOr.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLSome.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLStrictEqual.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLStrictInEqual.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLSubstr.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/JLVar.java
+/Users/verhasp/github/scribequa/jsonlogic/src/main/java/com/javax0/logiqua/jsonlogic/compatibilitycommands/package-info.java

@@ -1,5 +1,6 @@
 package com.javax0.logiqua.scripts;
 
+import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
 import com.javax0.logiqua.engine.Engine;
@@ -15,6 +16,11 @@ non-sealed public class FunctionNode extends AbstractOperation {
 
     @Override
     public Object evaluate() {
-        return ((Operation.Function) operation).evaluate(engine, Arrays.stream(args).map(Script::evaluate).toArray());
+        return evaluateUsing(engine);
+    }
+
+    @Override
+    public Object evaluateUsing(Executor executor) {
+        return ((Operation.Function) operation).evaluate(executor, Arrays.stream(args).map(s -> s.evaluateUsing(executor)).toArray());
     }
 }

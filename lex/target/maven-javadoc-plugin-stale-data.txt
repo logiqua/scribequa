@@ -30,18 +30,18 @@ com.javax0.lex
 com.javax0.lex.analyzers
 com.javax0.lex.tokens
 /Users/verhasp/github/scribequa/lex/src/main/java = 1761824223597
-/Users/verhasp/github/scribequa/lex/target/generated-sources/annotations = 1762106711373
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/tag-search-index.js = 1762106712843
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/overview-tree.html = 1762106712830
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/module-search-index.js = 1762106712841
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/index.html = 1762106712831
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/package-search-index.js = 1762106712842
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/index-all.html = 1762106712853
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/allpackages-index.html = 1762106712841
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/member-search-index.js = 1762106712843
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/overview-summary.html = 1762106712855
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/help-doc.html = 1762106712857
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/element-list = 1762106712761
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/search.html = 1762106712854
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/allclasses-index.html = 1762106712839
-/Users/verhasp/github/scribequa/lex/target/reports/apidocs/type-search-index.js = 1762106712842
+/Users/verhasp/github/scribequa/lex/target/generated-sources/annotations = 1762599386206
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/tag-search-index.js = 1762599387984
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/overview-tree.html = 1762599387965
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/module-search-index.js = 1762599387981
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/index.html = 1762599387967
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/package-search-index.js = 1762599387982
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/index-all.html = 1762599387996
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/allpackages-index.html = 1762599387980
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/member-search-index.js = 1762599387984
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/overview-summary.html = 1762599388004
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/help-doc.html = 1762599388006
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/element-list = 1762599387833
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/search.html = 1762599387999
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/allclasses-index.html = 1762599387978
+/Users/verhasp/github/scribequa/lex/target/reports/apidocs/type-search-index.js = 1762599387983
