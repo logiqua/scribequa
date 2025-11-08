@@ -131,6 +131,11 @@ let project = maven_project({
               }
             },
             {
+                groupId: "org.yaml",
+                artifactId: "snakeyaml",
+                version:  `org.yaml.snakeyaml`
+            },
+            {
                 groupId: "org.junit.jupiter",
                 artifactId: "junit-jupiter-api",
                 version:  `org.junit.jupiter`,
@@ -155,26 +160,6 @@ let project = maven_project({
                 artifactId: "mockito-core",
                 version: `org.mockito`,
                 scope: "test"
-            },
-
-            {
-                groupId: "jakarta.annotation",
-                artifactId: "jakarta.annotation-api",
-                version: `jakarta.annotation`,
-                scope: "provided",
-            },
-
-            {
-                groupId: "jakarta.inject",
-                artifactId: "jakarta.inject-api",
-                version: `jakarta.inject`,
-                scope: "provided",
-            },
-
-            {
-                groupId: "org.jline",
-                artifactId: "jline",
-                version: "3.30.6"
             }
 
         ]

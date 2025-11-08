@@ -30,25 +30,25 @@
 'JsonLogic compatibility module 1.0.0 API'
 com.javax0.logiqua.jsonlogic
 com.javax0.logiqua.jsonlogic.compatibilitycommands
-/Users/verhasp/github/scribequa/api/target/api-1.0.0.jar = 1762599380903
-/Users/verhasp/github/scribequa/engine/target/engine-1.0.0.jar = 1762599385102
-/Users/verhasp/github/scribequa/commands/target/commands-1.0.0.jar = 1762599382767
-/Users/verhasp/github/scribequa/json/target/json-1.0.0.jar = 1762599389116
-/Users/verhasp/github/scribequa/lex/target/lex-1.0.0.jar = 1762599386981
+/Users/verhasp/github/scribequa/api/target/api-1.0.0.jar = 1762639803181
+/Users/verhasp/github/scribequa/engine/target/engine-1.0.0.jar = 1762639807819
+/Users/verhasp/github/scribequa/commands/target/commands-1.0.0.jar = 1762639805543
+/Users/verhasp/github/scribequa/json/target/json-1.0.0.jar = 1762639812043
+/Users/verhasp/github/scribequa/lex/target/lex-1.0.0.jar = 1762639809691
 /Users/verhasp/github/scribequa/jsonlogic/src/main/java = 1762437460679
-/Users/verhasp/github/scribequa/jsonlogic/target/generated-sources/annotations = 1762599392263
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/tag-search-index.js = 1762599394446
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/overview-tree.html = 1762599394406
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/module-search-index.js = 1762599394443
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/index.html = 1762599394419
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/package-search-index.js = 1762599394444
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/serialized-form.html = 1762599394372
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/index-all.html = 1762599394452
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/allpackages-index.html = 1762599394442
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/member-search-index.js = 1762599394445
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/overview-summary.html = 1762599394454
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/help-doc.html = 1762599394456
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/element-list = 1762599394324
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/search.html = 1762599394453
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/allclasses-index.html = 1762599394441
-/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/type-search-index.js = 1762599394444
+/Users/verhasp/github/scribequa/jsonlogic/target/generated-sources/annotations = 1762639818348
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/tag-search-index.js = 1762639820423
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/overview-tree.html = 1762639820404
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/module-search-index.js = 1762639820416
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/index.html = 1762639820406
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/package-search-index.js = 1762639820420
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/serialized-form.html = 1762639820367
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/index-all.html = 1762639820429
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/allpackages-index.html = 1762639820415
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/member-search-index.js = 1762639820422
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/overview-summary.html = 1762639820435
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/help-doc.html = 1762639820438
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/element-list = 1762639820309
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/search.html = 1762639820434
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/allclasses-index.html = 1762639820414
+/Users/verhasp/github/scribequa/jsonlogic/target/reports/apidocs/type-search-index.js = 1762639820421

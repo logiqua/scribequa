@@ -22,6 +22,19 @@ let project=maven_project( {
         } ,
         dependencies: [
             {
+                groupId: groupId,
+                artifactId: "api"
+            } ,
+            {
+                groupId: groupId,
+                artifactId: "engine"
+            } ,
+            {
+                groupId: groupId,
+                artifactId: "commands",
+                scope: "test"
+            } ,
+            {
                 groupId: "org.junit.jupiter",
                 artifactId: "junit-jupiter-api",
             } ,
