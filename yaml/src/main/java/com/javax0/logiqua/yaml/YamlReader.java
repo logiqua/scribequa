@@ -1,7 +1,12 @@
 package com.javax0.logiqua.yaml;
 
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class YamlReader {
 
@@ -16,8 +21,21 @@ public class YamlReader {
     }
 
     public Object read() {
-        final var yaml = new Yaml();
+        final var loaderOptions = new LoaderOptions();
+        Constructor constructor = new Constructor(Object.class, loaderOptions) {
+            @Override
+            protected Object constructObject(Node node) {
+                if (node instanceof ScalarNode scalarNode) {
+                    if (scalarNode.getTag() == Tag.INT) {
+                        return Long.valueOf(scalarNode.getValue());
+                    } else if (node.getTag() == Tag.FLOAT) {
+                        return Double.valueOf(scalarNode.getValue());
+                    }
+                }
+                return super.constructObject(node);
+            }
+        };
+        final var yaml = new Yaml(constructor);
         return yaml.load(input);
     }
-
 }

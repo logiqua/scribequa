@@ -5,6 +5,8 @@ import com.javax0.logiqua.engine.Engine;
 import com.javax0.logiqua.scripts.ConstantValueNode;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class YamlBuilder {
 
@@ -24,11 +26,28 @@ public class YamlBuilder {
         return build(yamlObject);
     }
 
-    /*
-plus:
-     */
-
     private Script build(Object yamlObject) throws IllegalArgumentException {
-return null;
+        if (yamlObject instanceof Map<?, ?> map) {
+            if (map.size() != 1) {
+                return new ConstantValueNode<>(yamlObject);
+            }
+            final var entry = map.entrySet().iterator().next();
+            final var key = entry.getKey();
+            if (!(key instanceof String keyString)) {
+                throw new IllegalArgumentException("The command, which is the key of the map must be a string");
+            }
+            final var nodeBuilder = engine.getOp(keyString);
+            final var args = entry.getValue();
+            final var scripts = new ArrayList<Script>();
+            if (args instanceof List<?> listValue) {
+                for (final var arg : listValue) {
+                    scripts.add(build(arg));
+                }
+            } else {
+                scripts.add(build(args));
+            }
+            return nodeBuilder.subscripts(scripts.toArray(Script[]::new));
+        }
+        return new ConstantValueNode<>(yamlObject);
     }
 }
