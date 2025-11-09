@@ -35,5 +35,5 @@ let project=maven_project( {
             }
         ]
 } ) ;
-project . properties=import( "properties" ) . properties ;
-project . done( ) ; 
+project.properties=import( "properties" ) . properties ;
+project.done( ) ;
