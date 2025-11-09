@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"com.javax0.lex"},{"l":"com.javax0.lex.analyzers"},{"l":"com.javax0.lex.tokens"}];updateSearchResults();

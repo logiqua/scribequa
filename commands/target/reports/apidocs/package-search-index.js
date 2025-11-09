@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"com.javax0.logiqua.commands"},{"l":"com.javax0.logiqua.commands.utils"}];updateSearchResults();

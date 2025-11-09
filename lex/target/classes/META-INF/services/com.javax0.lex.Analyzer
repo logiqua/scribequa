@@ -1,8 +1,0 @@
-com.javax0.lex.analyzers.SpaceAnalyzer
-com.javax0.lex.analyzers.SymbolAnalyzer
-com.javax0.lex.analyzers.IntegerNumberAnalyzer
-com.javax0.lex.analyzers.StringAnalyzer
-com.javax0.lex.analyzers.IdentifierAnalyzer
-com.javax0.lex.analyzers.NewLineAnalyzer
-com.javax0.lex.analyzers.FloatNumberAnalyzer
-

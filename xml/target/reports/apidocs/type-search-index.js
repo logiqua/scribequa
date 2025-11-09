@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"com.javax0.logiqua.xml","l":"XmlBuilder"},{"p":"com.javax0.logiqua.xml","l":"XmlLogiqua"},{"p":"com.javax0.logiqua.xml","l":"XmlReader"}];updateSearchResults();
