@@ -1,7 +1,8 @@
+let JAVA_VERSION = ("logiqua_versions").JAVA_VERSION
 let properties = {
     "project.build.sourceEncoding" : "UTF-8",
     "maven.plugin.validation" : "VERBOSE",
     "maven.build.timestamp.format": "yyyy-MM-dd'T'HH:mm:ssZ",
-    "maven.compiler.source": 25,
-    "maven.compiler.target": 25
+    "maven.compiler.source": JAVA_VERSION,
+    "maven.compiler.target": JAVA_VERSION
     };

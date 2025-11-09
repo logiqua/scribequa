@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named.Symbol("missing_some")
-@Operation.Limited(min = 2)
+@Operation.Arity(min = 2)
 public class MissingSome implements Operation.Function {
     final static Missing missing = new Missing();
 

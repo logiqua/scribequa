@@ -1,0 +1,10 @@
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/engine/Builder.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/engine/CasterRegistry.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/engine/Engine.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/engine/MapContext.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/engine/ProxyRegistry.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/engine/Registry.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/scripts/AbstractOperation.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/scripts/ConstantValueNode.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/scripts/FunctionNode.java
+/Users/verhasp/github/scribequa/engine/src/main/java/com/javax0/logiqua/scripts/MacroNode.java

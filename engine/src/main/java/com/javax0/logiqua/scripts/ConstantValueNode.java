@@ -3,8 +3,6 @@ package com.javax0.logiqua.scripts;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Script;
 
-import java.util.Set;
-
 public class ConstantValueNode<T> implements Script {
 
     private final T value;
@@ -21,10 +19,5 @@ public class ConstantValueNode<T> implements Script {
     @Override
     public Object evaluateUsing(Executor executor) {
         return value;
-    }
-
-    @Override
-    public Set<Class<?>> returns() {
-        return Set.of(value.getClass());
     }
 }

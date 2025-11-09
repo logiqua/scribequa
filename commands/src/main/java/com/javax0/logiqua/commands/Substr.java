@@ -6,7 +6,7 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.commands.utils.Castor;
 
 @Named.Symbol("substr")
-@Operation.Limited(min = 2, max = 3)
+@Operation.Arity(min = 2, max = 3)
 public class Substr implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... args) {

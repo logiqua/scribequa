@@ -6,7 +6,7 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.jsonlogic.JsonLogic;
 
 @Named.Symbol("==")
-@Operation.Limited(min = 2, max = 2)
+@Operation.Arity(min = 2, max = 2)
 public class JLEqual implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... arguments) {

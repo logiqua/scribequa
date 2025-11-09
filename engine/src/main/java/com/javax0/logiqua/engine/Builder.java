@@ -2,7 +2,7 @@ package com.javax0.logiqua.engine;
 
 import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
-import com.javax0.logiqua.scripts.CommandNode;
+import com.javax0.logiqua.scripts.MacroNode;
 import com.javax0.logiqua.scripts.ConstantValueNode;
 import com.javax0.logiqua.scripts.FunctionNode;
 
@@ -33,17 +33,17 @@ public interface Builder {
         }
     }
 
-    class CommandNodeBuilder extends NodeBuilder {
-        private final Operation.Command operation;
+    class MacroNodeBuilder extends NodeBuilder {
+        private final Operation.Macro operation;
 
-        public CommandNodeBuilder(Engine engine, Operation.Command operation) {
+        public MacroNodeBuilder(Engine engine, Operation.Macro operation) {
             super(engine);
             this.operation = operation;
         }
 
         @Override
         public Script subscripts(Script... scripts) {
-            final var node = new CommandNode(engine, operation, scripts);
+            final var node = new MacroNode(engine, operation, scripts);
             operation.checkArguments(scripts);
             return node;
         }

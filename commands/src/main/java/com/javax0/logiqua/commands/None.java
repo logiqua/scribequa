@@ -7,12 +7,12 @@ import com.javax0.logiqua.commands.utils.LocalExecutor;
 import java.util.HashMap;
 
 @Named.Symbol("none")
-@Operation.Limited(min = 2, max = 2)
-public class None implements Operation.Command {
+@Operation.Arity(min = 2, max = 2)
+public class None implements Operation.Macro {
     @Override
     public Object evaluate(Executor executor, Script... args) {
         final var accessor = executor.getContext().accessor(args[0].evaluate());
-        if (!(accessor instanceof Context.Indexed inList)) {
+        if (!(accessor instanceof Context.IndexedProxy inList)) {
             throw new IllegalArgumentException("The first argument of the none command must be a list.");
         }
         final var script = args[1];

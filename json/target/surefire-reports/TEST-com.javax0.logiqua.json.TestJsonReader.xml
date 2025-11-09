@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.javax0.logiqua.json.TestJsonReader" time="0.03" tests="34" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="25"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/verhasp/github/scribequa/json/target/test-classes:/Users/verhasp/github/scribequa/json/target/classes:/Users/verhasp/github/scribequa/lex/target/lex-1.0.0.jar:/Users/verhasp/github/scribequa/api/target/api-1.0.0.jar:/Users/verhasp/github/scribequa/engine/target/engine-1.0.0.jar:/Users/verhasp/github/scribequa/commands/target/commands-1.0.0.jar:/Users/verhasp/.m2/repository/org/junit/jupiter/junit-jupiter-api/6.0.0/junit-jupiter-api-6.0.0.jar:/Users/verhasp/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/verhasp/.m2/repository/org/junit/platform/junit-platform-commons/6.0.0/junit-platform-commons-6.0.0.jar:/Users/verhasp/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/verhasp/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/Users/verhasp/.m2/repository/org/junit/jupiter/junit-jupiter-engine/6.0.0/junit-jupiter-engine-6.0.0.jar:/Users/verhasp/.m2/repository/org/junit/platform/junit-platform-engine/6.0.0/junit-platform-engine-6.0.0.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="25"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.boot.library.path" value="/Users/verhasp/.sdkman/candidates/java/25-oracle/lib"/>
+    <property name="sun.java.command" value="/Users/verhasp/github/scribequa/json/target/surefire/surefirebooter-20251109174744516_10.jar /Users/verhasp/github/scribequa/json/target/surefire 2025-11-09T17-47-37_667-jvmRun1 surefire-20251109174744516_8tmp surefire_2-20251109174744516_9tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/verhasp/github/scribequa/json/target/test-classes:/Users/verhasp/github/scribequa/json/target/classes:/Users/verhasp/github/scribequa/lex/target/lex-1.0.0.jar:/Users/verhasp/github/scribequa/api/target/api-1.0.0.jar:/Users/verhasp/github/scribequa/engine/target/engine-1.0.0.jar:/Users/verhasp/github/scribequa/commands/target/commands-1.0.0.jar:/Users/verhasp/.m2/repository/org/junit/jupiter/junit-jupiter-api/6.0.0/junit-jupiter-api-6.0.0.jar:/Users/verhasp/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/verhasp/.m2/repository/org/junit/platform/junit-platform-commons/6.0.0/junit-platform-commons-6.0.0.jar:/Users/verhasp/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/verhasp/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/Users/verhasp/.m2/repository/org/junit/jupiter/junit-jupiter-engine/6.0.0/junit-jupiter-engine-6.0.0.jar:/Users/verhasp/.m2/repository/org/junit/platform/junit-platform-engine/6.0.0/junit-platform-engine-6.0.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/verhasp"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-09-16"/>
+    <property name="java.home" value="/Users/verhasp/.sdkman/candidates/java/25-oracle"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/verhasp/github/scribequa/json"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/verhasp/github/scribequa/json/target/surefire/surefirebooter-20251109174744516_10.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="25+37-LTS-3491"/>
+    <property name="user.name" value="verhasp"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="15.7.1"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="/Users/verhasp/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/var/folders/0v/zpz64s8x60vcxp4hctx4n55w0000gp/T/"/>
+    <property name="java.version" value="25"/>
+    <property name="user.dir" value="/Users/verhasp/github/scribequa/json"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/verhasp/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25+37-LTS-3491"/>
+    <property name="stdin.encoding" value="UTF-8"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="69.0"/>
+  </properties>
+  <testcase name="readZeroValue" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readSingleProperty" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readJsonWithWhitespace" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readArrayOfBooleans" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readLargeJsonObject" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readArrayOfArraysOfObjects" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readRaggedArray" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readNestedMapsMultipleLevels" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readNullValue" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readMultipleStringProperties" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readNestedObject" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readArrayOfNumbers" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readArrayOfStrings" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readObjectWithNestedArraysAndObjects" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readArrayOfObjects" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readEmptyArray" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readComplexNestedStructure" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readMapWithNumericAndStringKeys" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readMultipleNumericProperties" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readEmptyObject" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readNegativeNumber" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readArrayOfMixedTypes" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readStringWithSpecialCharacters" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readStringWithEscapedQuotes" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readArrayContainingMapsAndArrays" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readSampleJson" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readThreeDimensionalArray" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readMixedTypes" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readMapWithArrayValues" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readFloatingPointNumber" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readTwoDimensionalArray" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readMapWithEmptyNestedStructures" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+  <testcase name="readBooleanFalse" classname="com.javax0.logiqua.json.TestJsonReader" time="0.001"/>
+  <testcase name="readBooleanTrue" classname="com.javax0.logiqua.json.TestJsonReader" time="0.0"/>
+</testsuite>

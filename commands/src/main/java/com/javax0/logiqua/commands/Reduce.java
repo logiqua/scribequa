@@ -3,16 +3,15 @@ package com.javax0.logiqua.commands;
 import com.javax0.logiqua.*;
 import com.javax0.logiqua.commands.utils.LocalExecutor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @Named.Symbol("reduce")
-@Operation.Limited(min = 3, max = 3)
-public class Reduce implements Operation.Command {
+@Operation.Arity(min = 3, max = 3)
+public class Reduce implements Operation.Macro {
     @Override
     public Object evaluate(Executor executor, Script... args) {
         final var accessor = executor.getContext().accessor(args[0].evaluate());
-        if (!(accessor instanceof Context.Indexed inList)) {
+        if (!(accessor instanceof Context.IndexedProxy inList)) {
             throw new IllegalArgumentException("The first argument of the reduce command must be a list.");
         }
         final var script = args[1];

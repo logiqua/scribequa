@@ -183,7 +183,7 @@
                     </executions>
                     <configuration>
                         <doclint>none</doclint>
-                        <source>25</source>
+                        <source>21</source>
                     </configuration>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -191,10 +191,10 @@
                 </plugin>
                 <plugin>
                     <configuration>
-                        <release>25</release>
-                        <source>25</source>
+                        <release>21</release>
+                        <source>21</source>
                         <encoding>UTF-8</encoding>
-                        <target>25</target>
+                        <target>21</target>
                     </configuration>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -256,8 +256,6 @@
     </scm>
     <properties>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
-        <maven.compiler.target>25</maven.compiler.target>
-        <maven.compiler.source>25</maven.compiler.source>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssZ</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

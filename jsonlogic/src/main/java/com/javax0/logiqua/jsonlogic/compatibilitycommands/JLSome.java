@@ -7,7 +7,7 @@ import com.javax0.logiqua.commands.utils.LocalExecutor;
 import java.util.HashMap;
 
 @Named.Symbol("some")
-public class JLSome implements Operation.Command {
+public class JLSome implements Operation.Macro {
 
     @Override
     public Object evaluate(Executor executor, Script... args) {
@@ -16,7 +16,7 @@ public class JLSome implements Operation.Command {
             return false;
         }
         final var accessor = executor.getContext().accessor(listArgument);
-        if (!(accessor instanceof Context.Indexed inList)) {
+        if (!(accessor instanceof Context.IndexedProxy inList)) {
             throw new IllegalArgumentException("The first argument of the 'some' command must be a list.");
         }
         final var script = args[1];

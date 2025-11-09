@@ -20,7 +20,7 @@ public class Array {
      * if the input is a single value, returns an array containing the value as its only element
      */
     public Object[] flat(Object arg){
-        if (executor.getContext().accessor(arg) instanceof Context.Indexed list) {
+        if (executor.getContext().accessor(arg) instanceof Context.IndexedProxy list) {
             final var returnValue = new Object[list.size()];
             for (int i = 0; i < list.size(); i++) {
                 returnValue[i] = list.get(i).get();

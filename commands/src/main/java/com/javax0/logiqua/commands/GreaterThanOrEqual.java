@@ -5,7 +5,7 @@ import com.javax0.logiqua.Operation;
 
 import java.util.function.BiPredicate;
 
-@Operation.Limited(min = 2)
+@Operation.Arity(min = 2)
 @Named.Symbol(">=")
 public class GreaterThanOrEqual extends Between {
     @Override

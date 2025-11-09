@@ -1,0 +1,15 @@
+com/javax0/logiqua/lsp/TestReduce.class
+com/javax0/logiqua/lsp/TestCat.class
+com/javax0/logiqua/lsp/TestFilter.class
+com/javax0/logiqua/lsp/TestMerge.class
+com/javax0/logiqua/lsp/TestSome.class
+com/javax0/logiqua/lsp/TestLspBuilder.class
+com/javax0/logiqua/lsp/TestNumericOperators.class
+com/javax0/logiqua/lsp/TestMap.class
+com/javax0/logiqua/lsp/TestMinMax.class
+com/javax0/logiqua/lsp/TestAll.class
+com/javax0/logiqua/lsp/TestLspReader.class
+com/javax0/logiqua/lsp/TestNone.class
+com/javax0/logiqua/lsp/TestSubstr.class
+com/javax0/logiqua/lsp/TestIn.class
+com/javax0/logiqua/lsp/TestLspLogiquaBoolAndComparator.class

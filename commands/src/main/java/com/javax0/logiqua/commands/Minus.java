@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Named.Symbol("-")
-@Operation.Limited(min = 1)
+@Operation.Arity(min = 1)
 public class Minus extends Operator {
     @Override
     Object unary(Object accumulator) {

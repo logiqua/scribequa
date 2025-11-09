@@ -39,7 +39,7 @@ import java.util.stream.StreamSupport;
  *     <li>
  * </ul>
  * <p>
- * The MapContext class also maintains two proxies for {@link MappedProxy} and {@link IndexedProxy} interfaces.
+ * The MapContext class also maintains two proxies for {@link MappedProxyFactory} and {@link IndexedProxyFactory} interfaces.
  * Any class implementing one of these interfaces with an instance registered with the MapContext will be used
  * to handle access to an object that is not meeting any of the above conditions (not a {@link Map}, not a {@link List},
  * etc.).
@@ -47,8 +47,8 @@ import java.util.stream.StreamSupport;
  */
 public class MapContext implements Context {
 
-    private final ProxyRegistry<MappedProxy> mappedProxyRegistry = new ProxyRegistry<>();
-    private final ProxyRegistry<IndexedProxy> indexedProxyRegistry = new ProxyRegistry<>();
+    private final ProxyRegistry<MappedProxyFactory> mappedProxyRegistry = new ProxyRegistry<>();
+    private final ProxyRegistry<IndexedProxyFactory> indexedProxyRegistry = new ProxyRegistry<>();
     private final CasterRegistry casters = new CasterRegistry();
 
     private final Map<String, Object> map;
@@ -116,10 +116,10 @@ public class MapContext implements Context {
         casters.register(from, to, caster);
     }
 
-    public void registerProxy(Class<?> forInterface, Proxy proxy) {
+    public void registerProxy(Class<?> forInterface, ProxyFactory proxy) {
         switch (proxy) {
-            case MappedProxy m -> mappedProxyRegistry.register(forInterface, m);
-            case IndexedProxy l -> indexedProxyRegistry.register(forInterface, l);
+            case MappedProxyFactory m -> mappedProxyRegistry.register(forInterface, m);
+            case IndexedProxyFactory l -> indexedProxyRegistry.register(forInterface, l);
         }
     }
 
@@ -235,16 +235,16 @@ public class MapContext implements Context {
     }
 
     /**
-     * Retrieves a {@link Proxy} proxy for the specified target object. The method first attempts to retrieve
+     * Retrieves a {@link ProxyFactory} proxy for the specified target object. The method first attempts to retrieve
      * a map-like proxy; if unavailable, it falls back to retrieving a list-like proxy.
      *
-     * @param target the object for which the {@link Proxy} proxy is to be retrieved
-     * @return a {@link Proxy} proxy for the specified target, or null if neither map-like nor list-like proxy is found
+     * @param target the object for which the {@link ProxyFactory} proxy is to be retrieved
+     * @return a {@link ProxyFactory} proxy for the specified target, or null if neither map-like nor list-like proxy is found
      */
     @Override
-    public Accessor accessor(Object target) {
+    public Proxy accessor(Object target) {
         if (target == null) {
-            return (Mapped) (String key) -> {
+            return (MappedProxy) (String key) -> {
                 if (key.isEmpty()) {
                     // if key is empty, we return the object, even if it is null
                     return Context.Value.of(null);
@@ -255,7 +255,7 @@ public class MapContext implements Context {
             };
         }
         if (target.getClass().isArray()) {
-            return new Indexed() {
+            return new IndexedProxy() {
 
                 @Override
                 public int size() {
@@ -276,9 +276,9 @@ public class MapContext implements Context {
         }
         return switch (target) {
 
-            case Context context -> (Mapped) (k) -> Context.Value.of(context.get(k));
-            case Map<?, ?> m -> (Mapped) (k) -> m.containsKey(k) ? Context.Value.of(m.get(k)) : null;
-            case List<?> list -> new Indexed() {
+            case Context context -> (MappedProxy) (k) -> Context.Value.of(context.get(k));
+            case Map<?, ?> m -> (MappedProxy) (k) -> m.containsKey(k) ? Context.Value.of(m.get(k)) : null;
+            case List<?> list -> new IndexedProxy() {
                 @Override
                 public int size() {
                     return list.size();
@@ -314,9 +314,9 @@ public class MapContext implements Context {
     }
 
     public class Convenience {
-        private static class ReflectionMappedProxy implements MappedProxy {
+        private static class ReflectionMappedProxyFactory implements MappedProxyFactory {
             @Override
-            public Mapped get(Object target) {
+            public MappedProxy get(Object target) {
                 return key -> {
                     final var field = Arrays.stream(target.getClass().getFields())
                             .filter(f -> f.getName().equals(key))
@@ -337,7 +337,7 @@ public class MapContext implements Context {
         }
 
         public void doJavaIntrospection() {
-            registerProxy(Object.class, new ReflectionMappedProxy());
+            registerProxy(Object.class, new ReflectionMappedProxyFactory());
         }
     }
 

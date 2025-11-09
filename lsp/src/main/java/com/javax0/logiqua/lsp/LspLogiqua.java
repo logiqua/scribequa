@@ -41,7 +41,9 @@ public class LspLogiqua implements Logiqua {
         final var analyzer = new LexicalAnalyzer();
         analyzer.skip(Space.class);
         analyzer.skip(NewLine.class);
+        analyzer.skip(LispCommentAnalyzer.Comment.class);
         analyzer.replaceAnalyzer(SymbolAnalyzer.class, new LispSymbolAnalyzer());
+        analyzer.registerAnalyzer(new LispCommentAnalyzer());
         final var tokenArray = analyzer.analyse(StringInput.of(source));
         final var tokens = TokenIterator.over(tokenArray);
         final var json = LspReader.of(tokens).read();

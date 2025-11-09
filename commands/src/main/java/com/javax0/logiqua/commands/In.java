@@ -9,7 +9,7 @@ import com.javax0.logiqua.commands.utils.Castor;
 import java.util.Objects;
 
 @Named.Symbol("in")
-@Operation.Limited(min = 2, max = 2)
+@Operation.Arity(min = 2, max = 2)
 public class In implements Operation.Function {
 
     @Override
@@ -17,7 +17,7 @@ public class In implements Operation.Function {
         final var member = args[0];
         final var containedIn = args[1];
         final var accessor = executor.getContext().accessor(containedIn);
-        if (accessor instanceof Context.Indexed inList) {
+        if (accessor instanceof Context.IndexedProxy inList) {
             for (int i = 0; i < inList.size(); i++) {
                 final var item = inList.get(i).get();
                 if (member == item || executor.getContext().caster(Context.classOf(item), Context.classOf(member))

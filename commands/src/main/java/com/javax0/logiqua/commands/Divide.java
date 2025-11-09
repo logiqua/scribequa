@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Named.Symbol("/")
-@Operation.Limited(min = 2)
+@Operation.Arity(min = 2)
 public class Divide extends Operator {
     @Override
     Object unary(Object accumulator) {

@@ -6,7 +6,7 @@ import com.javax0.logiqua.Operation;
 
 import java.util.Objects;
 
-@Operation.Limited(min = 2)
+@Operation.Arity(min = 2)
 @Operation.Symbol("==")
 public class Equals implements Operation.Function {
     @Override

@@ -5,7 +5,7 @@ import com.javax0.logiqua.Named;
 import com.javax0.logiqua.Operation;
 
 @Named.Symbol("===")
-@Operation.Limited(min = 2, max = 2)
+@Operation.Arity(min = 2, max = 2)
 public class JLStrictEqual implements Operation.Function{
     @Override
     public Boolean evaluate(Executor executor, Object... args) {

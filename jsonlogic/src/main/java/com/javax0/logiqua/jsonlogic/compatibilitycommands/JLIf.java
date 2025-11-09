@@ -7,7 +7,7 @@ import com.javax0.logiqua.Script;
 import com.javax0.logiqua.jsonlogic.JsonLogic;
 
 @Named.Symbol("if")
-public class JLIf implements Operation.Command {
+public class JLIf implements Operation.Macro {
     @Override
     public Object evaluate(Executor executor, Script... args) {
         if (args.length < 1) {

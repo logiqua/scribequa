@@ -1,5 +1,7 @@
 package com.javax0.logiqua;
 
+import java.util.Optional;
+
 /**
  * An instance of the executor can execute a script.
  */
@@ -20,7 +22,7 @@ public interface Executor {
      * @param symbol the symbol representing the operation to retrieve
      * @return the operation matching the symbol, or null if not found
      */
-    Operation getOperation(String symbol);
+    Optional<Operation> getOperation(String symbol);
 
     /**
      * Update an operation that was already loaded from the service loader mechanism.

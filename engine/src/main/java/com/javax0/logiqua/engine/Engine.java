@@ -6,6 +6,7 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.scripts.ConstantValueNode;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.ServiceLoader;
 
 /**
@@ -38,7 +39,7 @@ public class Engine implements Executor, Builder {
      */
     private void loadCommandsAndFunctions() {
         ServiceLoader.load(Operation.Function.class).forEach(registry::register);
-        ServiceLoader.load(Operation.Command.class).forEach(registry::register);
+        ServiceLoader.load(Operation.Macro.class).forEach(registry::register);
     }
 
     @Override
@@ -47,8 +48,8 @@ public class Engine implements Executor, Builder {
     }
 
     @Override
-    public Operation getOperation(String symbol) {
-        return registry.get(symbol);
+    public Optional<Operation> getOperation(String symbol) {
+        return Optional.ofNullable(registry.get(symbol));
     }
 
     @Override
@@ -68,8 +69,10 @@ public class Engine implements Executor, Builder {
 
     @Override
     public NodeBuilder getOp(String symbol) {
-        return switch (getOperation(symbol)) {
-            case Operation.Command command -> new CommandNodeBuilder(this, command);
+        return switch (getOperation(symbol).orElseThrow(
+                () -> new IllegalArgumentException("The operation " + symbol + " is not registered")
+        )) {
+            case Operation.Macro macro -> new MacroNodeBuilder(this, macro);
             case Operation.Function function -> new FunctionNodeBuilder(this, function);
         };
     }

@@ -7,8 +7,8 @@ import com.javax0.logiqua.Script;
 import com.javax0.logiqua.jsonlogic.JsonLogic;
 
 @Named.Symbol("or")
-@Operation.Limited(min = 1)
-public class JLOr implements Operation.Command {
+@Operation.Arity(min = 1)
+public class JLOr implements Operation.Macro {
     @Override
     public Object evaluate(Executor executor, Script... args) {
         if (args.length < 1) {

@@ -20,10 +20,10 @@ public interface Context {
      * This interface serves as a unification of map-like and list-like operations, providing a flexible foundation
      * for implementation and extension of collection-style behaviors in execution contexts.
      */
-    sealed interface Proxy permits MappedProxy, IndexedProxy {
+    sealed interface ProxyFactory permits MappedProxyFactory, IndexedProxyFactory {
     }
 
-    sealed interface Accessor permits Mapped, Indexed {
+    sealed interface Proxy permits MappedProxy, IndexedProxy {
 
     }
 
@@ -49,13 +49,13 @@ public interface Context {
      * behaviors in an execution context.
      */
     @FunctionalInterface
-    non-sealed interface MappedProxy extends Proxy {
-        Mapped get(Object target);
+    non-sealed interface MappedProxyFactory extends ProxyFactory {
+        MappedProxy get(Object target);
     }
 
 
     @FunctionalInterface
-    non-sealed interface Mapped extends Accessor {
+    non-sealed interface MappedProxy extends Proxy {
         Value get(String key);
     }
 
@@ -73,12 +73,12 @@ public interface Context {
      * wrapped in a `Context.Value` object.
      */
     @FunctionalInterface
-    non-sealed interface IndexedProxy extends Proxy {
-        Indexed get(Object target);
+    non-sealed interface IndexedProxyFactory extends ProxyFactory {
+        IndexedProxy get(Object target);
     }
 
     /**
-     * The Indexed interface represents a collection-like structure that allows
+     * The interface represents a collection-like structure that allows
      * access to elements by their positional index.
      * <p>
      * This interface provides methods to retrieve the size of the collection
@@ -87,7 +87,7 @@ public interface Context {
      * The interface is non-sealed, allowing additional implementation flexibility
      * and customization beyond the defined boundaries of the sealed Accessor interface.
      */
-    non-sealed interface Indexed extends Accessor {
+    non-sealed interface IndexedProxy extends Proxy {
         Value get(int index);
 
         int size();
@@ -124,19 +124,19 @@ public interface Context {
 
     /**
      * Returns a proxy that can be used to access the target object as a collection-like structure.
-     * The returned proxy can be {@link MappedProxy} or {@link IndexedProxy}.
+     * The returned proxy can be {@link MappedProxyFactory} or {@link IndexedProxyFactory}.
      *
      * @param target the object that we want to access as a collection-like structure. Note that this reference is also
-     *               passed as a parameter to the proxy method {@link MappedProxy#get(Object)} or
-     *               {@link IndexedProxy#get(Object)} as first parameter.
+     *               passed as a parameter to the proxy method {@link MappedProxyFactory#get(Object)} or
+     *               {@link IndexedProxyFactory#get(Object)} as first parameter.
      *               It must be the same target.
      *               The accessor may keep the reference passed to this method and use this or the one passed as a
      *               parameter to the proxy method as it decides. Hence, the reference passed here and to the 'get'
      *               method MUST be the same.
-     * @return either a {@link MappedProxy} or {@link IndexedProxy} proxy, or null if the target object is not a collection-like object
+     * @return either a {@link MappedProxyFactory} or {@link IndexedProxyFactory} proxy, or null if the target object is not a collection-like object
      * The structure and the actual context do not have any handler for the type of the target.
      */
-    Accessor accessor(Object target);
+    Proxy accessor(Object target);
 
     /**
      * Attempts to retrieve a caster that can transform an object of type {@code From} into an object of type {@code To}.

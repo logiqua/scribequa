@@ -2,17 +2,11 @@ package com.javax0.logiqua.commands;
 
 import com.javax0.logiqua.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Named.Symbol("or")
-@Operation.Limited(min = 2)
-public class Or implements Operation.Command {
-
-    @Override
-    public Set<Class<?>> returns(Script... args) {
-        return Set.of(Boolean.class);
-    }
+@Operation.Arity(min = 2)
+public class Or implements Operation.Macro {
 
     @Override
     public Object evaluate(Executor executor, Script... args) {

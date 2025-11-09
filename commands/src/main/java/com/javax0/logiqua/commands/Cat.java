@@ -5,7 +5,7 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.commands.utils.Castor;
 
 @Operation.Symbol("cat")
-@Operation.Limited(min = 1)
+@Operation.Arity(min = 1)
 public class Cat implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... args) {

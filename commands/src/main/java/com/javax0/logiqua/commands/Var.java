@@ -6,7 +6,7 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.commands.utils.Castor;
 
 @Named.Symbol("var")
-@Operation.Limited(min = 1, max = 2)
+@Operation.Arity(min = 1, max = 2)
 public class Var implements Operation.Function {
 
     @Override

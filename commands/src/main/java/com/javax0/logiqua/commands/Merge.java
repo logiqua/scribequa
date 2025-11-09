@@ -8,14 +8,14 @@ import com.javax0.logiqua.Operation;
 import java.util.ArrayList;
 
 @Named.Symbol("merge")
-@Operation.Limited(min = 1)
+@Operation.Arity(min = 1)
 public class Merge implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... args) {
         final var outList = new ArrayList<>();
         for( final var arg : args ){
             final var accessor = executor.getContext().accessor(arg);
-            if( !(accessor instanceof Context.Indexed array) ){
+            if( !(accessor instanceof Context.IndexedProxy array) ){
                 outList.add(arg);
             }else{
                 for( int i = 0 ; i < array.size(); i++){

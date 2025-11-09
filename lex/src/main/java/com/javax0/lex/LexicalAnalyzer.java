@@ -53,6 +53,15 @@ public class LexicalAnalyzer {
         throw new IllegalArgumentException("The analyzer " + type + " is not registered");
     }
 
+    /**
+     * Registers a new analyzer in the list of available analyzers.
+     *
+     * @param analyzer the analyzer to be registered
+     */
+    public void registerAnalyzer(Analyzer<?> analyzer) {
+        analyzers.add(analyzer);
+    }
+
     public Token<?>[] analyse(Input input) {
         final var result = new ArrayList<Token<?>>();
         while (!input.eof()) {

@@ -33,7 +33,7 @@ public class LspBuilder {
 
             if (firstElement instanceof Identifier id) {
                 final var key = id.value();
-                if (engine.getOperation(key) != null) {
+                if (engine.getOperation(key).isPresent()) {
                     final var nodeBuilder = engine.getOp(key);
                     final var args = new ArrayList<Script>(list.size() - 1);
                     for (int i = 1; i < list.size(); i++) {

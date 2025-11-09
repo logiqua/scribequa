@@ -1,0 +1,44 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+-sourcepath
+'/Users/verhasp/github/scribequa/api/src/main/java:/Users/verhasp/github/scribequa/api/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/verhasp/github/scribequa/api/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-Xdoclint:none
+-doctitle
+'Logiqua API 1.0.0 API'
+-use
+-version
+-windowtitle
+'Logiqua API 1.0.0 API'
+com.javax0.logiqua
+/Users/verhasp/github/scribequa/api/src/main/java = 1761241016681
+/Users/verhasp/github/scribequa/api/target/generated-sources/annotations = 1762706857294
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/tag-search-index.js = 1762706859007
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/overview-tree.html = 1762706858994
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/module-search-index.js = 1762706859004
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/index.html = 1762706859017
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/package-search-index.js = 1762706859005
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/index-all.html = 1762706859014
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/allpackages-index.html = 1762706859003
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/member-search-index.js = 1762706859006
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/help-doc.html = 1762706859019
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/element-list = 1762706858909
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/search.html = 1762706859016
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/allclasses-index.html = 1762706859001
+/Users/verhasp/github/scribequa/api/target/reports/apidocs/type-search-index.js = 1762706859005

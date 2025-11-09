@@ -4,7 +4,7 @@ import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.commands.utils.Castor;
 
-@Operation.Limited(min = 1, max = 1)
+@Operation.Arity(min = 1, max = 1)
 @Operation.Symbol("!")
 public class Not implements Operation.Function {
     @Override

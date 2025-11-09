@@ -8,7 +8,7 @@ public class TestAll {
     @Test
     void testAllTrue() {
         final var script = """
-                (all (2 4 6 8)
+                (all (2 4 6 8) ; this is comment
                      (== (% (var  "") 2) 0)
                 )
                 """;

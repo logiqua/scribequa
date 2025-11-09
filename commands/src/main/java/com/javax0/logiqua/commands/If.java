@@ -10,16 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Named.Symbol("if")
-@Operation.Limited(min = 2, max = 3)
-public class If implements Operation.Command {
-
-    @Override
-    public Set<Class<?>> returns(Script... args) {
-        final var retvals = new HashSet<Class<?>>();
-        retvals.addAll(args[0].returns());
-        retvals.addAll(args[1].returns());
-        return retvals;
-    }
+@Operation.Arity(min = 2, max = 3)
+public class If implements Operation.Macro {
 
     @Override
     public Object evaluate(Executor executor, Script... args) {

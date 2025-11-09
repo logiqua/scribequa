@@ -1,0 +1,15 @@
+com/javax0/logiqua/json/TestNone.class
+com/javax0/logiqua/json/TestMinMax.class
+com/javax0/logiqua/json/TestSubstr.class
+com/javax0/logiqua/json/TestCat.class
+com/javax0/logiqua/json/TestMap.class
+com/javax0/logiqua/json/TestIn.class
+com/javax0/logiqua/json/TestAll.class
+com/javax0/logiqua/json/TestFilter.class
+com/javax0/logiqua/json/TestJsonReader.class
+com/javax0/logiqua/json/TestReduce.class
+com/javax0/logiqua/json/TestJsonLogiquaBoolAndComparator.class
+com/javax0/logiqua/json/TestSome.class
+com/javax0/logiqua/json/TestJsonBuilder.class
+com/javax0/logiqua/json/TestNumericOperators.class
+com/javax0/logiqua/json/TestMerge.class

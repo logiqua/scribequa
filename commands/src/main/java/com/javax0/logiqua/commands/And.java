@@ -9,13 +9,8 @@ import com.javax0.logiqua.commands.utils.Castor;
 import java.util.Set;
 
 @Named.Symbol("and")
-@Operation.Limited(min = 2)
-public class And implements Operation.Command {
-
-    @Override
-    public Set<Class<?>> returns(Script... args) {
-        return Set.of(Boolean.class);
-    }
+@Operation.Arity(min = 2)
+public class And implements Operation.Macro {
 
     @Override
     public Object evaluate(Executor executor, Script... args) {

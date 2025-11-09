@@ -66,7 +66,7 @@ public class SimpleProxyMapContext implements Context {
      * @return see the definition in the interface
      */
     @Override
-    public Accessor accessor(Object target) {
+    public Proxy accessor(Object target) {
         return parent != null ? parent.accessor(target) : null;
     }
 

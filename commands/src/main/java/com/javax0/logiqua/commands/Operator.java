@@ -147,14 +147,14 @@ public abstract class Operator implements Operation.Function {
             accumulator = binary(accumulator, executor.getContext().caster(Context.classOf(arg), Context.classOf(accumulator))
                     .map(c -> c.cast(arg)).orElseGet(() ->
                             switch (acc) {
-                                case Byte _ -> toByte(arg);
-                                case Short _ -> toShort(arg);
-                                case Integer _ -> toInteger(arg);
-                                case Long _ -> toLong(arg);
-                                case Float _ -> toFloat(arg);
-                                case Double _ -> toDouble(arg);
-                                case BigDecimal _ -> toBigDecimal(arg);
-                                case BigInteger _ -> toBigInteger(arg);
+                                case Byte ignore -> toByte(arg);
+                                case Short ignore -> toShort(arg);
+                                case Integer ignore -> toInteger(arg);
+                                case Long ignore -> toLong(arg);
+                                case Float ignore -> toFloat(arg);
+                                case Double ignore -> toDouble(arg);
+                                case BigDecimal ignore -> toBigDecimal(arg);
+                                case BigInteger ignore -> toBigInteger(arg);
                                 default ->
                                         throw new IllegalArgumentException("Cannot calculate " + this.getClass().getSimpleName().toLowerCase() + " " + acc.getClass().getName() + " to " + arg.getClass().getName());
                             }));

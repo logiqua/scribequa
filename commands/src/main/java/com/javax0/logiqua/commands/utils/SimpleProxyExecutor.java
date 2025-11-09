@@ -4,6 +4,8 @@ import com.javax0.logiqua.Context;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
 
+import java.util.Optional;
+
 public class SimpleProxyExecutor implements Executor {
 
     private final Executor executor;
@@ -20,7 +22,7 @@ public class SimpleProxyExecutor implements Executor {
     }
 
     @Override
-    public Operation getOperation(String symbol) {
+    public Optional<Operation> getOperation(String symbol) {
         return executor.getOperation(symbol);
     }
 
