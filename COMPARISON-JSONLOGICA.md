@@ -121,6 +121,20 @@ engine.registerOperation(new MyCustomOperation());
 
 ## Feature Comparison
 
+### Library Dependencies and JSON Handling
+
+| Aspect | json-logic-java | Logiqua |
+|--------|-----------------|---------|
+| **JSON Library Dependency** | **Depends on [Gson](https://github.com/google/gson)** for all parsing and serialization.<br>Requires applications to be compatible with Gson; may lead to conflicts if another JSON library is preferred (such as Jackson or org.json). | **Does _not_ depend on any JSON parsing library** – it relies on whatever JSON library your application uses.<br>Integrates seamlessly with any existing JSON infrastructure. |
+| **Other Dependencies** | Minimal – only Gson | Only depends on **SnakeYAML** (and only if using YAML format); no external library dependencies for JSON, XML, or LISP formats. |
+| **Version Compatibility** | Risk of dependency clashes if your app uses a different Gson version or another JSON library. | No JSON library conflicts; safe to use in any environment with any JSON infrastructure. |
+| **YAML Support** | ❌ Not supported | ✅ Supported via SnakeYAML |
+
+> **Note:**  
+> Logiqua's architecture allows it to interoperate with any JSON solution you already have in your project—**no forced dependency or type conflicts.** This makes it ideal for large applications or libraries that already rely on a specific JSON stack.
+
+
+
 | Feature | json-logic-java | Logiqua |
 |---------|----------------|---------|
 | **JsonLogic Compatibility** | ✅ Full compatibility | ✅ Full compatibility (via `jsonlogic` module) |
