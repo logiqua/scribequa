@@ -5,7 +5,7 @@ import com.javax0.logiqua.Operation;
 
 import java.util.function.BiFunction;
 
-@Operation.Arity(min = 2)
+@Operation.Arity(min = 1)
 @Named.Symbol("min")
 public class Min extends SelectOne {
     @Override

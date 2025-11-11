@@ -1,4 +1,5 @@
 com.javax0.logiqua.commands.If
+com.javax0.logiqua.commands.Ternary
 com.javax0.logiqua.commands.Or
 com.javax0.logiqua.commands.And
 com.javax0.logiqua.commands.Map

@@ -5,14 +5,13 @@ import com.javax0.lex.StringInput;
 import com.javax0.lex.TokenIterator;
 import com.javax0.lex.tokens.NewLine;
 import com.javax0.lex.tokens.Space;
-import com.javax0.logiqua.engine.MapContext;
+import com.javax0.logiqua.engine.Engine;
 import com.javax0.logiqua.json.JsonLogiqua;
 import com.javax0.logiqua.json.JsonReader;
 import com.javax0.logiqua.jsonlogic.compatibilitycommands.*;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Map;
 
 public class JsonLogic {
 
@@ -32,7 +31,9 @@ public class JsonLogic {
         engine.registerOperation(new JLStrictEqual());
         engine.registerOperation(new JLStrictInEqual());
         engine.updateOperation(new JLAll());
-        ((MapContext) engine.getContext()).registerCaster(String.class, Number.class, s -> {
+        engine.updateOperation(new JLTernary());
+        engine.updateOperation(new JLMultiply());
+        ((CompatibilityContext) engine.getContext()).mapContext.registerCaster(String.class, Number.class, s -> {
             try {
                 return Long.parseLong(s);
             } catch (NumberFormatException e) {
@@ -41,33 +42,22 @@ public class JsonLogic {
         });
     }
 
-    @SuppressWarnings("unchecked")
     public Object apply(String json, Object data) throws JsonLogicException {
-        return switch (data) {
-            case null -> {
-                final var engine = new JsonLogiqua().with(Map.of());
-                registerCompatibilityOperations(engine);
-                final var scriptObject = engine.compile(json);
-                yield scriptObject.evaluate();
-            }
-            case Map<?, ?> map -> {
-                final var engine = new JsonLogiqua().with((Map<String, Object>) map);
-                registerCompatibilityOperations(engine);
-                final var scriptObject = engine.compile(json);
-                yield scriptObject.evaluate();
-            }
-            case String string -> {
-                final var analyzer = new LexicalAnalyzer();
-                analyzer.skip(Space.class);
-                analyzer.skip(NewLine.class);
-                final var tokenArray = analyzer.analyse(StringInput.of(string));
-                final var tokens = TokenIterator.over(tokenArray);
-                final var dataMap = JsonReader.of(tokens).read();
-                yield apply(json, dataMap);
-            }
-
-            default -> throw new JsonLogicException("Data must be a Map or null", "$");
-        };
+        if (data instanceof String string) {
+            final var analyzer = new LexicalAnalyzer();
+            analyzer.skip(Space.class);
+            analyzer.skip(NewLine.class);
+            final var tokenArray = analyzer.analyse(StringInput.of(string));
+            final var tokens = TokenIterator.over(tokenArray);
+            final var dataMap = JsonReader.of(tokens).read();
+            return apply(json, dataMap);
+        }
+        final var map = new CompatibilityContext(data);
+        final var engine = Engine.withData(map);
+        final var jsl = new JsonLogiqua().with(engine);
+        registerCompatibilityOperations(jsl);
+        final var scriptObject = jsl.compile(json);
+        return scriptObject.evaluate();
     }
 
 

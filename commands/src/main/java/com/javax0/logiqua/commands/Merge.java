@@ -8,7 +8,7 @@ import com.javax0.logiqua.Operation;
 import java.util.ArrayList;
 
 @Named.Symbol("merge")
-@Operation.Arity(min = 1)
+@Operation.Arity(min = 0)
 public class Merge implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... args) {
