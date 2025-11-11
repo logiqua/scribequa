@@ -6,13 +6,13 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.commands.utils.Castor;
 
 @Named.Symbol("var")
-@Operation.Arity(min = 1, max = 2)
+@Operation.Arity(min = 0, max = 2)
 public class JLVar implements Operation.Function {
 
     @Override
     public Object evaluate(Executor executor, Object... args) {
         final var cast = new Castor(executor);
-        final var key = cast.toString(args[0])
+        final var key = args.length == 0 || args[0] == null ? null : cast.toString(args[0])
                 .orElseThrow(() -> new IllegalArgumentException("The first argument of the var command must be a string."));
         try {
             final var value = executor.getContext().get(key);

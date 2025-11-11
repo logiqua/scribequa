@@ -33,13 +33,17 @@ public class JsonLogic {
         engine.updateOperation(new JLAll());
         engine.updateOperation(new JLTernary());
         engine.updateOperation(new JLMultiply());
-        ((CompatibilityContext) engine.getContext()).mapContext.registerCaster(String.class, Number.class, s -> {
+        engine.updateOperation(new JLFilter());
+        final var mapContext = ((CompatibilityContext) engine.getContext()).mapContext;
+        mapContext.registerCaster(String.class, Number.class, s -> {
             try {
                 return Long.parseLong(s);
             } catch (NumberFormatException e) {
                 return Double.parseDouble(s);
             }
         });
+        mapContext.registerCaster(String.class, Boolean.class, JsonLogic::truthy);
+        mapContext.registerCaster(Number.class, Boolean.class, JsonLogic::truthy);
     }
 
     public Object apply(String json, Object data) throws JsonLogicException {

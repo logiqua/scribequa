@@ -23,7 +23,11 @@ public class Missing implements Operation.Function {
         for (final var arg : arguments) {
             if (arg != null) {
                 final var key = arg.toString();
-                final var value = executor.getContext().get(key);
+                Context.Value value = null;
+                try {
+                    value = executor.getContext().get(key);
+                } catch (Exception ignore) {
+                }
                 if (value == null) {
                     missing.add(key);
                 }

@@ -17,7 +17,11 @@ public class CompatibilityContext implements Context {
 
     @Override
     public Value get(String key) {
-        return mapContext.get("data." + key);
+        if (key == null) {
+            return mapContext.get("data");
+        } else {
+            return mapContext.get("data." + key);
+        }
     }
 
     @Override

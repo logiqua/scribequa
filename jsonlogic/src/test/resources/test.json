@@ -1,4 +1,19 @@
 [
+
+  [
+    {"reduce": [
+      {"var":"desserts"},
+      {"+":[ {"var":"accumulator"}, {"var":"current.qty"}]},
+      0
+    ]},
+    {"desserts":[
+      {"name":"apple","qty":1},
+      {"name":"brownie","qty":2},
+      {"name":"cupcake","qty":3}
+    ]},
+    6
+  ],
+
   "# Non-rules get passed through",
   [ true, {}, true ],
   [ false, {}, false ],
@@ -388,19 +403,7 @@
     {"integers":[1,2,3,4]},
     0
   ],
-  [
-    {"reduce": [
-      {"var":"desserts"},
-      {"+":[ {"var":"accumulator"}, {"var":"current.qty"}]},
-      0
-    ]},
-    {"desserts":[
-      {"name":"apple","qty":1},
-      {"name":"brownie","qty":2},
-      {"name":"cupcake","qty":3}
-    ]},
-    6
-  ],
+
 
 
   [
