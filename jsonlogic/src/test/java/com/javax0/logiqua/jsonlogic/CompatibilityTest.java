@@ -9,13 +9,12 @@ import com.javax0.logiqua.json.JsonReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TestCompatibility {
+public class CompatibilityTest {
 
     @Test
     void testCompatibility() throws Exception {
@@ -36,9 +35,8 @@ public class TestCompatibility {
                     final var data = itemList.get(1);
                     final var expected = itemList.getLast();
                     final var cmdString = toString(command);
-                    System.out.println(cmdString);
                     final var result = new JsonLogic().apply(cmdString, data);
-
+                    Assertions.assertEquals(expected, result,"test for '"+cmdString+"' on "+toString(data)+" has failed");
                 }
 
             }

@@ -18,46 +18,25 @@ public class JLEqual implements Operation.Function {
         }
 
         // Check numeric loose equality
-        if (left instanceof Number && right instanceof Number) {
-            return Double.valueOf(((Number) left).doubleValue()).equals(((Number) right).doubleValue());
-        }
+        return switch (left) {
+            case Number number when right instanceof Number ->
+                    Double.valueOf(number.doubleValue()).equals(((Number) right).doubleValue());
+            case Number number when right instanceof String -> compareNumberToString(number, (String) right);
+            case Number number when right instanceof Boolean -> compareNumberToBoolean(number, (Boolean) right);
 
-        if (left instanceof Number && right instanceof String) {
-            return compareNumberToString((Number) left, (String) right);
-        }
+            // Check string loose equality
+            case String s when right instanceof String -> left.equals(right);
+            case String s when right instanceof Number -> compareNumberToString((Number) right, s);
+            case String s when right instanceof Boolean -> compareStringToBoolean(s, (Boolean) right);
 
-        if (left instanceof Number && right instanceof Boolean) {
-            return compareNumberToBoolean((Number) left, (Boolean) right);
-        }
-
-        // Check string loose equality
-        if (left instanceof String && right instanceof String) {
-            return left.equals(right);
-        }
-
-        if (left instanceof String && right instanceof Number) {
-            return compareNumberToString((Number) right, (String) left);
-        }
-
-        if (left instanceof String && right instanceof Boolean) {
-            return compareStringToBoolean((String) left, (Boolean) right);
-        }
-
-        // Check boolean loose equality
-        if (left instanceof Boolean && right instanceof Boolean) {
-            return ((Boolean) left).booleanValue() == ((Boolean) right).booleanValue();
-        }
-
-        if (left instanceof Boolean && right instanceof Number) {
-            return compareNumberToBoolean((Number) right, (Boolean) left);
-        }
-
-        if (left instanceof Boolean && right instanceof String) {
-            return compareStringToBoolean((String) right, (Boolean) left);
-        }
-
-        // Check non-truthy values
-        return !JsonLogic.truthy(left) && !JsonLogic.truthy(right);
+            // Check boolean loose equality
+            case Boolean b when right instanceof Boolean -> b.booleanValue() == ((Boolean) right).booleanValue();
+            case Boolean b when right instanceof Number -> compareNumberToBoolean((Number) right, b);
+            case Boolean b when right instanceof String -> compareStringToBoolean((String) right, b);
+            default ->
+                // Check non-truthy values
+                    !JsonLogic.truthy(left) && !JsonLogic.truthy(right);
+        };
 
     }
 
@@ -68,8 +47,7 @@ public class JLEqual implements Operation.Function {
             }
 
             return Double.parseDouble(right) == left.doubleValue();
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }

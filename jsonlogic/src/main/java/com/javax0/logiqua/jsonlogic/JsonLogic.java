@@ -34,6 +34,7 @@ public class JsonLogic {
         engine.updateOperation(new JLTernary());
         engine.updateOperation(new JLMultiply());
         engine.updateOperation(new JLFilter());
+        engine.updateOperation(new JLDivide());
         final var mapContext = ((CompatibilityContext) engine.getContext()).mapContext;
         mapContext.registerCaster(String.class, Number.class, s -> {
             try {
@@ -46,7 +47,7 @@ public class JsonLogic {
         mapContext.registerCaster(Number.class, Boolean.class, JsonLogic::truthy);
     }
 
-    public Object apply(String json, Object data) throws JsonLogicException {
+    public Object apply(String json, Object data) {
         if (data instanceof String string) {
             final var analyzer = new LexicalAnalyzer();
             analyzer.skip(Space.class);
@@ -66,44 +67,44 @@ public class JsonLogic {
 
 
     public static boolean truthy(Object value) {
-        if (value == null) {
-            return false;
-        }
-
-        if (value instanceof Boolean) {
-            return (boolean) value;
-        }
-
-        if (value instanceof Number) {
-            if (value instanceof Double) {
-                Double d = (Double) value;
-
-                if (d.isNaN()) {
-                    return false;
-                } else if (d.isInfinite()) {
-                    return true;
-                }
+        switch (value) {
+            case null -> {
+                return false;
             }
-
-            if (value instanceof Float) {
-                Float f = (Float) value;
-
-                if (f.isNaN()) {
-                    return false;
-                } else if (f.isInfinite()) {
-                    return true;
-                }
+            case Boolean b -> {
+                return (boolean) value;
             }
+            case Number number -> {
+                if (value instanceof Double) {
+                    Double d = (Double) value;
 
-            return ((Number) value).doubleValue() != 0.0;
-        }
+                    if (d.isNaN()) {
+                        return false;
+                    } else if (d.isInfinite()) {
+                        return true;
+                    }
+                }
 
-        if (value instanceof String) {
-            return !((String) value).isEmpty();
-        }
+                if (value instanceof Float) {
+                    Float f = (Float) value;
 
-        if (value instanceof Collection) {
-            return !((Collection<?>) value).isEmpty();
+                    if (f.isNaN()) {
+                        return false;
+                    } else if (f.isInfinite()) {
+                        return true;
+                    }
+                }
+
+                return number.doubleValue() != 0.0;
+            }
+            case String s -> {
+                return !s.isEmpty();
+            }
+            case Collection<?> collection -> {
+                return !collection.isEmpty();
+            }
+            default -> {
+            }
         }
 
         if (value.getClass().isArray()) {

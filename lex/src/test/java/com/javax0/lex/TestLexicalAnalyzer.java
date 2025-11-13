@@ -14,6 +14,7 @@ public class TestLexicalAnalyzer {
         final var input = StringInput.of("Hello, World");
         final var elements = new LexicalAnalyzer().analyse(input);
         final var result = getString(elements);
+        //noinspection TextBlockMigration
         Assertions.assertEquals("Identifier[start=null:0:0, end=null:0:5, value=Hello, lexeme=Hello]\n" +
                         "Symbol[start=null:0:5, end=null:0:6, value=,, lexeme=,]\n" +
                         "Space[start=null:0:6, end=null:0:7, value= , lexeme= ]\n" +
@@ -28,6 +29,7 @@ public class TestLexicalAnalyzer {
         lexicalAnalyzer.skip(Space.class);
         final var elements = lexicalAnalyzer.analyse(input);
         final var result = getString(elements);
+        //noinspection TextBlockMigration
         Assertions.assertEquals("Identifier[start=null:0:0, end=null:0:5, value=Hello, lexeme=Hello]\n" +
                 "Symbol[start=null:0:5, end=null:0:6, value=,, lexeme=,]\n" +
                 "Identifier[start=null:0:7, end=null:0:12, value=World, lexeme=World]\n", result);
@@ -41,6 +43,7 @@ public class TestLexicalAnalyzer {
         lexicalAnalyzer.getAnalyzer(SymbolAnalyzer.class).setSymbols(new String[]{"<<", ">>"});
         final var elements = lexicalAnalyzer.analyse(input);
         final var result = getString(elements);
+        //noinspection TextBlockMigration
         Assertions.assertEquals("Symbol[start=null:0:0, end=null:0:2, value=<<, lexeme=<<]\n" +
                 "Symbol[start=null:0:3, end=null:0:5, value=>>, lexeme=>>]\n" +
                 "Symbol[start=null:0:6, end=null:0:8, value=>>, lexeme=>>]\n", result);
@@ -53,6 +56,7 @@ public class TestLexicalAnalyzer {
         lexicalAnalyzer.skip(Space.class);
         final var elements = lexicalAnalyzer.analyse(input);
         final var result = getString(elements);
+        //noinspection TextBlockMigration
         Assertions.assertEquals("Symbol[start=null:0:0, end=null:0:1, value={, lexeme={]\n" +
                 "StringToken[start=null:0:1, end=null:0:3, value=a, lexeme=\"a\"]\n" +
                 "Symbol[start=null:0:5, end=null:0:6, value=:, lexeme=:]\n" +
@@ -88,6 +92,7 @@ public class TestLexicalAnalyzer {
         lexicalAnalyzer.replaceAnalyzer(IntegerNumberAnalyzer.class, new MyAnalyzer());
         final var elements = lexicalAnalyzer.analyse(input);
         final var result = getString(elements);
+        //noinspection TextBlockMigration
         Assertions.assertEquals("Symbol[start=null:0:0, end=null:0:1, value={, lexeme={]\n" +
                 "StringToken[start=null:0:1, end=null:0:3, value=a, lexeme=\"a\"]\n" +
                 "Symbol[start=null:0:5, end=null:0:6, value=:, lexeme=:]\n" +

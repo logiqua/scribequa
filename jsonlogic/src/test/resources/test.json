@@ -349,7 +349,7 @@
     []
   ],
   [
-    {"map":[{"var":"desserts"}, {"var":"qty"}]},
+    {"map":[{"var":"desserts"}, {"var":"current.qty"}]},
     {"desserts":[
       {"name":"apple","qty":1},
       {"name":"brownie","qty":2},

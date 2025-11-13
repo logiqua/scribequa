@@ -19,4 +19,5 @@ com.javax0.logiqua.commands.Remainder
 com.javax0.logiqua.commands.Merge
 com.javax0.logiqua.commands.In
 com.javax0.logiqua.commands.Cat
+com.javax0.logiqua.commands.It
 com.javax0.logiqua.commands.Substr

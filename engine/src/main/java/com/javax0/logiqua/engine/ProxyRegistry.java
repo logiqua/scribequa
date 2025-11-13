@@ -31,7 +31,7 @@ public class ProxyRegistry<T> {
         }
     }
 
-    ArrayList<Proxy> proxies = new ArrayList<>();
+    final ArrayList<Proxy> proxies = new ArrayList<>();
 
     /**
      * Retrieves a proxy instance associated with the specified class.

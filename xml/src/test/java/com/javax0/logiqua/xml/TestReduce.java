@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TestReduce {
-    private void test(final Object result, final String script) {
-    }
 
     @Test
     void testReduce() {

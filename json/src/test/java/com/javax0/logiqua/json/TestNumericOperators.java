@@ -1,6 +1,5 @@
 package com.javax0.logiqua.json;
 
-import com.javax0.logiqua.commands.Operator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

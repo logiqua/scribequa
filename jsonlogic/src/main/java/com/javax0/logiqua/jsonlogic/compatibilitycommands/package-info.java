@@ -6,7 +6,7 @@
  * <p>
  * These implementations ensure compatibility with the JsonLogic specification while leveraging
  * Logiqua's execution framework.
- *
+ * <p>
  * The class names are prefixed with {@code JL} to avoid name clashes with the Logiqua implementations.
  */
 package com.javax0.logiqua.jsonlogic.compatibilitycommands;

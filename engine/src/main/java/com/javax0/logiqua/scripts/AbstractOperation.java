@@ -4,8 +4,6 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
 import com.javax0.logiqua.engine.Engine;
 
-import java.util.Set;
-
 sealed abstract class AbstractOperation implements Script permits FunctionNode, MacroNode {
     protected final Operation operation;
     protected final Script[] args;

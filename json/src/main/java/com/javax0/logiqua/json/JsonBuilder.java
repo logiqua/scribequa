@@ -22,7 +22,11 @@ public class JsonBuilder {
     }
 
     public Script build() {
-        return build(jsonObject);
+        if (jsonObject instanceof List<?> list) {
+            return build(Map.of("it", list));
+        } else {
+            return build(jsonObject);
+        }
     }
 
     private Script build(Object jsonObject) throws IllegalArgumentException {
@@ -42,6 +46,8 @@ public class JsonBuilder {
             } else {
                 return nodeBuilder.subscripts(build(value));
             }
+        } else if (jsonObject instanceof List<?> list) {
+            return build(Map.of("it", list));
         } else {
             return new ConstantValueNode<>(jsonObject);
         }

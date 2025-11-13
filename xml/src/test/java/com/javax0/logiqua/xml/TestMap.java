@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class TestMap {
-    private void test(final Object result, final String script) {
-    }
 
     @Test
     void testMap() {

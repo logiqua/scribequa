@@ -1,5 +1,6 @@
 package com.javax0.logiqua;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -35,7 +36,7 @@ public interface Context {
      * @param <To>   the target type of the transformation
      */
     @FunctionalInterface
-    public interface Caster<From, To> {
+    interface Caster<From, To> {
         To cast(From from);
     }
 
@@ -100,7 +101,7 @@ public interface Context {
      * This wrapper is almost like a {@code java.util.Optional}, but it is not a generic type.
      * We use this wrapper instead of an optional, because when returning an optional from a method, it is assumed to be
      * not {@code null}. When the return type is {@code Value}, then it can also be {@code null}, which is means the
-     * value is not present. With the optional, you cannot return a value that is present and {@ @code null}.
+     * value is not present. With the optional, you cannot return a value that is present and {@code null}.
      *
      * @param get the actual value wrapped in this object. Also, the getter for this is called {@code get()}.
      */
@@ -165,4 +166,18 @@ public interface Context {
             return (Class<Object>) target.getClass();
         }
     }
+
+    /**
+     * Create a new context with the data from this context.
+     * <p>
+     * The aim of creating a new context with the data is to create a local environment for the execution of the commands.
+     * For example, the command reduce defined {@code accumulator} and {@code current} variables.
+     * If the context already has these variables, the new context will hide the existing ones without modifying the
+     * value.
+     *
+     * @param data the data that is handled by the new context, possibly shadowing data in the parent
+     * @return the new context
+     */
+    Context sprout(Map<String, Object> data);
+
 }

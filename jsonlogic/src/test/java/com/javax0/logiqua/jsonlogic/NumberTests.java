@@ -1,7 +1,5 @@
 package com.javax0.logiqua.jsonlogic;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +9,7 @@ public class NumberTests {
     // @Test NO, WE DO NOT
     public void testConvertAllNumericInputToDouble() throws JsonLogicException {
         JsonLogic jsonLogic = new JsonLogic();
-        Map<String, Number> numbers = new HashMap<String, Number>() {{
+        Map<String, Number> numbers = new HashMap<>() {{
             put("double", 1D);
             put("float", 1F);
             put("int", 1);

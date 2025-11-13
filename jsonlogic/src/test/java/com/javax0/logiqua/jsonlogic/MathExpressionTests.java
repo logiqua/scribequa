@@ -1,5 +1,6 @@
 package com.javax0.logiqua.jsonlogic;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,7 +39,8 @@ public class MathExpressionTests {
         assertEquals(3.14, result);
     }
 
-    //@Test this is not defined in json.logic, it is just so in the reference implementation
+    @Disabled
+    @Test //this is not defined in json.logic, it is just so in the reference implementation
     public void testAddWithArray() throws JsonLogicException {
         String json = """
                 {"+":[2,[[3,4],5]]}
@@ -48,7 +50,8 @@ public class MathExpressionTests {
         assertEquals(5L, result);  // This matches reference impl at jsonlogic.com
     }
 
-    //@Test this is not defined in json.logic, it is just so in the reference implementation
+    @Disabled
+    @Test //this is not defined in json.logic, it is just so in the reference implementation
     public void testStringAdd() throws JsonLogicException {
         assertNull(jsonLogic.apply("""
                 {"+" : "foo"}
@@ -111,7 +114,8 @@ public class MathExpressionTests {
         assertEquals(32L, result);
     }
 
-    //@Test this is not defined in json.logic, it is just so in the reference implementation
+    @Disabled
+    @Test // this is not defined in json.logic, it is just so in the reference implementation
     public void testMultiplyWithArray() throws JsonLogicException {
         String json = """
                 {"*":[2,[[3, 4], 5]]}
@@ -121,7 +125,8 @@ public class MathExpressionTests {
         assertEquals(6L, result);  // This matches reference impl at jsonlogic.com
     }
 
-    //@Test this is not defined in json.logic, it is just so in the reference implementation
+    @Disabled
+    @Test // this is not defined in json.logic, it is just so in the reference implementation
     public void testMultiplyWithEmptyArray() throws JsonLogicException {
         String json = """
                 {"*":[2,[]]}
@@ -189,9 +194,10 @@ public class MathExpressionTests {
         assertEquals(3L, result);
     }
 
-    //@Test this is not defined in json.logic, it is just so in the reference implementation
+    @Disabled
+    @Test // this is not defined in json.logic, it is just so in the reference implementation
     public void testDivideSingleNumber() throws JsonLogicException {
-        assertEquals(null, jsonLogic.apply("""
+        assertNull(jsonLogic.apply("""
                 {"/": [0]}
                 """, null));
     }

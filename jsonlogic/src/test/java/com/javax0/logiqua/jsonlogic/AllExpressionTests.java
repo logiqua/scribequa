@@ -15,7 +15,7 @@ public class AllExpressionTests {
                                    [], {">": [{"var": ""}, 0]}
                                ]
                        }
-                        """
+                       """
                 , null));
     }
 

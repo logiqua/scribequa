@@ -24,7 +24,7 @@ public class YamlLogiqua implements Logiqua {
             throw new IllegalStateException("The engine is already set");
         }
         this.engine = Engine.withData(data);
-        ;
+
         return this;
     }
 

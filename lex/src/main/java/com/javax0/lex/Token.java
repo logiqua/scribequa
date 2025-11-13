@@ -2,7 +2,7 @@ package com.javax0.lex;
 
 /**
  * Represents a lexical token identified during lexical analysis.
- *
+ * <p>
  * A token contains the
  *
  * <ul>

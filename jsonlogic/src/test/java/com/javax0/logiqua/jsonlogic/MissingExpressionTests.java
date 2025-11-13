@@ -13,7 +13,7 @@ public class MissingExpressionTests {
 
     @Test
     public void testMissing() throws JsonLogicException {
-        Map<String, Object> data = new HashMap<String, Object>() {{
+        Map<String, Object> data = new HashMap<>() {{
             put("a", "apple");
             put("c", "carrot");
         }};
@@ -21,13 +21,13 @@ public class MissingExpressionTests {
                 {"missing": ["a", "b"]}
                 """, data);
 
-        assertEquals(1, ((List) result).size());
-        assertEquals("b", ((List) result).get(0));
+        assertEquals(1, ((List<?>) result).size());
+        assertEquals("b", ((List<?>) result).getFirst());
     }
 
     @Test
     public void testMissingSomeUnderThreshold() throws JsonLogicException {
-        Map<String, Object> data = new HashMap<String, Object>() {{
+        Map<String, Object> data = new HashMap<>() {{
             put("a", "apple");
             put("c", "carrot");
         }};
@@ -40,7 +40,7 @@ public class MissingExpressionTests {
 
     @Test
     public void testMissingSomeOverThreshold() throws JsonLogicException {
-        Map<String, Object> data = new HashMap<String, Object>() {{
+        Map<String, Object> data = new HashMap<>() {{
             put("a", "apple");
         }};
         Object result = jsonLogic.apply("""
@@ -54,7 +54,7 @@ public class MissingExpressionTests {
 
     @Test
     public void testMissingSomeComplexExpression() throws JsonLogicException {
-        Map<String, Object> data = new HashMap<String, Object>() {{
+        Map<String, Object> data = new HashMap<>() {{
             put("first_name", "Bruce");
             put("last_name", "Wayne");
         }};

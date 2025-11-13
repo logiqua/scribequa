@@ -4,7 +4,6 @@ import com.javax0.lex.Analyzer;
 import com.javax0.lex.Input;
 import com.javax0.lex.Position;
 import com.javax0.lex.Token;
-import com.javax0.lex.tokens.Symbol;
 
 public class LispCommentAnalyzer implements Analyzer<String> {
 

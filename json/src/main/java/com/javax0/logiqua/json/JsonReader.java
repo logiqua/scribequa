@@ -6,7 +6,7 @@ import com.javax0.lex.tokens.*;
 import java.util.*;
 
 public class JsonReader {
-    TokenIterator tokens;
+    final TokenIterator tokens;
 
     public static JsonReader of(final TokenIterator elements) {
         return new JsonReader(elements);
@@ -27,9 +27,7 @@ public class JsonReader {
         final var token = tokens.next();
         if (token.is(Keyword.class)) {
             return switch (token.lexeme()) {
-                case "true" -> token.value();
-                case "false" -> token.value();
-                case "null" -> token.value();
+                case "true", "null", "false" -> token.value();
                 default ->
                         throw new IllegalArgumentException("JSON cannot handle the keyword '" + token.lexeme() + "'");
             };
@@ -42,7 +40,7 @@ public class JsonReader {
 
 
     List<Object> readArray() {
-        final var array = new ArrayList<Object>();
+        final var array = new ArrayList<>();
         if (tokens.current().is("[")) {
             tokens.next();
             if (tokens.current().is("]")) {

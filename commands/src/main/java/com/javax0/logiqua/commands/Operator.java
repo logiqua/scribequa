@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public abstract class Operator implements Operation.Function {
-    abstract Object unary(Object accumulator);
+    abstract protected Object unary(Object accumulator);
 
-    abstract Object binary(Object accumulator, Object arg);
+    abstract protected Object binary(Object accumulator, Object arg);
 
 
     public static Double toDouble(Object arg) {

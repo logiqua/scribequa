@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LspReader {
-    TokenIterator tokens;
+    final TokenIterator tokens;
 
     public static LspReader of(final TokenIterator elements) {
         return new LspReader(elements);
@@ -20,15 +20,12 @@ public class LspReader {
 
     public Object read() {
         if (tokens.current().is("(")) {
-            final var result = readArray();
-            return result;
+            return readArray();
         }
         final var token = tokens.next();
         if (token.is(Keyword.class)) {
             return switch (token.lexeme()) {
-                case "true" -> token.value();
-                case "false" -> token.value();
-                case "null" -> token.value();
+                case "true", "false", "null" -> token.value();
                 default ->
                         throw new IllegalArgumentException("JSON cannot handle the keyword '" + token.lexeme() + "'");
             };
@@ -43,7 +40,7 @@ public class LspReader {
     }
 
     List<Object> readArray() {
-        final var list = new ArrayList<Object>();
+        final var list = new ArrayList<>();
         if (tokens.current().is("(")) {
             tokens.next();
             if (tokens.current().is(")")) {

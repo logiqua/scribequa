@@ -2,15 +2,12 @@ package com.javax0.lex.analyzers;
 
 import com.javax0.lex.Analyzer;
 import com.javax0.lex.Input;
-import com.javax0.lex.Position;
 import com.javax0.lex.Token;
 import com.javax0.lex.tokens.Constant;
 import com.javax0.lex.tokens.Identifier;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Predicate;
 
 /**
@@ -39,8 +36,8 @@ import java.util.function.Predicate;
 public class IdentifierAnalyzer implements Analyzer<Object> {
 
     private Map<String,Object> keywords = new HashMap<>(Map.of("true", true, "false", false));
-    private Predicate<Character> start = Character::isJavaIdentifierStart;
-    private Predicate<Character> part = Character::isJavaIdentifierPart;
+    private final Predicate<Character> start = Character::isJavaIdentifierStart;
+    private final Predicate<Character> part = Character::isJavaIdentifierPart;
 
     public IdentifierAnalyzer() {
         keywords.put("null", null);

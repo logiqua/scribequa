@@ -10,7 +10,7 @@ import java.math.BigInteger;
 @Operation.Arity(min = 1)
 public class Minus extends Operator {
     @Override
-    Object unary(Object accumulator) {
+    protected Object unary(Object accumulator) {
         return switch (accumulator){
             case Byte b -> -b;
             case Short s -> -s;
@@ -27,7 +27,7 @@ public class Minus extends Operator {
     }
 
     @Override
-    Object binary(Object accumulator, Object arg) {
+    protected Object binary(Object accumulator, Object arg) {
         return switch (accumulator) {
             case Byte b -> (byte) (b - toByte(arg));
             case Short s -> (short) (s - toShort(arg));

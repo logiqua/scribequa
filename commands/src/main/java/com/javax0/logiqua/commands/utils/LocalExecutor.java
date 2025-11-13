@@ -7,7 +7,7 @@ import java.util.Map;
 public class LocalExecutor {
 
     public static Executor of(Map<String, Object> map, Executor executor) {
-        final var loopContext = new SimpleProxyMapContext(map, executor.getContext());
+        final var loopContext = executor.getContext().sprout(map);
         return new SimpleProxyExecutor(executor, loopContext);
     }
 

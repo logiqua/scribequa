@@ -13,7 +13,7 @@ public class ArrayHasExpressionTests {
                         {"and":
                                 [
                                    {"some":[
-                                               {"var":"fruits"}, 
+                                               {"var":"fruits"},
                                                {"in":[{"var":""}, ["apple"]]}
                                            ]
                                    }

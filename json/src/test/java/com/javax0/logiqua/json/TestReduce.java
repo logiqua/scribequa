@@ -3,11 +3,7 @@ package com.javax0.logiqua.json;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 public class TestReduce {
-    private void test(final Object result, final String script) {
-    }
 
     @Test
     void testReduce() {

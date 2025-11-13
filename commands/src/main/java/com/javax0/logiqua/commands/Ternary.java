@@ -4,7 +4,6 @@ import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Named;
 import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
-import com.javax0.logiqua.commands.utils.Castor;
 
 @Named.Symbol("?:")
 @Operation.Arity(min = 2, max = 3)

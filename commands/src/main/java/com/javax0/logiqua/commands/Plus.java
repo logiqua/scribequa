@@ -10,14 +10,14 @@ import java.math.BigInteger;
 @Operation.Arity(min = 1)
 public class Plus extends Operator {
     @Override
-    Object unary(Object accumulator) {
+    protected Object unary(Object accumulator) {
         if (accumulator instanceof String s) {
             try {
                 return Long.parseLong(s);
             } catch (NumberFormatException e) {
                 try {
                     return Double.parseDouble(s);
-                }catch(NumberFormatException e2){
+                } catch (NumberFormatException e2) {
                     return s;
                 }
             }
@@ -26,7 +26,7 @@ public class Plus extends Operator {
     }
 
     @Override
-    Object binary(Object accumulator, Object arg) {
+    protected Object binary(Object accumulator, Object arg) {
         return switch (accumulator) {
             case Byte b -> (byte) (b + toByte(arg));
             case Short s -> (short) (s + toShort(arg));

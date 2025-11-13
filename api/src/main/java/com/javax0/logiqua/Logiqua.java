@@ -1,7 +1,5 @@
 package com.javax0.logiqua;
 
-import java.util.Map;
-
 /**
  * The main interface of the Logiqua library.
  */

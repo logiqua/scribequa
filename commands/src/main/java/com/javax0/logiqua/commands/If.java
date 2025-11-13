@@ -6,9 +6,6 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
 import com.javax0.logiqua.commands.utils.Castor;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Named.Symbol("if")
 @Operation.Arity(min = 2, max = 3)
 public class If implements Operation.Macro {

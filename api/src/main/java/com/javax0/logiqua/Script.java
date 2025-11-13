@@ -1,7 +1,5 @@
 package com.javax0.logiqua;
 
-import java.util.Set;
-
 /**
  * A Script object represents the AST of the calculation.
  * <p>

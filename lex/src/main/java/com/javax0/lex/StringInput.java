@@ -61,7 +61,7 @@ public class StringInput implements Input {
     @Override
     public boolean startsWith(String prefix) {
         if (index + prefix.length() <= input.length()) {
-            return input.substring(index, index + prefix.length()).equals(prefix);
+            return input.startsWith(prefix, index);
         }
         return false;
     }

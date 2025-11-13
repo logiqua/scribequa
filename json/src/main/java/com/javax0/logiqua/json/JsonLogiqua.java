@@ -28,7 +28,7 @@ public class JsonLogiqua implements Logiqua {
         if( engine != null) {
             throw new IllegalStateException("The engine is already set");
         }
-        this.engine = Engine.withData(data);;
+        this.engine = Engine.withData(data);
         return this;
     }
 

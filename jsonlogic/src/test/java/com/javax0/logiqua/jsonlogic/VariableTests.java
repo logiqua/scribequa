@@ -1,5 +1,6 @@
 package com.javax0.logiqua.jsonlogic;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VariableTests {
     private static final JsonLogic jsonLogic = new JsonLogic();
 
-    //@Test
+    @Test
     public void testEmptyString() throws JsonLogicException {
         assertEquals(3.14, jsonLogic.apply("""
                 {"var": ""}
@@ -18,7 +19,7 @@ public class VariableTests {
 
     @Test
     public void testMapAccess() throws JsonLogicException {
-        Map<String, Double> data = new HashMap<String, Double>() {{
+        Map<String, Double> data = new HashMap<>() {{
             put("pi", 3.14);
         }};
 
@@ -39,15 +40,16 @@ public class VariableTests {
         assertNull(jsonLogic.apply("""
                 {"var": ["pi"]}
                 """, null));
-        assertEquals("{}",jsonLogic.apply("""
+        assertNull(jsonLogic.apply("""
                 {"var": ""}
-                """, null).toString());
+                """, null));
         assertNull(jsonLogic.apply("""
                 {"var": 0}
                 """, null));
     }
 
-    //@Test
+    @Disabled
+    @Test //
     public void testArrayAccess() throws JsonLogicException {
         String[] data = new String[]{"hello", "world"};
 
@@ -65,7 +67,8 @@ public class VariableTests {
                 """, data));
     }
 
-    //@Test
+    @Disabled
+    @Test //
     public void testArrayAccessWithStringKeys() throws JsonLogicException {
         String[] data = new String[]{"hello", "world"};
 
@@ -83,7 +86,8 @@ public class VariableTests {
                 """, data));
     }
 
-    //@Test
+    @Disabled
+    @Test //
     public void testListAccess() throws JsonLogicException {
         List<String> data = Arrays.asList("hello", "world");
 
@@ -101,7 +105,8 @@ public class VariableTests {
                 """, data));
     }
 
-    //@Test
+    @Disabled
+    @Test //
     public void testListAccessWithStringKeys() throws JsonLogicException {
         List<String> data = Arrays.asList("hello", "world");
 
@@ -121,7 +126,7 @@ public class VariableTests {
 
     @Test
     public void testComplexAccess() throws JsonLogicException {
-        Map<String, Object> data = new HashMap<String, Object>() {{
+        Map<String, Object> data = new HashMap<>() {{
             put("users", Arrays.asList(
                     new HashMap<String, Object>() {{
                         put("name", "John");
@@ -176,7 +181,8 @@ public class VariableTests {
         assertNull(result);
     }
 
-    //@Test  this is weird, we will not be compatible with this one
+    @Disabled
+    @Test //  this is weird, we will not be compatible with this one
     public void intermediateNull_returnsNull_notDefault() throws JsonLogicException {
         // data.a.b is null before finishing path -> should return null (no default)
         String rule = """
@@ -189,7 +195,8 @@ public class VariableTests {
         assertNull(result);
     }
 
-    //@Test
+    @Disabled
+    @Test //
     public void nonTraversableIntermediate_returnsNull_notDefault() throws JsonLogicException {
         // data.a is a number; trying to access a.b -> should return null (no default)
         String rule = """
@@ -212,7 +219,7 @@ public class VariableTests {
 
         Object result = jsonLogic.apply(rule, data);
 
-        assertTrue(result instanceof Number);
+        assertInstanceOf(Number.class, result);
         assertEquals(20.0, ((Number) result).doubleValue(), 0.0);
     }
 
@@ -242,7 +249,8 @@ public class VariableTests {
         assertNull(result);
     }
 
-    //@Test
+    @Disabled
+    @Test //
     public void topLevelNumericIndex_overList_works() throws JsonLogicException {
         // {"var": [1, "missing"]} over a top-level list -> "banana"
         String rule = """

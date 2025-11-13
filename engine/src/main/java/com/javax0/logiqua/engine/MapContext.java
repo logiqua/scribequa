@@ -51,7 +51,7 @@ public class MapContext implements Context {
     private final ProxyRegistry<IndexedProxyFactory> indexedProxyRegistry = new ProxyRegistry<>();
     private final CasterRegistry casters = new CasterRegistry();
 
-    private final Map<String, Object> map;
+    protected final Map<String, Object> map;
     public final Convenience convenience = new Convenience();
 
     public MapContext(Map<String, Object> map) {
@@ -125,12 +125,28 @@ public class MapContext implements Context {
 
     @Override
     public Context.Value get(String key) {
-        if (key.isEmpty()) {
+        if (key.isEmpty() && !map.containsKey("")) {
             return Context.Value.of(map);
         }
         return get(key, map);
     }
 
+    /**
+     * Retrieves a {@code Context.Value} instance corresponding to the given key from the specified object.
+     * The method supports nested keys, indexed elements in collections, and mappings through a variety of
+     * object structures, including maps, lists, arrays, and custom proxies.
+     *
+     * @param key the key or index used to retrieve the value; can include nested keys separated by dots (e.g., "key.subkey")
+     *            or indexes (e.g., "list[0]"). Whitespace around separators is ignored.
+     * @param from the source object from which the value will be retrieved; it can be a {@code Map}, {@code List},
+     *             {@code Collection}, {@code Object[]}, {@code Context}, or an object with mapped or indexed proxies.
+     * @return a {@code Context.Value} instance representing the retrieved value if found;
+     *         returns {@code null} if the key is not found or if the source object is {@code null}
+     *         and the key is non-empty.
+     * @throws IllegalArgumentException if the source object type is unsupported for key access.
+     * @throws NumberFormatException if the key is expected to represent an index but is not a valid number.
+     * @throws IndexOutOfBoundsException if the key references an index that is out of bounds in a list or array.
+     */
     public Context.Value get(String key, Object from) {
         final var dix = key.indexOf(".");
         final var pix = key.indexOf("[");
@@ -355,6 +371,10 @@ public class MapContext implements Context {
             }
         }
         return value;
+    }
+
+    public Context sprout(Map<String,Object> data) {
+        return new HierarchicalMapContext(data,this);
     }
 
 }

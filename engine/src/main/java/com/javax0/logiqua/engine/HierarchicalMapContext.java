@@ -1,12 +1,11 @@
-package com.javax0.logiqua.commands.utils;
+package com.javax0.logiqua.engine;
 
 import com.javax0.logiqua.Context;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class SimpleProxyMapContext implements Context {
-    final Map<String, Object> map;
+public class HierarchicalMapContext extends MapContext {
     final Context mapParent;
     final Context parent;
 
@@ -17,7 +16,7 @@ public class SimpleProxyMapContext implements Context {
      * @param map    the map to delegate the value requests to if the value is not found locally
      * @param parent the map and another parent to delegate to
      */
-    public SimpleProxyMapContext(Map<String, Object> map, Context parent) {
+    public HierarchicalMapContext(Map<String, Object> map, Context parent) {
         this(map, parent, parent);
     }
 
@@ -33,30 +32,48 @@ public class SimpleProxyMapContext implements Context {
      * @param mapParent the parent to delegate the value requests to if the value is not found locally
      * @param parent    the parent to delegate all other requests to
      */
-    public SimpleProxyMapContext(Map<String, Object> map, Context mapParent, Context parent) {
-        this.map = map;
+    public HierarchicalMapContext(Map<String, Object> map, Context mapParent, Context parent) {
+        super(map);
         this.mapParent = mapParent;
         this.parent = parent;
     }
 
 
     /**
-     * Get the value of the key. If the key is not found in the map and then fetch it from the parent if there is a
-     * parent.
+     * Get the value of the key. The approach is the following:
+     *
+     * <ul>
+     *     <li>try to find the key in the local map
+     *     <li>check if there is a key "" (empty string) defined in the current map, and if there is, then try to find the key in the value of the key ""
+     *     <li>try to find the key in the parent context if there is a parent context
+     * </ul>
+     *
      * <p>
      * Note that this method uses the mapParent delegate that may be null.
      *
      * @param key the key to look up
-     * @return the value associated with the key embedded in a Value, or null if not found.
+     * @return the value associated with the key embedded in a Value, or {@code null} if not found.
      */
     @Override
     public Value get(String key) {
-        if (map.containsKey(key)) {
-            return Value.of(map.get(key));
-        } else if (mapParent != null) {
-            return mapParent.get(key);
-        } else
-            return null;
+        final var value = super.get(key);
+        if (value != null) {
+            return value;
+        }
+
+        final var loopValue = super.get("");
+        if (loopValue != null) {
+            final var inLoop = get(key, loopValue.get());
+            if (inLoop != null) {
+                return inLoop;
+            }
+        }
+
+        if (mapParent != null) {
+            return get(key, mapParent);
+        }
+
+        return null;
     }
 
     /**

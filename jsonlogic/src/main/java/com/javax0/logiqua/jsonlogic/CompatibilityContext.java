@@ -4,6 +4,7 @@ import com.javax0.logiqua.Context;
 import com.javax0.logiqua.engine.MapContext;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class CompatibilityContext implements Context {
@@ -17,7 +18,7 @@ public class CompatibilityContext implements Context {
 
     @Override
     public Value get(String key) {
-        if (key == null) {
+        if (key == null || key.isEmpty()) {
             return mapContext.get("data");
         } else {
             return mapContext.get("data." + key);
@@ -32,5 +33,10 @@ public class CompatibilityContext implements Context {
     @Override
     public <From, To> Optional<Caster<From, To>> caster(Class<From> from, Class<To> to) {
         return mapContext.caster(from, to);
+    }
+
+    @Override
+    public Context sprout(Map<String, Object> data) {
+        return mapContext.sprout(data);
     }
 }
