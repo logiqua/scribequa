@@ -3,10 +3,10 @@ sys_import "turi.maven"
 import "logiqua_versions"
 
 let project=maven_project( {
-        name: "JsonLogic compatibility module",
-        artifactId: "jsonlogic"
+        name: "Logiqua Gui App",
+        artifactId: "fx"
         version: VERSION,
-        description: "This module provides API compatible with JsonLogic",
+        description: "Logiqua Interactive playground using JavaFX",
         parent:{
             groupId: groupId,
             artifactId: "logiqua-parent",
@@ -21,9 +21,17 @@ let project=maven_project( {
             ]
         } ,
         dependencies: [
-            .. { for each module in["api", "engine", "commands", "json", "lex"] list:{
+            .. { for each module in["api", "engine", "commands", "json", "xml", "lsp", "yaml", "jsonlogic"] list:{
                     groupId: groupId,
                     artifactId: module
+                }
+            } ,
+            .. {
+                for each javafx_module in["base", "controls", "fxml"] list{
+                    {
+                        groupId: "org.openjfx",
+                        artifactId: "javafx-" + javafx_module,
+                    }
                 }
             } ,
             {

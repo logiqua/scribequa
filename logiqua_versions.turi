@@ -14,6 +14,8 @@ let `jakarta.annotation` = "3.0.0";
 let `jakarta.inject` = "2.0.1";
 let `sisu-maven-plugin` = "0.3.5";
 let `org.yaml.snakeyaml` = "2.5"
+let `org.openjfx`= "25.0.1" ;
+
 let JAVA_VERSION = 21;
 
 let groupId = "com.javax0.logiqua";

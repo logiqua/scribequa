@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.javax0.logiqua</groupId>
         <artifactId>logiqua-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <build>
         <plugins>
@@ -33,7 +33,7 @@
     <name>Logiqua Engine</name>
     <description>Core logiqua execution engine.</description>
     <artifactId>engine</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <properties>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssZ</maven.build.timestamp.format>

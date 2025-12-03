@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.javax0.logiqua</groupId>
         <artifactId>logiqua-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <build>
         <plugins>
@@ -33,7 +33,7 @@
     <name>JsonLogic compatibility module</name>
     <description>This module provides API compatible with JsonLogic</description>
     <artifactId>jsonlogic</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <properties>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssZ</maven.build.timestamp.format>
@@ -55,6 +55,10 @@
         <dependency>
             <groupId>com.javax0.logiqua</groupId>
             <artifactId>json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>lex</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -30,9 +30,9 @@
         </plugins>
     </build>
     <modelVersion>4.0.0</modelVersion>
-    <name>Logiqua Commands implementation</name>
-    <description>Command implementations for Logiqua</description>
-    <artifactId>commands</artifactId>
+    <name>Logiqua Gui App</name>
+    <description>Logiqua Interactive playground using JavaFX</description>
+    <artifactId>fx</artifactId>
     <version>1.0.1</version>
     <properties>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
@@ -43,6 +43,46 @@
         <dependency>
             <groupId>com.javax0.logiqua</groupId>
             <artifactId>api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>commands</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>lsp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.javax0.logiqua</groupId>
+            <artifactId>jsonlogic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

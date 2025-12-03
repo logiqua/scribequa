@@ -1,4 +1,4 @@
-global APPIA=? ( env( "APPIA" ) ?. split( "\\|" ) ) or [ source_directory( ) + "/.." ] ;
+global APPIA=? ( env( "APPIA" ) ?. split( "\\|" ) ) or [ source_directory( ) + "/.." ];
 sys_import "turi.maven"
 import "logiqua_versions"
 
@@ -11,7 +11,7 @@ let project=maven_project( {
             groupId: groupId,
             artifactId: "logiqua-parent",
             version: VERSION
-        } ,
+        },
         build:{
             plugins: [
                 maven_plugin( "source" ),
@@ -19,34 +19,34 @@ let project=maven_project( {
                 maven_plugin( "compiler" ),
                 maven_plugin( "resources" )
             ]
-        } ,
+        },
         dependencies: [
             {
                 groupId: "org.yaml",
                 artifactId: "snakeyaml"
-            } ,
+            },
             {
                 groupId: groupId,
                 artifactId: "api"
-            } ,
+            },
             {
                 groupId: groupId,
                 artifactId: "engine"
-            } ,
+            },
             {
                 groupId: groupId,
                 artifactId: "commands",
                 scope: "test"
-            } ,
+            },
             {
                 groupId: "org.junit.jupiter",
                 artifactId: "junit-jupiter-api",
-            } ,
+            },
             {
                 groupId: "org.junit.jupiter",
                 artifactId: "junit-jupiter-engine",
             }
         ]
-} ) ;
-project . properties=import( "properties" ) . properties ;
-project . done( ) ; 
+} );
+project.properties=import( "properties" ) .properties;
+project.done( ); 
