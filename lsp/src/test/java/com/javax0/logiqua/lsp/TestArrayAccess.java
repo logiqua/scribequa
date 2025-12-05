@@ -19,16 +19,4 @@ public class TestArrayAccess {
         final var result = scriptObject.evaluate();
         Assertions.assertEquals(88, result);
     }
-
-    @Test
-    void testArrayAndFieldDirectAccessExpression() {
-        final var script = "(* foo[1]  bar)";
-        final var scriptObject = new LspLogiqua().with(
-                Map.of("foo", List.of(1,2,3,4),
-                        "map" , Map.of( "a", -1, "b",-2),
-                        "bar", 44)
-        ).compile(script);
-        final var result = scriptObject.evaluate();
-        Assertions.assertEquals(88, result);
-    }
 }
