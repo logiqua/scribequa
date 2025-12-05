@@ -12,7 +12,7 @@ import java.math.RoundingMode;
 public class Divide extends Operator {
     @Override
     protected Object unary(Object accumulator) {
-        throw new IllegalArgumentException("Cannot multiply a single number " + accumulator.getClass().getName());
+        throw new IllegalArgumentException("Cannot divide a single number " + accumulator.getClass().getName());
     }
 
     @Override

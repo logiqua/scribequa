@@ -28,6 +28,11 @@ public class StringInput implements Input {
     }
 
     @Override
+    public char peek(int i) {
+        return input.charAt(index+i);
+    }
+
+    @Override
     public char next() {
         char ch = input.charAt(index++);
         if (ch == '\n') {
@@ -55,7 +60,12 @@ public class StringInput implements Input {
 
     @Override
     public boolean eof() {
-        return index >= input.length();
+        return length() <= 0;
+    }
+
+    @Override
+    public int length() {
+        return input.length() - index;
     }
 
     @Override

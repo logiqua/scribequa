@@ -35,6 +35,11 @@
             </dependency>
             <dependency>
                 <groupId>com.javax0.logiqua</groupId>
+                <artifactId>exp</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.javax0.logiqua</groupId>
                 <artifactId>yaml</artifactId>
                 <version>1.0.1</version>
             </dependency>
@@ -84,17 +89,17 @@
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-base</artifactId>
-                <version>25.0.1</version>
+                <version>21.0.9</version>
             </dependency>
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
-                <version>25.0.1</version>
+                <version>21.0.9</version>
             </dependency>
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-fxml</artifactId>
-                <version>25.0.1</version>
+                <version>21.0.9</version>
             </dependency>
             <dependency>
                 <scope>test</scope>
@@ -146,6 +151,7 @@
         <module>commands</module>
         <module>json</module>
         <module>lsp</module>
+        <module>exp</module>
         <module>yaml</module>
         <module>xml</module>
         <module>lex</module>

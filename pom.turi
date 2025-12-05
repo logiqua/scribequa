@@ -2,7 +2,7 @@ global APPIA=? ( env("APPIA") ?. split("\\|") ) or[ source_directory() ];
 sys_import "turi.maven"
 import "logiqua_versions"
 
-let modules=["api", "engine", "commands", "json", "lsp", "yaml", "xml", "lex", "jsonlogic", "fx"];
+let modules=["api", "engine", "commands", "json", "lsp", "exp", "yaml", "xml", "lex", "jsonlogic", "fx"];
 
 let project=maven_project( {
         name: "Logiqua Parent",

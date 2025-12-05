@@ -5,6 +5,7 @@ import com.javax0.lex.StringInput;
 import com.javax0.lex.TokenIterator;
 import com.javax0.lex.tokens.NewLine;
 import com.javax0.lex.tokens.Space;
+import com.javax0.logiqua.exp.ExpLogiqua;
 import com.javax0.logiqua.json.JsonLogiqua;
 import com.javax0.logiqua.json.JsonReader;
 import com.javax0.logiqua.jsonlogic.JsonLogic;
@@ -44,11 +45,14 @@ public class Main extends Application {
         final var rbLsp = new RadioButton("Lisp");
         rbLsp.setToggleGroup(group);
         rbLsp.setUserData("L");
+        final var rbExp = new RadioButton("Expression");
+        rbExp.setToggleGroup(group);
+        rbExp.setUserData("E");
         final var rbJsonLogica = new RadioButton("JSON CompatibilityMode");
         rbJsonLogica.setToggleGroup(group);
         rbJsonLogica.setUserData("C");
 
-        formatSelectorBox.getChildren().addAll(rbJson, rbYaml, rbXml, rbLsp, rbJsonLogica);
+        formatSelectorBox.getChildren().addAll(rbJson, rbYaml, rbXml, rbLsp, rbExp, rbJsonLogica);
 
 
         final var logicLabel = new Label("Logic");
@@ -85,6 +89,7 @@ public class Main extends Application {
                                     case "Y" -> new YamlLogiqua().with(map).compile(logicCode).evaluate();
                                     case "X" -> new XmlLogiqua().with(map).compile(logicCode).evaluate();
                                     case "L" -> new LspLogiqua().with(map).compile(logicCode).evaluate();
+                                    case "E" -> new ExpLogiqua().with(map).compile(logicCode).evaluate();
                                     case "C" -> new JsonLogic().apply(logicCode, map);
                                     default -> "Unknown format";
                                 };

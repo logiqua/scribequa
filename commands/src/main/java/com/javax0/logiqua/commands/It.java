@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class It implements Operation.Function {
     @Override
     public Object evaluate(Executor executor, Object... args) {
-        final var it=  new ArrayList<>(args.length);
+        final var it = new ArrayList<>(args.length);
         it.addAll(Arrays.asList(args));
         return it;
     }

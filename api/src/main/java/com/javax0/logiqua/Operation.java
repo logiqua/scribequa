@@ -18,30 +18,6 @@ public sealed interface Operation extends Named permits Operation.Function, Oper
     }
 
     /**
-     * Some syntax structures may need priority information. For example in an expression
-     *
-     * <pre>
-     *     {@code 1 + 2 * 3}
-     * </pre>
-     * <p>
-     * the multiplication has higher priority than the addition, hence it is executed first, resulting in 6, and then the
-     * addition is performed, resulting in the final result 7.
-     * <p>
-     * This annotation can specify a priority for an operation.
-     * <p>
-     * When an operation is not annotated with this annotation, then the operation can only be used in an expression
-     * in a way that does not require priority information. For example, using a conventional programming language, infix
-     * expressions, as a function.
-     * <p>
-     * It is recommended to leave generous spaces between the priority values so that other operations can easily be
-     * inserted into the hierarchy list without changing the existing priority values.
-     */
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface Priority {
-        int value();
-    }
-
-    /**
      * An operation may optionally implement this method to specify the limits of the arguments.
      * The returned array must have two elements, the first one is the minimum number of arguments,
      * the second one is the maximum number of arguments.

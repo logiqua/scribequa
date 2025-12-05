@@ -12,6 +12,7 @@
         <module name="lsp" />
         <module name="json" />
         <module name="api" />
+        <module name="exp" />
         <module name="jsonlogic" />
         <module name="commands" />
         <module name="lex" />

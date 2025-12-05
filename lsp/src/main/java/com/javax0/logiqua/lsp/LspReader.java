@@ -39,7 +39,7 @@ public class LspReader {
         throw new IllegalArgumentException("Cannot read the value from the token " + token);
     }
 
-    List<Object> readArray() {
+    private List<Object> readArray() {
         final var list = new ArrayList<>();
         if (tokens.current().is("(")) {
             tokens.next();

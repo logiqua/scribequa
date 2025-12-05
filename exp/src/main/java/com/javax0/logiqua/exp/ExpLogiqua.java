@@ -1,8 +1,10 @@
-package com.javax0.logiqua.lsp;
+package com.javax0.logiqua.exp;
 
 import com.javax0.lex.LexicalAnalyzer;
 import com.javax0.lex.StringInput;
 import com.javax0.lex.TokenIterator;
+import com.javax0.lex.analyzers.FloatNumberAnalyzer;
+import com.javax0.lex.analyzers.IntegerNumberAnalyzer;
 import com.javax0.lex.analyzers.SymbolAnalyzer;
 import com.javax0.lex.tokens.Identifier;
 import com.javax0.lex.tokens.NewLine;
@@ -14,7 +16,7 @@ import com.javax0.logiqua.engine.MapContext;
 
 import java.util.Map;
 
-public class LspLogiqua implements Logiqua {
+public class ExpLogiqua implements Logiqua {
 
     private Engine engine = null;
 
@@ -22,12 +24,12 @@ public class LspLogiqua implements Logiqua {
         return engine;
     }
 
-    public LspLogiqua with(Engine engine) {
+    public ExpLogiqua with(Engine engine) {
         this.engine = engine;
         return this;
     }
 
-    public LspLogiqua with(Map<String, Object> data) {
+    public ExpLogiqua with(Map<String, Object> data) {
         if (engine != null) {
             throw new IllegalStateException("The engine is already set");
         }
@@ -41,12 +43,14 @@ public class LspLogiqua implements Logiqua {
         final var analyzer = new LexicalAnalyzer();
         analyzer.skip(Space.class);
         analyzer.skip(NewLine.class);
-        analyzer.skip(LispCommentAnalyzer.Comment.class);
-        analyzer.replaceAnalyzer(SymbolAnalyzer.class, new LispSymbolAnalyzer());
-        analyzer.registerAnalyzer(new LispCommentAnalyzer());
+        analyzer.skip(ExpCommentAnalyzer.Comment.class);
+        analyzer.replaceAnalyzer(SymbolAnalyzer.class, new ExpSymbolAnalyzer());
+        analyzer.replaceAnalyzer(FloatNumberAnalyzer.class, new ExpFloatNumberAnalyzer());
+        analyzer.replaceAnalyzer(IntegerNumberAnalyzer.class, new ExpIntegerNumberAnalyzer());
+        analyzer.registerAnalyzer(new ExpCommentAnalyzer());
         final var tokenArray = analyzer.analyse(StringInput.of(source));
         final var tokens = TokenIterator.over(tokenArray);
-        final var lsp = LspReader.of(tokens).read();
+        final var json = ExpReader.of(tokens).read();
         if (!tokens.eof()) {
             throw new IllegalArgumentException("There is extra text following the script");
         }
@@ -54,6 +58,6 @@ public class LspLogiqua implements Logiqua {
             engine = Engine.withData(Map.of());
         }
         ((MapContext) engine.getContext()).registerCaster(Identifier.class, String.class, token -> token.value());
-        return LspBuilder.from(lsp, engine).build();
+        return ExpBuilder.from(json, engine).build();
     }
 }

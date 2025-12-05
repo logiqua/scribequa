@@ -21,6 +21,7 @@ public class None implements Operation.Macro {
         final var cast = new Castor(loopExecutor);
         for (int i = 0; i < inList.size(); i++) {
             final var item = inList.get(i);
+            map.put("current", item.get());
             map.put("", item.get());
             final var filtered = script.evaluateUsing(loopExecutor);
             if (cast.toBoolean(filtered)

@@ -1,12 +1,12 @@
 # Logiqua
 
-**Logiqua** is a powerful, extensible expression evaluation engine for Java. It provides a unified API for evaluating expressions written in multiple formats (JSON, YAML, XML, LISP-style), making it easy to build rule engines, configuration systems, and dynamic expression evaluators.
+**Logiqua** is a powerful, extensible expression evaluation engine for Java. It provides a unified API for evaluating expressions written in multiple formats (JSON, YAML, XML, LISP-style, or infix expressions), making it easy to build rule engines, configuration systems, and dynamic expression evaluators.
 
 ## Overview
 
 Logiqua is a modular expression evaluation framework that allows you to:
 
-- **Write expressions in multiple formats**: JSON, YAML, XML, or LISP-style syntax
+- **Write expressions in multiple formats**: JSON, YAML, XML, LISP-style syntax, or infix expressions
 - **Evaluate complex logic**: Support for arithmetic, comparisons, conditionals, and array operations
 - **Access variables**: Flexible context system for variable access and data binding
 - **Extend functionality**: Easy to add custom operations via the ServiceLoader mechanism
@@ -14,13 +14,13 @@ Logiqua is a modular expression evaluation framework that allows you to:
 
 ## Features
 
-- **Multiple Format Support**: Write expressions in JSON, YAML, XML, or LISP-style syntax
+- **Multiple Format Support**: Write expressions in JSON, YAML, XML, LISP-style syntax, or infix expressions
 - **JsonLogic Compatible**: Full compatibility with JsonLogic specification
 - **Extensible Operations**: Easy to add custom operations via ServiceLoader
 - **Type Coercion**: Automatic type conversion between compatible types
 - **Context Management**: Flexible context system for variable access
 - **Array Operations**: Built-in support for filtering, mapping, reducing arrays
-- **Comments Support**: YAML and LISP formats support comments for documentation
+- **Comments Support**: YAML, LISP, XML, and Expression formats support comments for documentation
 - **Well-Tested**: Comprehensive test coverage across all modules
 
 ## Quick Start
@@ -55,6 +55,13 @@ Add the format-specific module you want to use to your `pom.xml`:
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>lsp</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<!-- For infix expression format -->
+<dependency>
+    <groupId>com.javax0.logiqua</groupId>
+    <artifactId>exp</artifactId>
     <version>1.0.0</version>
 </dependency>
 
@@ -138,6 +145,19 @@ Object result = script.evaluate();
 // result = 30
 ```
 
+#### Infix Expression Format
+
+```java
+import com.javax0.logiqua.exp.ExpLogiqua;
+import com.javax0.logiqua.Script;
+import java.util.Map;
+
+ExpLogiqua exp = new ExpLogiqua().with(Map.of("x", 10, "y", 20));
+Script script = exp.compile("x + y");
+Object result = script.evaluate();
+// result = 30
+```
+
 ## Architecture
 
 Logiqua is built as a modular system with the following components:
@@ -154,6 +174,7 @@ Logiqua is built as a modular system with the following components:
 - **`yaml`**: YAML-based expression parser (JsonLogic compatible)
 - **`xml`**: XML-based expression parser
 - **`lsp`**: LISP-style expression parser
+- **`exp`**: Infix expression parser with operator precedence
 
 ### Compatibility Modules
 
@@ -161,7 +182,11 @@ Logiqua is built as a modular system with the following components:
 
 ### Utility Modules
 
-- **`lex`**: Lexical analysis framework used by the LSP module
+- **`lex`**: Lexical analysis framework used by the LSP and Expression modules
+
+### Application Modules
+
+- **`fx`**: Interactive GUI playground application built with JavaFX for testing and experimenting with Logiqua expressions
 
 ## Project Structure
 
@@ -174,8 +199,10 @@ Logiqua/
 ├── yaml/             # YAML format parser
 ├── xml/              # XML format parser
 ├── lsp/              # LISP-style format parser
+├── exp/              # Infix expression format parser
 ├── jsonlogic/        # JsonLogic compatibility
-└── lex/              # Lexical analysis framework
+├── lex/              # Lexical analysis framework
+└── fx/               # Interactive GUI playground application
 ```
 
 ## Module Documentation
@@ -189,8 +216,10 @@ Each module has its own comprehensive README:
 - **[YAML Module](yaml/README.md)** - YAML format parser
 - **[XML Module](xml/README.md)** - XML format parser
 - **[LSP Module](lsp/README.md)** - LISP-style format parser
+- **[Expression Module](exp/README.md)** - Infix expression format parser
 - **[JsonLogic Module](jsonlogic/README.md)** - JsonLogic compatibility
 - **[Lex Module](lex/README.md)** - Lexical analysis framework
+- **[FX Module](fx/README.md)** - Interactive GUI playground application
 
 ## Supported Operations
 
@@ -228,13 +257,15 @@ See the [Commands Module README](commands/README.md) for complete documentation 
 
 ## Format Comparison
 
-| Feature | JSON | YAML | XML | LISP |
-|---------|------|------|-----|------|
-| Comments | ❌ | ✅ | ✅ | ✅ |
-| Human-readable | ⚠️ | ✅ | ⚠️ | ✅ |
-| JsonLogic Compatible | ✅ | ❌ | ❌ | ❌ |
-| Nested Structures | ✅ | ✅ | ✅ | ✅ |
-| Type Preservation | ✅ | ✅ | ✅ | ✅ |
+| Feature | JSON | YAML | XML | LISP | Expression |
+|---------|------|------|-----|------|------------|
+| Comments | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Human-readable | ⚠️ | ✅ | ⚠️ | ✅ | ✅ |
+| JsonLogic Compatible | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Infix Notation | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Operator Precedence | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Nested Structures | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Type Preservation | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ## Building
 
@@ -265,10 +296,46 @@ cd <module>
 mvn test
 ```
 
+## Interactive Playground
+
+Logiqua includes an interactive GUI playground application (`fx` module) built with JavaFX that allows you to:
+
+- **Test expressions interactively**: Enter expressions in any supported format (JSON, YAML, XML, LISP, or infix expressions)
+- **Provide context data**: Enter data in JSON format to test expressions with variables
+- **See results instantly**: View evaluation results or error messages in real-time
+- **Switch formats easily**: Select different format parsers with radio buttons
+
+### Running the GUI Playground
+
+To run the interactive playground:
+
+```bash
+cd fx
+mvn javafx:run
+```
+
+Or build and run the JAR:
+
+```bash
+cd fx
+mvn clean package
+java -jar target/fx-1.0.1.jar
+```
+
+The GUI provides a simple interface where you can:
+1. Select the format (JSON, YAML, XML, LISP, Expression, or JSON Compatibility Mode)
+2. Enter your expression in the "Logic" text area
+3. Optionally enter data in JSON format in the "Data" text area
+4. Click "Run" to evaluate the expression
+5. View the result or any error messages in the "Result" text area
+
+See the [FX Module README](fx/README.md) for more details and a screenshot.
+
 ## Requirements
 
 - **Java 21+**: Logiqua requires Java 21 or higher
 - **Maven 3.6+**: For building the project
+- **JavaFX** (optional): Required only for the `fx` GUI playground module
 
 ## License
 

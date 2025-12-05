@@ -21,7 +21,7 @@ let project=maven_project( {
             ]
         } ,
         dependencies: [
-            .. { for each module in["api", "engine", "commands", "json", "xml", "lsp", "yaml", "jsonlogic"] list:{
+            .. { for each module in["api", "engine", "commands", "json", "xml", "lsp", "exp", "yaml", "jsonlogic"] list:{
                     groupId: groupId,
                     artifactId: module
                 }

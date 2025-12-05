@@ -5,6 +5,7 @@ module logiqua.fx {
     requires logiqua.yaml;
     requires logiqua.xml;
     requires logiqua.lsp;
+    requires logiqua.exp;
     requires logiqua.jsonlogic;
     requires logiqua.engine;
     requires logiqua.commands;

@@ -10,9 +10,11 @@ public interface Input {
     interface Index {}
     Position position();
     char peek();
+    char peek(int i);
     char next();
     Index index();
     void reset(Index index);
     boolean eof();
+    int length();
     boolean startsWith(String prefix);
 }

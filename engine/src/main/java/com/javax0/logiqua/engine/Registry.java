@@ -73,5 +73,4 @@ public class Registry {
         }
         return operations.get(symbol);
     }
-
 }
