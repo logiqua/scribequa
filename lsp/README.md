@@ -343,6 +343,21 @@ x
 
 This means you can use identifiers directly in expressions, and they will be treated as variable lookups.
 
+### Converting to JSON Format
+
+Scripts compiled from LISP-style syntax can be converted to JSON format using the `jsonify()` method, regardless of their original format. This enables canonical storage and JSON-based searchability:
+
+```java
+LspLogiqua lsp = new LspLogiqua().with(Map.of("x", 10, "y", 20));
+Script script = lsp.compile("(+ (var \"x\") (var \"y\"))");
+
+// Convert to JSON format for storage
+String jsonRepresentation = script.jsonify();
+// jsonRepresentation = "{\"+\":[{\"var\":[\"x\"]},{\"var\":[\"y\"]}]}"
+```
+
+This allows applications to store scripts in a canonical JSON format while accepting input in LISP-style syntax (or any other format), enabling format-independent script storage and searchability.
+
 ### Local Context Variables
 
 In array operations (`filter`, `map`, `reduce`, `all`, `some`, `none`), the current element is available as:

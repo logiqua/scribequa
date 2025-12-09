@@ -279,6 +279,8 @@ The GUI supports all Logiqua format parsers:
 - **Expression**: Infix expression format with operator precedence
 - **JSON Compatibility Mode**: Direct JsonLogic API compatibility mode
 
+All scripts compiled from any format can be converted to JSON using the `jsonify()` method for canonical storage and JSON-based searchability. See the [API Module README](../api/README.md) for details on the `jsonify()` method.
+
 See the respective module READMEs for detailed syntax information:
 - [JSON Module](../json/README.md)
 - [YAML Module](../yaml/README.md)

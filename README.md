@@ -11,6 +11,7 @@ Logiqua is a modular expression evaluation framework that allows you to:
 - **Access variables**: Flexible context system for variable access and data binding
 - **Extend functionality**: Easy to add custom operations via the ServiceLoader mechanism
 - **Type-safe evaluation**: Automatic type coercion and type information tracking
+- **Canonical JSON storage**: Convert any script to JSON format regardless of original format for standardized storage and searchability
 
 ## Features
 
@@ -21,6 +22,7 @@ Logiqua is a modular expression evaluation framework that allows you to:
 - **Context Management**: Flexible context system for variable access
 - **Array Operations**: Built-in support for filtering, mapping, reducing arrays
 - **Comments Support**: YAML, LISP, XML, and Expression formats support comments for documentation
+- **Canonical JSON Conversion**: Convert any script to JSON format using `jsonify()` for standardized storage and JSON-based searchability
 - **Well-Tested**: Comprehensive test coverage across all modules
 
 ## Quick Start
@@ -157,6 +159,36 @@ Script script = exp.compile("x + y");
 Object result = script.evaluate();
 // result = 30
 ```
+
+### Converting Scripts to JSON Format
+
+The `jsonify()` method allows you to convert any script to JSON format, regardless of its original format. This is useful for storing scripts in a canonical format and enabling JSON-based searchability:
+
+```java
+import com.javax0.logiqua.yaml.YamlLogiqua;
+import com.javax0.logiqua.Script;
+import java.util.Map;
+
+// Compile a script from YAML format
+YamlLogiqua yaml = new YamlLogiqua().with(Map.of("x", 10, "y", 20));
+Script script = yaml.compile("""
+    "+":
+      - var: "x"
+      - var: "y"
+    """);
+
+// Convert to JSON format for storage
+String jsonRepresentation = script.jsonify();
+// jsonRepresentation = "{\"+\":[{\"var\":[\"x\"]},{\"var\":[\"y\"]}]}"
+
+// The JSON can be stored in a database or searched using JSON tools
+// Later, you can recompile from JSON if needed
+```
+
+This feature enables applications to:
+- **Store scripts in a canonical format**: Regardless of whether scripts were originally written in YAML, XML, LISP, or infix expressions, they can all be stored as JSON
+- **Enable JSON-based searchability**: Use JSON query tools to search and filter scripts by their structure
+- **Maintain format independence**: Store scripts in a format-independent way while preserving the ability to work with them in any format
 
 ## Architecture
 
@@ -339,7 +371,7 @@ See the [FX Module README](fx/README.md) for more details and a screenshot.
 
 ## License
 
-Logiqua is licensed under the [Apache License, Version 2.0](LICENSE).
+Logiqua is dual-licensed under both the [MIT License](LICENSES) and the [Apache License, Version 2.0](LICENSES). You may choose to use this software under either license, whichever better fits your needs.
 
 ## Contributing
 

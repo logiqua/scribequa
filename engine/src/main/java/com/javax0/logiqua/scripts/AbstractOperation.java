@@ -4,6 +4,9 @@ import com.javax0.logiqua.Operation;
 import com.javax0.logiqua.Script;
 import com.javax0.logiqua.engine.Engine;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 sealed abstract class AbstractOperation implements Script permits FunctionNode, MacroNode {
     protected final Operation operation;
     protected final Script[] args;
@@ -15,4 +18,9 @@ sealed abstract class AbstractOperation implements Script permits FunctionNode, 
         this.args = args;
     }
 
+
+    @Override
+    public String jsonify() {
+        return "{\"" + operation.symbol() + "\":[" + Arrays.stream(args).map(Script::jsonify).collect(Collectors.joining(",")) + "]}";
+    }
 }

@@ -37,10 +37,13 @@ public interface Script {
     Object evaluate();
     Object evaluateUsing(Executor executor);
     Set<Class<?>> returns();
+    String jsonify();
 }
 ```
 
 A `Script` contains an operation and its arguments. Each argument is itself a `Script` that can be evaluated. The script can evaluate itself or use a specific executor for evaluation with local context.
+
+The `jsonify()` method converts the script to its JSON string representation, regardless of the original format used to compile it. This enables canonical storage and JSON-based searchability of scripts.
 
 #### `Executor`
 Orchestrates script execution and provides access to operations:
@@ -148,6 +151,16 @@ The typical usage pattern involves:
    Logiqua logiqua = new XmlLogiqua().with(contextData);
    Script script = logiqua.compile(scriptString);
    Object result = script.evaluate();
+   ```
+
+4. **Convert script to JSON format** (for canonical storage):
+   ```java
+   // Compile script from any format (YAML, XML, LISP, etc.)
+   Script script = yamlLogiqua.compile(yamlScript);
+   
+   // Convert to JSON format for storage
+   String jsonRepresentation = script.jsonify();
+   // Store jsonRepresentation in database or search using JSON tools
    ```
 
 ### Creating Custom Operations

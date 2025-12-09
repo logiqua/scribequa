@@ -638,6 +638,26 @@ The XML must be well-formed:
 - Special characters must be escaped
 - The document must have a single root element
 
+### Converting to JSON Format
+
+Scripts compiled from XML can be converted to JSON format using the `jsonify()` method, regardless of their original format. This enables canonical storage and JSON-based searchability:
+
+```java
+XmlLogiqua xml = new XmlLogiqua().with(Map.of("x", 10, "y", 20));
+Script script = xml.compile("""
+    <op symbol="+">
+        <var id="x"/>
+        <var id="y"/>
+    </op>
+    """);
+
+// Convert to JSON format for storage
+String jsonRepresentation = script.jsonify();
+// jsonRepresentation = "{\"+\":[{\"var\":[\"x\"]},{\"var\":[\"y\"]}]}"
+```
+
+This allows applications to store scripts in a canonical JSON format while accepting input in XML (or any other format), enabling format-independent script storage and searchability.
+
 ## Error Handling
 
 The parser will throw `IllegalArgumentException` for:

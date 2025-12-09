@@ -6,6 +6,7 @@ import com.javax0.logiqua.Script;
 import com.javax0.logiqua.engine.Engine;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 non-sealed public class FunctionNode extends AbstractOperation {
 

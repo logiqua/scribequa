@@ -210,6 +210,32 @@ Object result = script.evaluate();
 // result = 30
 ```
 
+#### Converting Scripts to JSON Format
+
+The `jsonify()` method allows you to convert any script to JSON format for canonical storage:
+
+```java
+Engine engine = Engine.withData(Map.of("x", 10, "y", 20));
+
+// Build a script programmatically
+Script script = engine.getOp("+")
+    .args(
+        engine.getOp("var").args("x"),
+        engine.getOp("var").args("y")
+    );
+
+// Convert to JSON format
+String jsonRepresentation = script.jsonify();
+// jsonRepresentation = "{\"+\":[{\"var\":[\"x\"]},{\"var\":[\"y\"]}]}"
+
+// This JSON can be stored in a database or searched using JSON query tools
+```
+
+This is particularly useful when you want to:
+- Store scripts in a canonical format regardless of how they were created
+- Enable JSON-based searchability of scripts
+- Maintain format independence in your application's script storage
+
 ### Context Features
 
 #### Type Casting

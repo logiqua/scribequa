@@ -29,4 +29,11 @@ public interface Script {
      */
     Object evaluateUsing(Executor executor);
 
+
+    /**
+     * Converts this script into its JSON string representation.
+     *
+     * @return a JSON string that represents this Script object
+     */
+    String jsonify();
 }

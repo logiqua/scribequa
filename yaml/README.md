@@ -567,6 +567,25 @@ This ensures type consistency throughout the evaluation.
 
 The YAML format is compatible with JsonLogic YAML format, making it easy to migrate existing JsonLogic rules to Logiqua.
 
+### Converting to JSON Format
+
+Scripts compiled from YAML can be converted to JSON format using the `jsonify()` method, regardless of their original format. This enables canonical storage and JSON-based searchability:
+
+```java
+YamlLogiqua yaml = new YamlLogiqua().with(Map.of("x", 10, "y", 20));
+Script script = yaml.compile("""
+    "+":
+      - var: "x"
+      - var: "y"
+    """);
+
+// Convert to JSON format for storage
+String jsonRepresentation = script.jsonify();
+// jsonRepresentation = "{\"+\":[{\"var\":[\"x\"]},{\"var\":[\"y\"]}]}"
+```
+
+This allows applications to store scripts in a canonical JSON format while accepting input in YAML (or any other format), enabling format-independent script storage and searchability.
+
 ## Error Handling
 
 The parser will throw `IllegalArgumentException` for:

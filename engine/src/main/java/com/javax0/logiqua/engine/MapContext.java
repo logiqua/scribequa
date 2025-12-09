@@ -106,6 +106,15 @@ public class MapContext implements Context {
         registerCaster(short.class, Byte.class, Short::byteValue);
         registerCaster(BigInteger.class, Byte.class, BigInteger::byteValue);
 
+        registerCaster(Byte.class, Double.class, i -> (double) i);
+        registerCaster(Short.class, Double.class, i -> (double) i);
+        registerCaster(Integer.class, Double.class, i -> (double) i);
+        registerCaster(Long.class, Double.class, i -> (double) i);
+        registerCaster(Byte.class, Float.class, i -> (float) i);
+        registerCaster(Short.class, Float.class, i -> (float) i);
+        registerCaster(Integer.class, Float.class, i -> (float) i);
+        registerCaster(Long.class, Float.class, i -> (float) i);
+
         registerCaster(Float.class, Double.class, Float::doubleValue);
         registerCaster(Double.class, Float.class, Double::floatValue);
         registerCaster(BigDecimal.class, Double.class, BigDecimal::doubleValue);
@@ -136,15 +145,15 @@ public class MapContext implements Context {
      * The method supports nested keys, indexed elements in collections, and mappings through a variety of
      * object structures, including maps, lists, arrays, and custom proxies.
      *
-     * @param key the key or index used to retrieve the value; can include nested keys separated by dots (e.g., "key.subkey")
-     *            or indexes (e.g., "list[0]"). Whitespace around separators is ignored.
+     * @param key  the key or index used to retrieve the value; can include nested keys separated by dots (e.g., "key.subkey")
+     *             or indexes (e.g., "list[0]"). Whitespace around separators is ignored.
      * @param from the source object from which the value will be retrieved; it can be a {@code Map}, {@code List},
      *             {@code Collection}, {@code Object[]}, {@code Context}, or an object with mapped or indexed proxies.
      * @return a {@code Context.Value} instance representing the retrieved value if found;
-     *         returns {@code null} if the key is not found or if the source object is {@code null}
-     *         and the key is non-empty.
-     * @throws IllegalArgumentException if the source object type is unsupported for key access.
-     * @throws NumberFormatException if the key is expected to represent an index but is not a valid number.
+     * returns {@code null} if the key is not found or if the source object is {@code null}
+     * and the key is non-empty.
+     * @throws IllegalArgumentException  if the source object type is unsupported for key access.
+     * @throws NumberFormatException     if the key is expected to represent an index but is not a valid number.
      * @throws IndexOutOfBoundsException if the key references an index that is out of bounds in a list or array.
      */
     public Context.Value get(String key, Object from) {
@@ -286,7 +295,7 @@ public class MapContext implements Context {
                     if (index >= Array.getLength(target)) {
                         throw new IndexOutOfBoundsException("Index " + index + " is out of bounds > " + ((Object[]) target).length);
                     }
-                    return Context.Value.of(Array.get(target,index));
+                    return Context.Value.of(Array.get(target, index));
                 }
             };
         }
@@ -373,8 +382,8 @@ public class MapContext implements Context {
         return value;
     }
 
-    public Context sprout(Map<String,Object> data) {
-        return new HierarchicalMapContext(data,this);
+    public Context sprout(Map<String, Object> data) {
+        return new HierarchicalMapContext(data, this);
     }
 
 }
