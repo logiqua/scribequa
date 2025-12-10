@@ -22,6 +22,6 @@ public class ReduceExpressionTests {
         final var data = Map.of("x",new int[]{1, 2, 3, 4, 5, 6});
         Object result = jsonLogic.apply(json, data);
 
-        assertEquals(21, result);
+        assertEquals(21L, result);
     }
 }

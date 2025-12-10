@@ -36,42 +36,42 @@ Add the format-specific module you want to use to your `pom.xml`:
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>json</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- For YAML format -->
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>yaml</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- For XML format -->
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>xml</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- For LISP-style format -->
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>lsp</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- For infix expression format -->
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>exp</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- For JsonLogic compatibility -->
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>jsonlogic</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 

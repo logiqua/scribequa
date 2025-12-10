@@ -1,6 +1,5 @@
 package com.javax0.logiqua.commands;
 
-import com.javax0.logiqua.Context;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
 
@@ -12,17 +11,93 @@ public abstract class Operator implements Operation.Function {
 
     abstract protected Object binary(Object accumulator, Object arg);
 
+    /**
+     * Type promotion order: Byte < Short < Integer < Long < Float < Double < BigInteger < BigDecimal
+     * When mixing integer and floating-point types, the result is the wider floating-point type.
+     * When mixing BigInteger/BigDecimal with floating-point, result is BigDecimal.
+     */
+    private enum NumericType {
+        BYTE(0),
+        SHORT(1),
+        INTEGER(2),
+        LONG(3),
+        FLOAT(4),
+        DOUBLE(5),
+        BIG_INTEGER(6),
+        BIG_DECIMAL(7);
 
+        private final int order;
+
+        NumericType(int order) {
+            this.order = order;
+        }
+
+        static NumericType of(Object value) {
+            return switch (value) {
+                case Byte ignored -> BYTE;
+                case Short ignored -> SHORT;
+                case Integer ignored -> INTEGER;
+                case Long ignored -> LONG;
+                case Float ignored -> FLOAT;
+                case Double ignored -> DOUBLE;
+                case BigInteger ignored -> BIG_INTEGER;
+                case BigDecimal ignored -> BIG_DECIMAL;
+                default -> null;
+            };
+        }
+
+        /**
+         * Determines the common type for two numeric values.
+         * Rules:
+         * - If both are integer types, use the wider integer type
+         * - If one is floating-point, use the wider floating-point type
+         * - BigInteger/BigDecimal with floating-point -> BigDecimal
+         */
+        static NumericType promote(NumericType left, NumericType right) {
+            if (left == null || right == null) return null;
+
+            // If both are integer types (Byte through Long)
+            if (left.order <= LONG.order && right.order <= LONG.order) {
+                return values()[Math.max(left.order, right.order)];
+            }
+
+            // If one is floating-point (Float or Double)
+            if (left == FLOAT || left == DOUBLE || right == FLOAT || right == DOUBLE) {
+                // If either is BigDecimal, result is BigDecimal
+                if (left == BIG_DECIMAL || right == BIG_DECIMAL) {
+                    return BIG_DECIMAL;
+                }
+                // If either is BigInteger, result is BigDecimal
+                if (left == BIG_INTEGER || right == BIG_INTEGER) {
+                    return BIG_DECIMAL;
+                }
+                // Otherwise, use the wider floating-point type
+                return values()[Math.max(left.order, right.order)];
+            }
+
+            // Both are BigInteger or BigDecimal
+            return values()[Math.max(left.order, right.order)];
+        }
+
+        Object convert(Object value) {
+            return switch (this) {
+                case BYTE -> toByte(value);
+                case SHORT -> toShort(value);
+                case INTEGER -> toInteger(value);
+                case LONG -> toLong(value);
+                case FLOAT -> toFloat(value);
+                case DOUBLE -> toDouble(value);
+                case BIG_INTEGER -> toBigInteger(value);
+                case BIG_DECIMAL -> toBigDecimal(value);
+            };
+        }
+    }
+
+    // Conversion methods - using switch expressions for actual conversion
     public static Double toDouble(Object arg) {
         return switch (arg) {
             case Double d -> d;
-            case Integer i -> i.doubleValue();
-            case Long l -> l.doubleValue();
-            case Short s -> s.doubleValue();
-            case Byte b -> b.doubleValue();
-            case Float f -> f.doubleValue();
-            case BigInteger bi -> bi.doubleValue();
-            case BigDecimal bd -> bd.doubleValue();
+            case Number n -> n.doubleValue();
             default -> throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to double");
         };
     }
@@ -30,13 +105,7 @@ public abstract class Operator implements Operation.Function {
     public static Byte toByte(Object arg) {
         return switch (arg) {
             case Byte b -> b;
-            case Short s -> s.byteValue();
-            case Integer i -> i.byteValue();
-            case Long l -> l.byteValue();
-            case Float f -> f.byteValue();
-            case Double d -> d.byteValue();
-            case BigInteger bi -> bi.byteValue();
-            case BigDecimal bd -> bd.byteValue();
+            case Number n -> n.byteValue();
             default -> throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to byte");
         };
     }
@@ -44,13 +113,7 @@ public abstract class Operator implements Operation.Function {
     public static Short toShort(Object arg) {
         return switch (arg) {
             case Short s -> s;
-            case Byte b -> b.shortValue();
-            case Integer i -> i.shortValue();
-            case Long l -> l.shortValue();
-            case Float f -> f.shortValue();
-            case Double d -> d.shortValue();
-            case BigInteger bi -> bi.shortValue();
-            case BigDecimal bd -> bd.shortValue();
+            case Number n -> n.shortValue();
             default -> throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to short");
         };
     }
@@ -58,13 +121,7 @@ public abstract class Operator implements Operation.Function {
     public static Integer toInteger(Object arg) {
         return switch (arg) {
             case Integer i -> i;
-            case Byte b -> b.intValue();
-            case Short s -> s.intValue();
-            case Long l -> l.intValue();
-            case Float f -> f.intValue();
-            case Double d -> d.intValue();
-            case BigInteger bi -> bi.intValue();
-            case BigDecimal bd -> bd.intValue();
+            case Number n -> n.intValue();
             default -> throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to integer");
         };
     }
@@ -72,13 +129,7 @@ public abstract class Operator implements Operation.Function {
     public static Long toLong(Object arg) {
         return switch (arg) {
             case Long l -> l;
-            case Byte b -> b.longValue();
-            case Short s -> s.longValue();
-            case Integer i -> i.longValue();
-            case Float f -> f.longValue();
-            case Double d -> d.longValue();
-            case BigInteger bi -> bi.longValue();
-            case BigDecimal bd -> bd.longValue();
+            case Number n -> n.longValue();
             default -> throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to long");
         };
     }
@@ -86,27 +137,16 @@ public abstract class Operator implements Operation.Function {
     public static Float toFloat(Object arg) {
         return switch (arg) {
             case Float f -> f;
-            case Byte b -> b.floatValue();
-            case Short s -> s.floatValue();
-            case Integer i -> i.floatValue();
-            case Long l -> l.floatValue();
-            case Double d -> d.floatValue();
-            case BigInteger bi -> bi.floatValue();
-            case BigDecimal bd -> bd.floatValue();
+            case Number n -> n.floatValue();
             default -> throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to float");
         };
     }
 
     public static BigDecimal toBigDecimal(Object arg) {
         return switch (arg) {
-            case Byte b -> BigDecimal.valueOf(b);
-            case Short s -> BigDecimal.valueOf(s);
-            case Integer i -> BigDecimal.valueOf(i);
-            case Long l -> BigDecimal.valueOf(l);
-            case Float f -> BigDecimal.valueOf(f);
-            case Double d -> BigDecimal.valueOf(d);
-            case BigInteger bi -> new BigDecimal(bi);
             case BigDecimal bd -> bd;
+            case BigInteger bi -> new BigDecimal(bi);
+            case Number n -> BigDecimal.valueOf(n.doubleValue());
             default ->
                     throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to BigDecimal");
         };
@@ -114,50 +154,58 @@ public abstract class Operator implements Operation.Function {
 
     public static BigInteger toBigInteger(Object arg) {
         return switch (arg) {
-            case Byte b -> BigInteger.valueOf(b);
-            case Short s -> BigInteger.valueOf(s);
-            case Integer i -> BigInteger.valueOf(i);
-            case Long l -> BigInteger.valueOf(l);
-            case Float f -> BigInteger.valueOf(f.longValue());
-            case Double d -> BigInteger.valueOf(d.longValue());
             case BigInteger bi -> bi;
             case BigDecimal bd -> bd.toBigInteger();
+            case Number n -> BigInteger.valueOf(n.longValue());
             default ->
                     throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to BigInteger");
         };
     }
 
+    private static Object convertNumeric(Object value, NumericType targetType) {
+        if (value == null) return null;
+        NumericType sourceType = NumericType.of(value);
+        if (sourceType == null) {
+            throw new IllegalArgumentException("Cannot convert " + value.getClass().getName() + " to numeric type");
+        }
+        if (sourceType == targetType) {
+            return value;
+        }
+        return targetType.convert(value);
+    }
 
     @Override
     public Object evaluate(Executor executor, Object... args) {
         var accumulator = args[0];
         if (accumulator instanceof String string) {
-            final var op = executor.getContext().caster(String.class, Number.class)
+            final var castResult = executor.getContext().caster(String.class, Number.class)
                     .map(c -> c.cast(string));
-            if (op.isPresent()) {
-                accumulator = op.get();
+            if (castResult.isPresent()) {
+                accumulator = castResult.get();
             }
         }
         if (args.length == 1) {
             return unary(accumulator);
         }
+
+        var accumulatorType = NumericType.of(accumulator);
         for (int i = 1; i < args.length; i++) {
-            final var acc = accumulator;
             final var arg = args[i];
-            accumulator = binary(accumulator, executor.getContext().caster(Context.classOf(arg), Context.classOf(accumulator))
-                    .map(c -> c.cast(arg)).orElseGet(() ->
-                            switch (acc) {
-                                case Byte ignore -> toByte(arg);
-                                case Short ignore -> toShort(arg);
-                                case Integer ignore -> toInteger(arg);
-                                case Long ignore -> toLong(arg);
-                                case Float ignore -> toFloat(arg);
-                                case Double ignore -> toDouble(arg);
-                                case BigDecimal ignore -> toBigDecimal(arg);
-                                case BigInteger ignore -> toBigInteger(arg);
-                                default ->
-                                        throw new IllegalArgumentException("Cannot calculate " + this.getClass().getSimpleName().toLowerCase() + " " + acc.getClass().getName() + " to " + arg.getClass().getName());
-                            }));
+            final Object convertedArg;
+            final var argType = NumericType.of(arg);
+            if (accumulatorType != null && argType != null) {
+                final var commonType = NumericType.promote(accumulatorType, argType);
+                if (commonType != null) {
+                    accumulator = convertNumeric(accumulator, commonType);
+                    accumulatorType = commonType;
+                    convertedArg = convertNumeric(arg, commonType);
+                } else {
+                    throw new IllegalArgumentException("Cannot convert " + arg + " to a numeric type");
+                }
+            } else {
+                convertedArg = arg;
+            }
+            accumulator = binary(accumulator, convertedArg);
         }
         return accumulator;
     }

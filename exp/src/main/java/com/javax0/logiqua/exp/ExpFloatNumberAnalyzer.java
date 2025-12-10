@@ -42,7 +42,11 @@ public class ExpFloatNumberAnalyzer implements Analyzer<Double> {
         if (sb.isEmpty()) {
             return null;
         }
-        final var value = Double.parseDouble(sb.toString());
-        return new FloatingNumber(start, input.position(), value, sb.toString());
+        try {
+            final var value = Double.parseDouble(sb.toString());
+            return new FloatingNumber(start, input.position(), value, sb.toString());
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("There was a NFE for "+sb.toString(),e);
+        }
     }
 }

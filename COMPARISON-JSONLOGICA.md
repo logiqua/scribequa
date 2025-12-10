@@ -3,7 +3,7 @@
 This document provides a comprehensive comparison between **Logiqua** and **[json-logic-java](https://github.com/jamsesso/json-logic-java)**, two Java implementations for evaluating JsonLogic expressions.
 
 ## Overview
-
+![comparison infographics](infographics_comparison.png)
 ### json-logic-java
 
 [json-logic-java](https://github.com/jamsesso/json-logic-java) is a pure Java implementation of JsonLogic that attempts to mimic the public API of the original JavaScript implementation. It was created to provide JsonLogic functionality without relying on the Nashorn JavaScript engine.
@@ -241,7 +241,7 @@ Object result2 = script2.evaluate();
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>jsonlogic</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 

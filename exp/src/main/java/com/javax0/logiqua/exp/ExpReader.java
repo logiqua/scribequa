@@ -75,7 +75,7 @@ public class ExpReader {
         final var token = tokens.next();
         if (token.is("(")) {
             final var expression = read();
-            if (!tokens.current().is(")")) {
+            if (tokens.eof() || !tokens.current().is(")")) {
                 throw new IllegalArgumentException("The expression started with '(' must end with ')'");
             }
             tokens.next();
