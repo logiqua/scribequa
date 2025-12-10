@@ -11,7 +11,7 @@ import java.math.BigInteger;
 public class Remainder extends Operator {
     @Override
     protected Object unary(Object accumulator) {
-        throw new IllegalArgumentException("Cannot multiply a single number " + accumulator.getClass().getName());
+        throw new IllegalArgumentException("Cannot calculate the remainder of a single number " + accumulator.getClass().getName());
     }
 
     /**

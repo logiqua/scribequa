@@ -47,11 +47,29 @@ public class ExpReader {
      * object, a list representing expressions, or a result based on priority-handled sub-expressions.
      */
     public Object read() {
+        return read(0);
+    }
+
+    /**
+     * Reads the next expression from the token stream, analyzing its structure and handling depth constraints.
+     * This method processes tokens recursively and constructs an appropriate representation of the expression.
+     * If the token starts with a "!" symbol, a composite structure is created with the symbol and the following
+     * parsed expression. In other cases, the method delegates to sub-expression reading for further parsing.
+     *
+     * @param dept the current depth of recursion, used to prevent parsing beyond the maximum allowed depth
+     * @return the parsed representation of the expression, which can be a composite object or the result of
+     *         sub-expression parsing
+     * @throws IllegalArgumentException if the current parsing depth exceeds the defined maximum limit
+     */
+    public Object read(int dept) {
+        if( dept > MAX_DEPTH ){
+            throw new IllegalArgumentException("The expression is too deep");
+        }
         if (!tokens.eof() && tokens.current().is("!")) {
             final var token = tokens.next();
             final var ret = new ArrayList<>();
             ret.add(token);
-            ret.add(read());
+            ret.add(read(dept + 1));
             return ret;
         }
         return readSubExpression(0, 0);
@@ -92,7 +110,7 @@ public class ExpReader {
     private Object readTerminal(int priority, int dept) {
         final var token = tokens.next();
         if (token.is("(")) {
-            final var expression = read();
+            final var expression = read(0);
             if (tokens.eof() || !tokens.current().is(")")) {
                 throw new IllegalArgumentException("The expression started with '(' must end with ')'");
             }
@@ -157,7 +175,7 @@ public class ExpReader {
 
     private void addExpressionList(final List<Object> function) {
         while (!tokens.eof()) {
-            function.add(read());
+            function.add(read(0));
             if (!tokens.eof() && tokens.current().is(",")) {
                 tokens.next();
             } else {

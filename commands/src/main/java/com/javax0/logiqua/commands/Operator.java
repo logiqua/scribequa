@@ -146,6 +146,7 @@ public abstract class Operator implements Operation.Function {
         return switch (arg) {
             case BigDecimal bd -> bd;
             case BigInteger bi -> new BigDecimal(bi);
+            case Long l -> BigDecimal.valueOf(l);// different from 'n.doubleValue()' double when there are more than 53 bits
             case Number n -> BigDecimal.valueOf(n.doubleValue());
             default ->
                     throw new IllegalArgumentException("Cannot convert " + arg.getClass().getName() + " to BigDecimal");
