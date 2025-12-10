@@ -30,11 +30,14 @@ public class XmlLogiqua implements Logiqua {
 
     @Override
     public Script compile(String source) {
-        final var xml = XmlReader.of(source).read();
-
         if (engine == null) {
             engine = Engine.withData(Map.of());
         }
+        if( engine.limit() < source.length()) {
+            throw new IllegalArgumentException("The source is too long");
+        }
+
+        final var xml = XmlReader.of(source).read();
 
         return XmlBuilder.from(xml, engine).build();
     }

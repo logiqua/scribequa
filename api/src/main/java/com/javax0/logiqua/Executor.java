@@ -6,6 +6,21 @@ import java.util.Optional;
  * An instance of the executor can execute a script.
  */
 public interface Executor {
+
+    /**
+     * Sets a limit for the executor, specifying the maximum source size it should work with.
+     *
+     * @param size the maximum limit to set for the executor
+     */
+    void limit(int size);
+
+    /**
+     * Retrieves the maximum source size limit set for the executor.
+     *
+     * @return the maximum source size limit
+     */
+    int limit();
+
     /**
      * An executor always runs in a context. Some code wants to access the context directly.
      *

@@ -20,6 +20,7 @@ import java.util.ServiceLoader;
 public class Engine implements Executor, Builder {
     private final Context context;
     private final Registry registry = new Registry();
+    int limit = 10_000_000;
 
     public static Engine withData(Map<String, Object> map) {
         return withData(new MapContext(map));
@@ -40,6 +41,16 @@ public class Engine implements Executor, Builder {
     private void loadCommandsAndFunctions() {
         ServiceLoader.load(Operation.Function.class).forEach(registry::register);
         ServiceLoader.load(Operation.Macro.class).forEach(registry::register);
+    }
+
+    @Override
+    public void limit(int size) {
+        this.limit = size;
+    }
+
+    @Override
+    public int limit() {
+        return limit;
     }
 
     @Override

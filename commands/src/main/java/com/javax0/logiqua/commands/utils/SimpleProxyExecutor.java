@@ -10,10 +10,22 @@ public class SimpleProxyExecutor implements Executor {
 
     private final Executor executor;
     private final Context context;
+    int limit = 10_000_000;
+
 
     public SimpleProxyExecutor(Executor executor, Context context) {
         this.executor = executor;
         this.context = context;
+    }
+
+    @Override
+    public void limit(int size) {
+        this.limit = size;
+    }
+
+    @Override
+    public int limit() {
+        return this.limit;
     }
 
     @Override

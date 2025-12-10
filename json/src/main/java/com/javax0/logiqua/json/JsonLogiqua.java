@@ -34,6 +34,12 @@ public class JsonLogiqua implements Logiqua {
 
     @Override
     public Script compile(String source) {
+        if( engine == null) {
+            engine = Engine.withData(Map.of());
+        }
+        if( engine.limit() < source.length()) {
+            throw new IllegalArgumentException("The source is too long");
+        }
         final var analyzer = new LexicalAnalyzer();
         analyzer.skip(Space.class);
         analyzer.skip(NewLine.class);
@@ -41,9 +47,6 @@ public class JsonLogiqua implements Logiqua {
         final var tokens = TokenIterator.over(tokenArray);
         final var json = JsonReader.of(tokens).read();
 
-        if( engine == null) {
-            engine = Engine.withData(Map.of());
-        }
 
         return JsonBuilder.from(json, engine).build();
     }

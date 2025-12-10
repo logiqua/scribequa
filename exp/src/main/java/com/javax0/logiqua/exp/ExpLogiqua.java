@@ -40,6 +40,12 @@ public class ExpLogiqua implements Logiqua {
 
     @Override
     public Script compile(String source) {
+        if (engine == null) {
+            engine = Engine.withData(Map.of());
+        }
+        if( engine.limit() < source.length()) {
+            throw new IllegalArgumentException("The source is too long");
+        }
         final var analyzer = new LexicalAnalyzer();
         analyzer.skip(Space.class);
         analyzer.skip(NewLine.class);
@@ -53,9 +59,6 @@ public class ExpLogiqua implements Logiqua {
         final var json = ExpReader.of(tokens).read();
         if (!tokens.eof()) {
             throw new IllegalArgumentException("There is extra text following the script");
-        }
-        if (engine == null) {
-            engine = Engine.withData(Map.of());
         }
         ((MapContext) engine.getContext()).registerCaster(Identifier.class, String.class, token -> token.value());
         return ExpBuilder.from(json, engine).build();
