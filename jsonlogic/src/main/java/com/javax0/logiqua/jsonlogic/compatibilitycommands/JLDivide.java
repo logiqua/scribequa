@@ -67,8 +67,24 @@ public class JLDivide extends Operator {
             }
             case Float f -> f / toFloat(arg);
             case Double d -> d / toDouble(arg);
-            case BigDecimal bd -> bd.divide(toBigDecimal(arg), RoundingMode.HALF_DOWN);
-            case BigInteger bi -> bi.divide(toBigInteger(arg));
+            case BigDecimal bd -> {
+                final var divisor = toBigDecimal(arg);
+                if (divisor.compareTo(BigDecimal.ZERO) == 0) {
+                    yield bd.compareTo(BigDecimal.ZERO) > 0
+                            ? Double.POSITIVE_INFINITY
+                            : Double.NEGATIVE_INFINITY;
+                }
+                yield bd.divide(divisor, RoundingMode.HALF_DOWN);
+            }
+            case BigInteger bi -> {
+                final var divisor = toBigInteger(arg);
+                if (divisor.equals(BigInteger.ZERO)) {
+                    yield bi.compareTo(BigInteger.ZERO) > 0
+                            ? Double.POSITIVE_INFINITY
+                            : Double.NEGATIVE_INFINITY;
+                }
+                yield bi.divide(divisor);
+            }
             default ->
                     throw new IllegalArgumentException("Cannot divide " + accumulator.getClass().getName() + " to " + arg.getClass().getName());
         };

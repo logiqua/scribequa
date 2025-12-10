@@ -54,24 +54,42 @@ public class ExpReader {
             ret.add(read());
             return ret;
         }
-        return readSubExpression(0);
+        return readSubExpression(0, 0);
     }
 
-    private Object readSubExpression(int priority) {
+    private static final int MAX_DEPTH = 300;
+
+    /**
+     * Reads a sub-expression from the token stream based on the given priority and depth level.
+     * This method is used to construct hierarchical representations of expressions by recursively
+     * parsing sub-expressions. Sub-expressions may include binary operators, terminals, or composite
+     * structures based on operator precedence and grouping.
+     *
+     * @param priority the priority level, determining which operators to evaluate in this context
+     * @param dept the current depth of recursion to prevent overly deep expression parsing
+     * @return the parsed representation of the sub-expression, which may be an object, list,
+     *         or other relevant structure depending on the expression type
+     * @throws IllegalArgumentException if the maximum recursion depth is exceeded, or if invalid
+     *                                  tokens are encountered during parsing
+     */
+    private Object readSubExpression(int priority, int dept) {
+        if( dept > MAX_DEPTH ){
+            throw new IllegalArgumentException("The expression is too deep");
+        }
         if (priority == binaryOperators.length) {
-            return readTerminal(priority);
+            return readTerminal(priority, dept + 1);
         } else {
-            var left = readSubExpression(priority + 1);
+            var left = readSubExpression(priority + 1, dept + 1);
             while (isOperator(priority)) {
                 final var operator = tokens.next();
-                final var right = readSubExpression(priority + 1);
+                final var right = readSubExpression(priority + 1, dept + 1);
                 left = List.of(operator, left, right);
             }
             return left;
         }
     }
 
-    private Object readTerminal(int priority) {
+    private Object readTerminal(int priority, int dept) {
         final var token = tokens.next();
         if (token.is("(")) {
             final var expression = read();
@@ -97,7 +115,7 @@ public class ExpReader {
         if (token.is("+") || token.is("-")) {
             final var ret = new ArrayList<>();
             ret.add(token);
-            ret.add(readSubExpression(priority));
+            ret.add(readSubExpression(priority, dept + 1));
             return ret;
         }
         if (token.is(Keyword.class)) {

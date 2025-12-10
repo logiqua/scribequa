@@ -1,6 +1,7 @@
 package com.javax0.logiqua.engine;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class TestVar {
     }
 
     @Test
+    @DisplayName( "Test reflective access to a field")
     void testReflectiveAccess() {
         final var ctx = new MapContext(Map.of("a", this));
         ctx.convenience.doJavaIntrospection();

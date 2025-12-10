@@ -15,6 +15,9 @@ public class Substr implements Operation.Function {
         var start = cast.toLong(args[1]).orElseThrow(() -> new IllegalArgumentException("The second argument of the substr command must be a number.")).intValue();
         if( start < 0 ){
             start = baseString.length() + start;
+            if( start < 0 ){
+                throw new IllegalArgumentException("The start index must be in the range of the string.");
+            }
         }
 
         int end;
@@ -26,6 +29,9 @@ public class Substr implements Operation.Function {
 
         if( end < 0 ){
             end = baseString.length() + end;
+            if( end < 0 ){
+                throw new IllegalArgumentException("The end index must be in the range of the string.");
+            }
         }else{
             end = start + end;
         }

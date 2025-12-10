@@ -154,9 +154,34 @@ public class MapContext implements Context {
      * and the key is non-empty.
      * @throws IllegalArgumentException  if the source object type is unsupported for key access.
      * @throws NumberFormatException     if the key is expected to represent an index but is not a valid number.
-     * @throws IndexOutOfBoundsException if the key references an index that is out of bounds in a list or array.
+     * @throws IndexOutOfBoundsException if the key references an index out of bounds in a list or array.
      */
     public Context.Value get(String key, Object from) {
+        return get(key, from, 0);
+    }
+
+    private static final int MAX_DEBT = 100;
+
+    /**
+     * Retrieves a {@code Context.Value} instance corresponding to the given key from the specified source object.
+     * This method supports nested key resolution, indexed elements within collections, and mappings through various
+     * object structures such as maps, lists, arrays, and custom proxies.
+     *
+     * @param key  the key or index used to retrieve the value; can include nested keys separated by dots (e.g., "key.subkey")
+     *             or indexes (e.g., "list[0]"). Whitespace around separators is trimmed.
+     * @param from the source object from which the value is to be retrieved; it can be a {@code Context},
+     *             {@code Map}, {@code List}, {@code Collection}, {@code Object[]}, or an object with mapped or indexed proxies.
+     * @param debt the current recursive depth for resolving nested keys, used to prevent exceeding the allowed maximum recursion depth.
+     * @return a {@code Context.Value} instance representing the retrieved value if found;
+     *         returns {@code null} if the key is not found or if the source object is {@code null} and the key is non-empty.
+     * @throws IllegalArgumentException  if the recursion depth exceeds the allowed maximum or if the source object type is unsupported for key access.
+     * @throws NumberFormatException     if the key is expected to represent an index but is not a valid number.
+     * @throws IndexOutOfBoundsException if the key references an out-of-bounds index in a list or array.
+     */
+    private Context.Value get(String key, Object from, int debt) {
+        if (debt > MAX_DEBT) {
+            throw new IllegalArgumentException("Maximum debt reached while indexing 'var' element");
+        }
         final var dix = key.indexOf(".");
         final var pix = key.indexOf("[");
         if (dix != -1 || pix != -1) {
@@ -164,7 +189,7 @@ public class MapContext implements Context {
             Object iterator = from;
             for (final var part : parts) {
                 String k = part.endsWith("]") ? part.substring(0, part.length() - 1) : part;
-                final var iteratorV = get(k, iterator);
+                final var iteratorV = get(k, iterator, debt + 1);
                 if (iteratorV == null) {
                     return null;
                 }
@@ -194,9 +219,9 @@ public class MapContext implements Context {
                     }
                     yield Context.Value.of(list.get(index));
                 }
-                case Collection<?> collection -> get(key, List.of(collection));
-                case Iterable<?> iterable -> get(key, List.of(iterable));
-                case Object[] data -> get(key, Arrays.asList(data));
+                case Collection<?> collection -> get(key, List.of(collection), debt + 1);
+                case Iterable<?> iterable -> get(key, List.of(iterable), debt + 1);
+                case Object[] data -> get(key, Arrays.asList(data), debt + 1);
                 default -> {
                     final var mapLike = mappedProxyRegistry.getProxy(from.getClass());
                     if (mapLike != null) {
@@ -338,6 +363,12 @@ public class MapContext implements Context {
         };
     }
 
+    /**
+     * The Convenience class provides utility methods and functionality to simplify
+     * certain operations related to Java object introspection and proxy handling.
+     * This class leverages features such as reflection to facilitate custom object
+     * mappings and dynamic field access.
+     */
     public class Convenience {
         private static class ReflectionMappedProxyFactory implements MappedProxyFactory {
             @Override
@@ -361,6 +392,26 @@ public class MapContext implements Context {
             }
         }
 
+        /**
+         * This method is used to register a proxy for handling dynamic mappings of Java objects using reflection.
+         * It specifically registers a `ReflectionMappedProxyFactory` for the `Object` class.
+         * <p>
+         * The method leverages the functionality of the `registerProxy` method to map the generic `Object` class
+         * to a proxy implementation that allows dynamic access to the fields of Java objects through reflection.
+         * This can be utilized for introspection purposes, enabling the retrieval and manipulation of object
+         * fields at runtime.
+         * <p>
+         * <strong>SECURITY WARNING:</strong> This is an opt-in feature that uses reflection to access public fields
+         * without security restrictions. Enabling this feature may:
+         * <ul>
+         *     <li>Expose sensitive data from public fields</li>
+         *     <li>Allow access to internal state of security-sensitive objects</li>
+         *     <li>Bypass normal access controls and encapsulation</li>
+         * </ul>
+         * Only enable this feature in trusted environments where exposing object internals is acceptable.
+         * Consider using a SecurityManager when enabling this functionality in sensitive applications.
+         *
+         */
         public void doJavaIntrospection() {
             registerProxy(Object.class, new ReflectionMappedProxyFactory());
         }
@@ -371,15 +422,18 @@ public class MapContext implements Context {
         if (key.isEmpty()) {
             return -1;
         }
-        int value = 0;
+        long value = 0;
         for (char c : key.toCharArray()) {
             if (Character.isDigit(c)) {
                 value = value * 10 + Character.getNumericValue(c);
+                if (value > Integer.MAX_VALUE) {
+                    return -1; // Indicate invalid index
+                }
             } else {
                 return -1;
             }
         }
-        return value;
+        return (int) value;
     }
 
     public Context sprout(Map<String, Object> data) {
