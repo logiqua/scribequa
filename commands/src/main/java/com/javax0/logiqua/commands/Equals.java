@@ -16,7 +16,7 @@ public class Equals implements Operation.Function {
             final var value = executor.getContext().caster(Context.classOf(args[i]),Context.classOf(base))
                     .orElseThrow(() -> new IllegalArgumentException("The arguments of the equals command must be of the same type after coercion."))
                     .cast(args[i]);
-            if( !Objects.equals(base, value) ){
+            if( !com.javax0.logiqua.commands.utils.Equals.equals(base, value) ){
                 return false;
             }
         }

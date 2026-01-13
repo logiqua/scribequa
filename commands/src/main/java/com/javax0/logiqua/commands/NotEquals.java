@@ -3,6 +3,7 @@ package com.javax0.logiqua.commands;
 import com.javax0.logiqua.Context;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
+import com.javax0.logiqua.commands.utils.Equals;
 
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class NotEquals implements Operation.Function {
                 return false;
             }
             final var value = caster.get().cast(args[i]);
-            if (Objects.equals(base, value)) {
+            if (Equals.equals(base, value)) {
                 return false;
             }
         }
