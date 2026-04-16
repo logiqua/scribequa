@@ -1,0 +1,738 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "jsonlogic-expression-schema.json",
+  "title": "JSONLogic Expression (Logiqua Engine)",
+  "description": "JSON Schema for validating JSONLogic-compatible expressions processed by the Logiqua engine in JSON input mode. A valid expression is a constant primitive, a literal array, a constant map (0 or 2+ keys), or a single-key operation object whose key names a supported operator.",
+  "$ref": "#/$defs/expression",
+
+  "$defs": {
+
+    "expression": {
+      "title": "JSONLogic Expression",
+      "description": "A JSONLogic value: a constant primitive, a literal array, a constant map, or an operation object.",
+      "oneOf": [
+        { "title": "null constant",    "type": "null" },
+        { "title": "boolean constant", "type": "boolean" },
+        { "title": "numeric constant", "type": "number" },
+        { "title": "string constant",  "type": "string" },
+        {
+          "title": "literal array",
+          "description": "Interpreted as the 'it' operator — each element is evaluated and the results are returned as an array.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/expression" }
+        },
+        {
+          "title": "constant map",
+          "description": "An object with 0 or 2+ keys is treated as a constant literal value (not evaluated as an operation).",
+          "type": "object",
+          "not": { "minProperties": 1, "maxProperties": 1 }
+        },
+        { "$ref": "#/$defs/operation" }
+      ]
+    },
+
+    "non-array-expression": {
+      "title": "Non-array expression",
+      "description": "A valid expression that is not a JSON array. Used as the single-argument form of operators.",
+      "allOf": [
+        { "not": { "type": "array" } },
+        { "$ref": "#/$defs/expression" }
+      ]
+    },
+
+    "var-key": {
+      "title": "Variable key",
+      "description": "A data access key: null or empty string returns whole data; a dot-separated string is a property path; a number is an array index.",
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string" },
+        { "type": "number" }
+      ]
+    },
+
+    "operation": {
+      "title": "Operation",
+      "description": "An object with exactly one key naming the operator and whose value provides the argument(s).",
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "oneOf": [
+        { "$ref": "#/$defs/op-var" },
+        { "$ref": "#/$defs/op-if" },
+        { "$ref": "#/$defs/op-ternary" },
+        { "$ref": "#/$defs/op-and" },
+        { "$ref": "#/$defs/op-or" },
+        { "$ref": "#/$defs/op-not" },
+        { "$ref": "#/$defs/op-not-not" },
+        { "$ref": "#/$defs/op-equal" },
+        { "$ref": "#/$defs/op-strict-equal" },
+        { "$ref": "#/$defs/op-not-equal" },
+        { "$ref": "#/$defs/op-strict-not-equal" },
+        { "$ref": "#/$defs/op-lt" },
+        { "$ref": "#/$defs/op-lte" },
+        { "$ref": "#/$defs/op-gt" },
+        { "$ref": "#/$defs/op-gte" },
+        { "$ref": "#/$defs/op-plus" },
+        { "$ref": "#/$defs/op-minus" },
+        { "$ref": "#/$defs/op-multiply" },
+        { "$ref": "#/$defs/op-divide" },
+        { "$ref": "#/$defs/op-modulo" },
+        { "$ref": "#/$defs/op-cat" },
+        { "$ref": "#/$defs/op-substr" },
+        { "$ref": "#/$defs/op-in" },
+        { "$ref": "#/$defs/op-all" },
+        { "$ref": "#/$defs/op-some" },
+        { "$ref": "#/$defs/op-none" },
+        { "$ref": "#/$defs/op-filter" },
+        { "$ref": "#/$defs/op-map" },
+        { "$ref": "#/$defs/op-reduce" },
+        { "$ref": "#/$defs/op-merge" },
+        { "$ref": "#/$defs/op-min" },
+        { "$ref": "#/$defs/op-max" },
+        { "$ref": "#/$defs/op-missing" },
+        { "$ref": "#/$defs/op-missing-some" },
+        { "$ref": "#/$defs/op-log" },
+        { "$ref": "#/$defs/op-it" }
+      ]
+    },
+
+    "op-var": {
+      "title": "var",
+      "description": "Access data by key path. {\"var\": \"key\"}, {\"var\": \"\"} (whole data), {\"var\": null}, {\"var\": [\"key\"]}, {\"var\": [\"key\", default]}",
+      "type": "object",
+      "required": ["var"],
+      "additionalProperties": false,
+      "properties": {
+        "var": {
+          "oneOf": [
+            { "$ref": "#/$defs/var-key" },
+            {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 2,
+              "prefixItems": [
+                { "$ref": "#/$defs/var-key" },
+                { "$ref": "#/$defs/expression" }
+              ],
+              "items": false
+            }
+          ]
+        }
+      }
+    },
+
+    "op-if": {
+      "title": "if",
+      "description": "Conditional evaluation. {\"if\": [condition, then, else?]} or multi-branch {\"if\": [c1,t1, c2,t2, ..., else?]}. Accepts 0 or more arguments.",
+      "type": "object",
+      "required": ["if"],
+      "additionalProperties": false,
+      "properties": {
+        "if": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-ternary": {
+      "title": "?:",
+      "description": "Ternary / chained-if operator — identical semantics to 'if'. Accepts 0 or more arguments.",
+      "type": "object",
+      "required": ["?:"],
+      "additionalProperties": false,
+      "properties": {
+        "?:": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-and": {
+      "title": "and",
+      "description": "Logical AND — returns the first falsy value or the last value if all are truthy. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["and"],
+      "additionalProperties": false,
+      "properties": {
+        "and": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-or": {
+      "title": "or",
+      "description": "Logical OR — returns the first truthy value or the last value if all are falsy. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["or"],
+      "additionalProperties": false,
+      "properties": {
+        "or": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-not": {
+      "title": "!",
+      "description": "Logical NOT — returns boolean negation of the truthy value of its argument. Accepts 0 or 1 argument.",
+      "type": "object",
+      "required": ["!"],
+      "additionalProperties": false,
+      "properties": {
+        "!": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-not-not": {
+      "title": "!!",
+      "description": "Double negation — coerces a value to a boolean. Accepts 1 argument.",
+      "type": "object",
+      "required": ["!!"],
+      "additionalProperties": false,
+      "properties": {
+        "!!": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-equal": {
+      "title": "==",
+      "description": "Loose equality with type coercion. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["=="],
+      "additionalProperties": false,
+      "properties": {
+        "==": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-strict-equal": {
+      "title": "===",
+      "description": "Strict equality without type coercion. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["==="],
+      "additionalProperties": false,
+      "properties": {
+        "===": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-not-equal": {
+      "title": "!=",
+      "description": "Loose inequality with type coercion. Requires at least 2 arguments.",
+      "type": "object",
+      "required": ["!="],
+      "additionalProperties": false,
+      "properties": {
+        "!=": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-strict-not-equal": {
+      "title": "!==",
+      "description": "Strict inequality without type coercion. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["!=="],
+      "additionalProperties": false,
+      "properties": {
+        "!==": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-lt": {
+      "title": "<",
+      "description": "Less-than comparison. Two arguments: a < b. Three arguments: a < b < c (between check). Requires at least 2 arguments.",
+      "type": "object",
+      "required": ["<"],
+      "additionalProperties": false,
+      "properties": {
+        "<": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-lte": {
+      "title": "<=",
+      "description": "Less-than-or-equal comparison. Two arguments: a <= b. Three arguments: a <= b <= c (between check). Requires at least 2 arguments.",
+      "type": "object",
+      "required": ["<="],
+      "additionalProperties": false,
+      "properties": {
+        "<=": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-gt": {
+      "title": ">",
+      "description": "Greater-than comparison. Two arguments: a > b. Three arguments: a > b > c (between check). Requires at least 2 arguments.",
+      "type": "object",
+      "required": [">"],
+      "additionalProperties": false,
+      "properties": {
+        ">": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-gte": {
+      "title": ">=",
+      "description": "Greater-than-or-equal comparison. Two arguments: a >= b. Three arguments: a >= b >= c (between check). Requires at least 2 arguments.",
+      "type": "object",
+      "required": [">="],
+      "additionalProperties": false,
+      "properties": {
+        ">=": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-plus": {
+      "title": "+",
+      "description": "Addition. Unary (coerce to number) or n-ary (sum). Requires at least 1 argument.",
+      "type": "object",
+      "required": ["+"],
+      "additionalProperties": false,
+      "properties": {
+        "+": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-minus": {
+      "title": "-",
+      "description": "Subtraction. Unary (negation) or n-ary (sequential subtraction). Requires at least 1 argument.",
+      "type": "object",
+      "required": ["-"],
+      "additionalProperties": false,
+      "properties": {
+        "-": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-multiply": {
+      "title": "*",
+      "description": "Multiplication. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["*"],
+      "additionalProperties": false,
+      "properties": {
+        "*": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-divide": {
+      "title": "/",
+      "description": "Division. Requires at least 2 arguments.",
+      "type": "object",
+      "required": ["/"],
+      "additionalProperties": false,
+      "properties": {
+        "/": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-modulo": {
+      "title": "%",
+      "description": "Remainder (modulo). Requires at least 2 arguments.",
+      "type": "object",
+      "required": ["%"],
+      "additionalProperties": false,
+      "properties": {
+        "%": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-cat": {
+      "title": "cat",
+      "description": "String concatenation. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["cat"],
+      "additionalProperties": false,
+      "properties": {
+        "cat": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-substr": {
+      "title": "substr",
+      "description": "Substring extraction. {\"substr\": [string, start]} or {\"substr\": [string, start, length]}. Start and length may be negative. Requires 2 or 3 arguments.",
+      "type": "object",
+      "required": ["substr"],
+      "additionalProperties": false,
+      "properties": {
+        "substr": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-in": {
+      "title": "in",
+      "description": "Membership test. {\"in\": [value, collection]}. For arrays: tests array membership. For strings: tests substring containment. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["in"],
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-all": {
+      "title": "all",
+      "description": "Array ALL — true if the logic expression is truthy for every element of the array. {\"all\": [array, logic]}. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["all"],
+      "additionalProperties": false,
+      "properties": {
+        "all": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-some": {
+      "title": "some",
+      "description": "Array SOME — true if the logic expression is truthy for at least one element of the array. {\"some\": [array, logic]}. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["some"],
+      "additionalProperties": false,
+      "properties": {
+        "some": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-none": {
+      "title": "none",
+      "description": "Array NONE — true if the logic expression is falsy for every element of the array. {\"none\": [array, logic]}. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["none"],
+      "additionalProperties": false,
+      "properties": {
+        "none": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-filter": {
+      "title": "filter",
+      "description": "Array filter — returns a new array containing only elements for which the logic expression is truthy. {\"filter\": [array, logic]}. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["filter"],
+      "additionalProperties": false,
+      "properties": {
+        "filter": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-map": {
+      "title": "map",
+      "description": "Array map — applies the logic expression to each element and returns the transformed array. {\"map\": [array, logic]}. Requires exactly 2 arguments.",
+      "type": "object",
+      "required": ["map"],
+      "additionalProperties": false,
+      "properties": {
+        "map": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-reduce": {
+      "title": "reduce",
+      "description": "Array reduce — folds an array into a single value. Inside the logic expression, {\"var\":\"current\"} is the current element and {\"var\":\"accumulator\"} is the running total. {\"reduce\": [array, logic, initial]}. Requires exactly 3 arguments.",
+      "type": "object",
+      "required": ["reduce"],
+      "additionalProperties": false,
+      "properties": {
+        "reduce": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-merge": {
+      "title": "merge",
+      "description": "Array merge — flattens arrays one level deep and concatenates them. Non-array arguments are included as-is. Accepts 0 or more arguments.",
+      "type": "object",
+      "required": ["merge"],
+      "additionalProperties": false,
+      "properties": {
+        "merge": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-min": {
+      "title": "min",
+      "description": "Minimum value of the arguments. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["min"],
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-max": {
+      "title": "max",
+      "description": "Maximum value of the arguments. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["max"],
+      "additionalProperties": false,
+      "properties": {
+        "max": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-missing": {
+      "title": "missing",
+      "description": "Returns a list of the provided keys that are absent from the data. {\"missing\": \"key\"} or {\"missing\": [\"k1\",\"k2\",...]}. Accepts 0 or more arguments.",
+      "type": "object",
+      "required": ["missing"],
+      "additionalProperties": false,
+      "properties": {
+        "missing": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-missing-some": {
+      "title": "missing_some",
+      "description": "Returns the missing keys if fewer than the required minimum count are present. {\"missing_some\": [min_count, [\"k1\",\"k2\",...]}]. Requires at least 2 arguments.",
+      "type": "object",
+      "required": ["missing_some"],
+      "additionalProperties": false,
+      "properties": {
+        "missing_some": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      }
+    },
+
+    "op-log": {
+      "title": "log",
+      "description": "Logs all arguments to stdout and returns the string representation of the first argument. Requires at least 1 argument.",
+      "type": "object",
+      "required": ["log"],
+      "additionalProperties": false,
+      "properties": {
+        "log": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    },
+
+    "op-it": {
+      "title": "it",
+      "description": "Constructs an array from its arguments. Each argument is evaluated and placed into the returned ArrayList. Accepts 0 or more arguments. Note: a top-level JSON array is automatically treated as 'it'.",
+      "type": "object",
+      "required": ["it"],
+      "additionalProperties": false,
+      "properties": {
+        "it": {
+          "oneOf": [
+            { "$ref": "#/$defs/non-array-expression" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/expression" }
+            }
+          ]
+        }
+      }
+    }
+
+  }
+}
