@@ -26,4 +26,4 @@ target/*
 hs_err_pid*
 replay_pid*
 /api/target/
-.idea
+/.idea/
