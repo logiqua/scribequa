@@ -1,4 +1,4 @@
-let VERSION = "2.0.2";
+let VERSION = "2.0.3";
 
 let `maven-javadoc-plugin` = "3.12.0";
 let `maven-source-plugin` = "3.3.1";
@@ -11,7 +11,7 @@ let `org.mockito` = "5.17.0";
 let `maven-resources-plugin` = "3.3.1";
 let `maven-core` = "4.0.0-rc-4";
 let `jakarta.annotation` = "3.0.0";
-let `jakarta.inject` = "2.0.2";
+let `jakarta.inject` = "2.0.3";
 let `sisu-maven-plugin` = "0.3.5";
 let `org.yaml.snakeyaml` = "2.5"
 let `org.openjfx`= "21.0.9" ;

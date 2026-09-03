@@ -26,7 +26,7 @@ A schema is that description. Given one, the second read throws a
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>schema</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
 </dependency>
 ```
 

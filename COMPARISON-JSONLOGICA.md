@@ -241,7 +241,7 @@ Object result2 = script2.evaluate();
 <dependency>
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>jsonlogic</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
 </dependency>
 ```
 
