@@ -168,6 +168,49 @@ public interface Context {
     }
 
     /**
+     * The schema that describes the data this context can hold.
+     * <p>
+     * The default is {@link Schema#OPEN}, a schema that excludes nothing, so a context that was not
+     * given one behaves exactly as it did before schemas existed.
+     *
+     * @return the schema of this context, never {@code null}
+     */
+    default Schema schema() {
+        return Schema.OPEN;
+    }
+
+    /**
+     * Split a variable path into its segments.
+     * <p>
+     * This method defines the path syntax of {@link #get(String)} in one place so that the contexts
+     * that resolve a path and the {@link Schema} implementations that judge it cannot drift apart.
+     * A path is split on {@code '.'} and {@code '['}, the closing {@code ']'} is dropped, and the
+     * whitespace around the separators is ignored. Both {@code "a.b"} and {@code "a[b]"} yield
+     * {@code ["a", "b"]}, and {@code "orders[0].total"} yields {@code ["orders", "0", "total"]}.
+     * <p>
+     * A path without any separator is a single segment, including the empty path, which yields a
+     * single empty segment.
+     *
+     * @param key the path to split
+     * @return the segments of the path, never empty
+     */
+    static String[] segments(String key) {
+        if (key == null) {
+            return new String[]{""};
+        }
+        if (key.indexOf('.') == -1 && key.indexOf('[') == -1) {
+            return new String[]{key};
+        }
+        final var parts = key.trim().split("\\s*[\\[.]\\s*", -1);
+        final var segments = new String[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            final var part = parts[i];
+            segments[i] = part.endsWith("]") ? part.substring(0, part.length() - 1) : part;
+        }
+        return segments;
+    }
+
+    /**
      * Create a new context with the data from this context.
      * <p>
      * The aim of creating a new context with the data is to create a local environment for the execution of the commands.

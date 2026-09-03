@@ -23,6 +23,7 @@ Logiqua is a modular expression evaluation framework that allows you to:
 - **Array Operations**: Built-in support for filtering, mapping, reducing arrays
 - **Comments Support**: YAML, LISP, XML, and Expression formats support comments for documentation
 - **Canonical JSON Conversion**: Convert any script to JSON format using `jsonify()` for standardized storage and JSON-based searchability
+- **Schema-Checked Variables**: Describe the data with a JSON Schema or a path list and a read of a variable the data can never have throws instead of looking undefined
 - **Well-Tested**: Comprehensive test coverage across all modules
 
 ## Quick Start
@@ -72,6 +73,13 @@ Add the format-specific module you want to use to your `pom.xml`:
     <groupId>com.javax0.logiqua</groupId>
     <artifactId>jsonlogic</artifactId>
     <version>2.0.1</version>
+</dependency>
+
+<!-- For checking variable reads against a description of the data -->
+<dependency>
+    <groupId>com.javax0.logiqua</groupId>
+    <artifactId>schema</artifactId>
+    <version>2.0.2</version>
 </dependency>
 ```
 
@@ -190,6 +198,57 @@ This feature enables applications to:
 - **Enable JSON-based searchability**: Use JSON query tools to search and filter scripts by their structure
 - **Maintain format independence**: Store scripts in a format-independent way while preserving the ability to work with them in any format
 
+### Checking Variables Against a Schema
+
+A variable a script reads may be absent for two very different reasons. It is an optional field that
+this particular record lacks, or it is a typo. Both look the same to a context, and both quietly turn
+into the default value:
+
+```java
+// "user.aeg" is a typo for "user.age", and this returns 0 forever
+new JsonLogiqua().with(Map.of("user", Map.of("name", "Alice")))
+        .compile("""
+                {"var": ["user.aeg", 0]}""")
+        .evaluate();
+```
+
+Give the engine a description of the data and the typo becomes an exception, while the genuinely
+optional field keeps its default:
+
+```java
+import com.javax0.logiqua.schema.JsonSchema;
+
+final var schema = JsonSchema.of("""
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "user": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": { "type": "string" },
+                "age":  { "type": "integer" }
+              }
+            }
+          }
+        }
+        """);
+
+final var engine = Engine.withData(Map.of("user", Map.of("name", "Alice")), schema);
+final var logiqua = new JsonLogiqua().with(engine);
+
+logiqua.compile("""
+        {"var": ["user.age", 0]}""").evaluate();  // 0, the field is optional and absent
+
+logiqua.compile("""
+        {"var": ["user.aeg", 0]}""").evaluate();  // throws SchemaViolationException
+```
+
+The description does not have to be a JSON Schema document. `PathSchema.of("user.name", "user.age")`
+takes the list of readable paths, and `Schema` is a one-method interface that anything describing the
+data can implement. See the [Schema Module README](schema/README.md).
+
 ## Architecture
 
 Logiqua is built as a modular system with the following components:
@@ -212,6 +271,11 @@ Logiqua is built as a modular system with the following components:
 
 - **`jsonlogic`**: JsonLogic compatibility layer
 
+### Validation Modules
+
+- **`schema`**: Descriptions of the data a script may read, so that reading a variable the data can
+  never have fails instead of looking undefined
+
 ### Utility Modules
 
 - **`lex`**: Lexical analysis framework used by the LSP and Expression modules
@@ -233,6 +297,7 @@ Logiqua/
 ├── lsp/              # LISP-style format parser
 ├── exp/              # Infix expression format parser
 ├── jsonlogic/        # JsonLogic compatibility
+├── schema/           # Data structure descriptions for variable checking
 ├── lex/              # Lexical analysis framework
 └── fx/               # Interactive GUI playground application
 ```
@@ -250,6 +315,7 @@ Each module has its own comprehensive README:
 - **[LSP Module](lsp/README.md)** - LISP-style format parser
 - **[Expression Module](exp/README.md)** - Infix expression format parser
 - **[JsonLogic Module](jsonlogic/README.md)** - JsonLogic compatibility
+- **[Schema Module](schema/README.md)** - Data structure descriptions for variable checking
 - **[Lex Module](lex/README.md)** - Lexical analysis framework
 - **[FX Module](fx/README.md)** - Interactive GUI playground application
 

@@ -4,6 +4,7 @@ import com.javax0.logiqua.Context;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Named;
 import com.javax0.logiqua.Operation;
+import com.javax0.logiqua.SchemaViolationException;
 import com.javax0.logiqua.commands.utils.Array;
 
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public class Missing implements Operation.Function {
                 Context.Value value = null;
                 try {
                     value = executor.getContext().get(key);
+                } catch (SchemaViolationException schemaViolation) {
+                    // a key the schema rules out is not missing, it is misspelled, and reporting it as
+                    // missing would hide the very error the schema was given to find
+                    throw schemaViolation;
                 } catch (Exception ignore) {
                 }
                 if (value == null) {

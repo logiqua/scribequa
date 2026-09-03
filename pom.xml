@@ -60,6 +60,11 @@
             </dependency>
             <dependency>
                 <groupId>com.javax0.logiqua</groupId>
+                <artifactId>schema</artifactId>
+                <version>2.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.javax0.logiqua</groupId>
                 <artifactId>fx</artifactId>
                 <version>2.0.2</version>
             </dependency>
@@ -156,6 +161,7 @@
         <module>xml</module>
         <module>lex</module>
         <module>jsonlogic</module>
+        <module>schema</module>
         <module>fx</module>
     </modules>
     <url>https://github.com/logiqua/scribequa</url>

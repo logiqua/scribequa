@@ -185,10 +185,8 @@ public class MapContext implements Context {
         final var dix = key.indexOf(".");
         final var pix = key.indexOf("[");
         if (dix != -1 || pix != -1) {
-            final var parts = key.trim().split("\\s*[\\[.]\\s*", -1);
             Object iterator = from;
-            for (final var part : parts) {
-                String k = part.endsWith("]") ? part.substring(0, part.length() - 1) : part;
+            for (final var k : Context.segments(key)) {
                 final var iteratorV = get(k, iterator, debt + 1);
                 if (iteratorV == null) {
                     return null;

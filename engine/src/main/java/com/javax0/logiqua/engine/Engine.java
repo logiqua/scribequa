@@ -3,6 +3,7 @@ package com.javax0.logiqua.engine;
 import com.javax0.logiqua.Context;
 import com.javax0.logiqua.Executor;
 import com.javax0.logiqua.Operation;
+import com.javax0.logiqua.Schema;
 import com.javax0.logiqua.scripts.ConstantValueNode;
 
 import java.util.Map;
@@ -28,6 +29,30 @@ public class Engine implements Executor, Builder {
 
     public static Engine withData(Context context) {
         return new Engine(context);
+    }
+
+    /**
+     * Create an engine over the given data whose variable reads are checked against the schema.
+     * Reading a variable that the schema rules out throws a
+     * {@link com.javax0.logiqua.SchemaViolationException} instead of reporting an undefined variable.
+     *
+     * @param map    the data of the context
+     * @param schema the schema that describes the data
+     * @return the new engine
+     */
+    public static Engine withData(Map<String, Object> map, Schema schema) {
+        return withData(SchemaCheckedContext.of(map, schema));
+    }
+
+    /**
+     * Create an engine over the given context whose variable reads are checked against the schema.
+     *
+     * @param context the context that holds the data
+     * @param schema  the schema that describes the data
+     * @return the new engine
+     */
+    public static Engine withData(Context context, Schema schema) {
+        return withData(new SchemaCheckedContext(context, schema));
     }
 
     private Engine(Context context) {
