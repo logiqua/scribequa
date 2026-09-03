@@ -3,7 +3,10 @@ package com.javax0.logiqua.json;
 import com.javax0.lex.TokenIterator;
 import com.javax0.lex.tokens.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class JsonReader {
     final TokenIterator tokens;
@@ -55,6 +58,8 @@ public class JsonReader {
                         tokens.next();
                     } else if (tokens.current().is("]")) {
                         break;
+                    } else {
+                        throw new IllegalArgumentException("The JSON array element is followed by a ',' or ']' not by '" + tokens.current() + "'");
                     }
                 }
             }
@@ -92,11 +97,18 @@ public class JsonReader {
                                 tokens.next();
                             } else if (tokens.current().is("}")) {
                                 break;
+                            } else {
+                                throw new IllegalArgumentException("The JSON object field is followed by a ',' or '}' not by '" + tokens.current() + "'");
                             }
                         }
                     } else {
-                        throw new IllegalArgumentException("The value must be after the colon, like \"key\" : value\n" +
-                                "but it is >>" + colon.lexeme() + "<< instead of a ':'");
+                        if (colon.is("=")) {
+                            throw new IllegalArgumentException("The value must be after a colon, like \"key\" : value\n" +
+                                    "and NOT after an equal sign, like '\"key\" = value' NO NO NO\n");
+                        } else {
+                            throw new IllegalArgumentException("The value must be after the colon, like \"key\" : value\n" +
+                                    "but it is >>" + colon.lexeme() + "<< instead of a ':'");
+                        }
                     }
                 } else {
                     throw new IllegalArgumentException("The key must be a string or an identifier. It is >>" + key.lexeme() + "<< instead");

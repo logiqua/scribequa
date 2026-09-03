@@ -26,6 +26,21 @@ public class TestJsonReader {
         Assertions.assertEquals("{a=1, b=Hello, World!}", jsonObject.toString());
     }
 
+    @Test
+    void readErroneousJson1() {
+        final var sample = """
+                {"a":1 "b":"Hello, World!"}
+                """;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> parseToObject(sample));
+    }
+
+    @Test
+    void readErroneousJson2() {
+        final var sample = """
+                {"a":1, "b":"Hello, World!""}"
+                """;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> parseToObject(sample));
+    }
 
     @Test
     void readEmptyObject() {
@@ -169,7 +184,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readEmptyArray(){
+    void readEmptyArray() {
         final var sample = """
                 {"items":[]}
                 """;
@@ -178,7 +193,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayOfNumbers(){
+    void readArrayOfNumbers() {
         final var sample = """
                 {"numbers":[1,2,3,4,5]}
                 """;
@@ -189,7 +204,15 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayOfStrings(){
+    void readArrayERROR() {
+        final var sample = """
+                {"numbers":[1 2 3 4 5]}
+                """;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> parseToObject(sample));
+    }
+
+    @Test
+    void readArrayOfStrings() {
         final var sample = """
                 {"colors":["red","green","blue"]}
                 """;
@@ -200,7 +223,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayOfBooleans(){
+    void readArrayOfBooleans() {
         final var sample = """
                 {"flags":[true,false,true]}
                 """;
@@ -210,7 +233,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayOfMixedTypes(){
+    void readArrayOfMixedTypes() {
         final var sample = """
                 {"mixed":[1,"text",true,null]}
                 """;
@@ -221,7 +244,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayOfObjects(){
+    void readArrayOfObjects() {
         final var sample = """
                 {"users":[{"name":"Alice","age":30},{"name":"Bob","age":25}]}
                 """;
@@ -232,7 +255,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readNestedObject(){
+    void readNestedObject() {
         final var sample = """
                 {"person":{"name":"John","address":{"city":"NYC","zip":"10001"}}}
                 """;
@@ -243,7 +266,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readTwoDimensionalArray(){
+    void readTwoDimensionalArray() {
         final var sample = """
                 {"matrix":[[1,2,3],[4,5,6],[7,8,9]]}
                 """;
@@ -254,7 +277,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readThreeDimensionalArray(){
+    void readThreeDimensionalArray() {
         final var sample = """
                 {"cube":[[[1,2],[3,4]],[[5,6],[7,8]]]}
                 """;
@@ -265,7 +288,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayOfArraysOfObjects(){
+    void readArrayOfArraysOfObjects() {
         final var sample = """
                 {"data":[[{"id":1},{"id":2}],[{"id":3},{"id":4}]]}
                 """;
@@ -275,7 +298,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readObjectWithNestedArraysAndObjects(){
+    void readObjectWithNestedArraysAndObjects() {
         final var sample = """
                 {"company":{"name":"TechCorp","departments":[{"dept":"Engineering","members":["Alice","Bob"]},{"dept":"Sales","members":["Carol"]}]}}
                 """;
@@ -287,7 +310,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readMapWithNumericAndStringKeys(){
+    void readMapWithNumericAndStringKeys() {
         final var sample = """
                 {"data":{"field1":"value1","field2":"value2","field3":"value3"}}
                 """;
@@ -297,7 +320,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readNestedMapsMultipleLevels(){
+    void readNestedMapsMultipleLevels() {
         final var sample = """
                 {"level1":{"level2":{"level3":{"level4":"deep value"}}}}
                 """;
@@ -307,7 +330,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readMapWithArrayValues(){
+    void readMapWithArrayValues() {
         final var sample = """
                 {"config":{"servers":["server1","server2","server3"],"ports":[8080,8081,8082]}}
                 """;
@@ -318,7 +341,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readComplexNestedStructure(){
+    void readComplexNestedStructure() {
         final var sample = """
                 {"organization":{"name":"AcmeCorp","offices":[{"location":"HQ","teams":[{"name":"Platform","members":["Dev1","Dev2"],"budget":50000},{"name":"Support","members":["Support1"],"budget":30000}]},{"location":"Branch","teams":[{"name":"Sales","members":["Sales1","Sales2"],"budget":40000}]}]}}
                 """;
@@ -330,7 +353,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readArrayContainingMapsAndArrays(){
+    void readArrayContainingMapsAndArrays() {
         final var sample = """
                 {"records":[{"user":"Alice","scores":[95,87,92]},{"user":"Bob","scores":[88,90]}]}
                 """;
@@ -342,7 +365,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readMapWithEmptyNestedStructures(){
+    void readMapWithEmptyNestedStructures() {
         final var sample = """
                 {"parent":{"empty_array":[],"empty_object":{},"value":"test"}}
                 """;
@@ -352,7 +375,7 @@ public class TestJsonReader {
     }
 
     @Test
-    void readRaggedArray(){
+    void readRaggedArray() {
         final var sample = """
                 {"data":[[1,2,3],[4,5],[6,7,8,9]]}
                 """;
